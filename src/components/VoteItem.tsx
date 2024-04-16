@@ -3,7 +3,7 @@ import ArrowNext from '~/assets/icons/arrow_next.svg?react';
 import Check from '~/assets/icons/check.svg?react';
 
 type VoteItemProps = {
-  status: 'planned' | 'available' | 'participated' | 'closed';
+  status: 'planned' | 'current' | 'closed';
   title: string;
   schedule: string;
   votingRate: number;
@@ -22,7 +22,7 @@ export function VoteItem({
       <div>
         <div className="flex items-center gap-2 text-xl font-semibold">
           {title}
-          {participated && (
+          {status === 'closed' && participated && (
             <span className="flex items-center text-sm font-semibold text-sky-500 fill-sky-500">
               <Check width={20} height={20} />
               참여함
@@ -37,12 +37,28 @@ export function VoteItem({
           </div>
         )}
       </div>
-      <Button
-        text="투표하기"
-        icon={<ArrowNext className="fill-white" width={20} />}
-        iconPosition="right"
-        size="medium"
-      />
+      {status === 'current' ? (
+        <Button
+          text={participated ? '투표 완료' : '투표하기'}
+          icon={
+            participated ? (
+              <Check width={20} className="fill-white" />
+            ) : (
+              <ArrowNext width={20} className="fill-white" />
+            )
+          }
+          iconPosition="right"
+          size="medium"
+          disabled={participated ? true : false}
+        />
+      ) : (
+        <Button
+          text="투표 개요"
+          icon={<ArrowNext className="fill-white" width={20} />}
+          iconPosition="right"
+          size="medium"
+        />
+      )}
     </li>
   );
 }

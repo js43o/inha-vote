@@ -28,11 +28,36 @@ export function CurrentVotePage() {
         </div>
         <ul className="flex flex-col gap-4">
           <VoteItem
-            status="available"
+            status="current"
+            title="2024학년도 총학생회 선거"
+            schedule="2024년 4월 3일(수) 06:00 ~ 2024년 4월 5일(금) 18:30"
+            votingRate={70}
+          />
+          <VoteItem
+            status="current"
             title="2024학년도 총학생회 선거"
             schedule="2024년 4월 3일(수) 06:00 ~ 2024년 4월 5일(금) 18:30"
             votingRate={70}
             participated
+          />
+          <VoteItem
+            status="closed"
+            title="2024학년도 총학생회 선거"
+            schedule="2024년 4월 3일(수) 06:00 ~ 2024년 4월 5일(금) 18:30"
+            votingRate={70}
+          />
+          <VoteItem
+            status="closed"
+            title="2024학년도 총학생회 선거"
+            schedule="2024년 4월 3일(수) 06:00 ~ 2024년 4월 5일(금) 18:30"
+            votingRate={70}
+            participated
+          />
+          <VoteItem
+            status="planned"
+            title="2024학년도 총학생회 선거"
+            schedule="2024년 4월 3일(수) 06:00 ~ 2024년 4월 5일(금) 18:30"
+            votingRate={70}
           />
         </ul>
       </main>
