@@ -6,8 +6,8 @@ import { CurrentVotePage } from '~/pages/CurrentVote';
 
 const router = createBrowserRouter([
     {
-        path: '/',
-        element: <CurrentVotePage />,
+        path: 'vote',
+        children: [{ path: 'current', element: <CurrentVotePage /> }],
     },
 ]);
 

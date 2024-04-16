@@ -1,3 +1,9 @@
+import { Menu } from '~/components';
+
 export function CurrentVotePage() {
-    return <div className="">Hello World</div>;
+    return (
+        <div className="">
+            <Menu />
+        </div>
+    );
 }
