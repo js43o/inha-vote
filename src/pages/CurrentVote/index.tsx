@@ -1,6 +1,7 @@
 import Sort from '~/assets/icons/sort.svg?react';
 import { Menu } from '~/components';
 import { VoteItem } from '~/components';
+import { CheckCircle } from '~/components';
 
 export function CurrentVotePage() {
   return (
@@ -8,11 +9,14 @@ export function CurrentVotePage() {
       <Menu />
       <main className="flex flex-col gap-6 w-[768px]">
         <header className="flex flex-col gap-1">
-          <h1>진행 중인 투표</h1>
+          <h1 className="text-3xl font-bold">진행 중인 투표</h1>
           <div>현재 진행되고 있는 투표 목록입니다.</div>
         </header>
         <div className="flex items-center justify-between">
-          <div>아직 참여하지 않은 투표만 보기</div>
+          <div className="flex items-center gap-1.5 font-semibold">
+            <CheckCircle />
+            아직 참여하지 않은 투표만 보기
+          </div>
           <div>
             <span>
               <Sort />
