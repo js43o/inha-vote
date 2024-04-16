@@ -2,6 +2,7 @@ import Sort from '~/assets/icons/sort.svg?react';
 import { Menu } from '~/components';
 import { VoteItem } from '~/components';
 import { CheckCircle } from '~/components';
+import { SortType } from '~/components/SortType';
 
 export function CurrentVotePage() {
   return (
@@ -17,16 +18,12 @@ export function CurrentVotePage() {
             <CheckCircle />
             아직 참여하지 않은 투표만 보기
           </div>
-          <div>
-            <span>
+          <div className="flex items-center gap-2">
+            <span className="flex items-center font-semibold">
               <Sort />
               정렬
             </span>
-            <div>
-              <div>제목순</div>
-              <div>종료일순</div>
-              <div>등록일순</div>
-            </div>
+            <SortType selected="title" />
           </div>
         </div>
         <ul className="flex flex-col gap-4">
