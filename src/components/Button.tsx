@@ -3,9 +3,9 @@ type ButtonProps = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   theme?: 'primary' | 'secondary';
   icon?: React.ReactNode;
+  iconPosition?: 'left' | 'right';
+  size?: 'large' | 'medium' | 'small';
   fullWidth?: boolean;
-  slim?: boolean;
-  small?: boolean;
 };
 
 export function Button({
@@ -13,14 +13,14 @@ export function Button({
   onClick,
   theme = 'primary',
   icon,
-  slim = false,
+  iconPosition = 'left',
   fullWidth = false,
-  small = false,
+  size = 'large',
 }: ButtonProps) {
   return (
     <button
       className={`flex cursor-pointer items-center justify-center gap-1 rounded-lg font-semibold leading-tight border
-      ${fullWidth ? 'w-full' : ''} ${small ? 'text-sm' : ''} ${slim ? 'px-2 py-1.5' : 'p-3'}
+      ${fullWidth ? 'w-full' : ''} ${size === 'large' ? 'p-3' : size === 'medium' ? 'px-3 py-2' : 'py-1 px-2 text-sm'}
       ${
         theme === 'primary'
           ? 'border-gray-800 bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-900'
@@ -28,8 +28,17 @@ export function Button({
       }`}
       onClick={onClick}
     >
-      {icon}
-      {text}
+      {iconPosition === 'left' ? (
+        <>
+          {icon}
+          {text}
+        </>
+      ) : (
+        <>
+          {text}
+          {icon}
+        </>
+      )}
     </button>
   );
 }
