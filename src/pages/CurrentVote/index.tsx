@@ -8,7 +8,7 @@ export function CurrentVotePage() {
   return (
     <div className="flex flex-col gap-24 py-4 items-center">
       <Menu />
-      <main className="flex flex-col gap-6 w-[768px]">
+      <main className="flex flex-col gap-6 w-full max-w-[768px]">
         <header className="flex flex-col gap-1">
           <h1 className="text-3xl font-bold">진행 중인 투표</h1>
           <div>현재 진행되고 있는 투표 목록입니다.</div>
