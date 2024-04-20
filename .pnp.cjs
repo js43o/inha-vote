@@ -26,6 +26,9 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
+          ["@fullcalendar/core", "npm:6.1.11"],\
+          ["@fullcalendar/daygrid", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.1.11"],\
+          ["@fullcalendar/react", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.1.11"],\
           ["@types/react", "npm:18.2.79"],\
           ["@types/react-dom", "npm:18.2.25"],\
           ["@typescript-eslint/eslint-plugin", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:7.7.0"],\
@@ -38,6 +41,7 @@ const RAW_RUNTIME_STATE =
           ["postcss", "npm:8.4.38"],\
           ["prettier", "npm:3.2.5"],\
           ["react", "npm:18.2.0"],\
+          ["react-calendar", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.8.0"],\
           ["react-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:18.2.0"],\
           ["react-router-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.22.3"],\
           ["tailwindcss", "npm:3.4.3"],\
@@ -657,6 +661,68 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@eslint-js-npm-8.57.0-00ead3710a-10c0.zip/node_modules/@eslint/js/",\
         "packageDependencies": [\
           ["@eslint/js", "npm:8.57.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@fullcalendar/core", [\
+      ["npm:6.1.11", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@fullcalendar-core-npm-6.1.11-ae049c8ace-10c0.zip/node_modules/@fullcalendar/core/",\
+        "packageDependencies": [\
+          ["@fullcalendar/core", "npm:6.1.11"],\
+          ["preact", "npm:10.12.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@fullcalendar/daygrid", [\
+      ["npm:6.1.11", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@fullcalendar-daygrid-npm-6.1.11-2187ca1b8f-10c0.zip/node_modules/@fullcalendar/daygrid/",\
+        "packageDependencies": [\
+          ["@fullcalendar/daygrid", "npm:6.1.11"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.1.11", {\
+        "packageLocation": "./.yarn/__virtual__/@fullcalendar-daygrid-virtual-7df7850fe4/4/AppData/Local/Yarn/Berry/cache/@fullcalendar-daygrid-npm-6.1.11-2187ca1b8f-10c0.zip/node_modules/@fullcalendar/daygrid/",\
+        "packageDependencies": [\
+          ["@fullcalendar/daygrid", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.1.11"],\
+          ["@fullcalendar/core", "npm:6.1.11"],\
+          ["@types/fullcalendar__core", null]\
+        ],\
+        "packagePeers": [\
+          "@fullcalendar/core",\
+          "@types/fullcalendar__core"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@fullcalendar/react", [\
+      ["npm:6.1.11", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@fullcalendar-react-npm-6.1.11-f195dbae42-10c0.zip/node_modules/@fullcalendar/react/",\
+        "packageDependencies": [\
+          ["@fullcalendar/react", "npm:6.1.11"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.1.11", {\
+        "packageLocation": "./.yarn/__virtual__/@fullcalendar-react-virtual-bdd0d682c9/4/AppData/Local/Yarn/Berry/cache/@fullcalendar-react-npm-6.1.11-f195dbae42-10c0.zip/node_modules/@fullcalendar/react/",\
+        "packageDependencies": [\
+          ["@fullcalendar/react", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.1.11"],\
+          ["@fullcalendar/core", "npm:6.1.11"],\
+          ["@types/fullcalendar__core", null],\
+          ["@types/react", "npm:18.2.79"],\
+          ["@types/react-dom", "npm:18.2.25"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@fullcalendar/core",\
+          "@types/fullcalendar__core",\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1615,6 +1681,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@wojtekmaj/date-utils", [\
+      ["npm:1.5.1", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@wojtekmaj-date-utils-npm-1.5.1-e21d58f022-10c0.zip/node_modules/@wojtekmaj/date-utils/",\
+        "packageDependencies": [\
+          ["@wojtekmaj/date-utils", "npm:1.5.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["abbrev", [\
       ["npm:2.0.0", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/abbrev-npm-2.0.0-0eb38a17e5-10c0.zip/node_modules/abbrev/",\
@@ -1974,6 +2049,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/clean-stack-npm-2.2.0-a8ce435a5c-10c0.zip/node_modules/clean-stack/",\
         "packageDependencies": [\
           ["clean-stack", "npm:2.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["clsx", [\
+      ["npm:2.1.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/clsx-npm-2.1.0-29d286e1de-10c0.zip/node_modules/clsx/",\
+        "packageDependencies": [\
+          ["clsx", "npm:2.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2671,6 +2755,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["get-user-locale", [\
+      ["npm:2.3.2", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/get-user-locale-npm-2.3.2-3b463b4839-10c0.zip/node_modules/get-user-locale/",\
+        "packageDependencies": [\
+          ["get-user-locale", "npm:2.3.2"],\
+          ["mem", "npm:8.1.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["glob", [\
       ["npm:10.3.12", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/glob-npm-10.3.12-f2e90133a0-10c0.zip/node_modules/glob/",\
@@ -2887,6 +2981,9 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["inha-vote", "workspace:."],\
+          ["@fullcalendar/core", "npm:6.1.11"],\
+          ["@fullcalendar/daygrid", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.1.11"],\
+          ["@fullcalendar/react", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.1.11"],\
           ["@types/react", "npm:18.2.79"],\
           ["@types/react-dom", "npm:18.2.25"],\
           ["@typescript-eslint/eslint-plugin", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:7.7.0"],\
@@ -2899,6 +2996,7 @@ const RAW_RUNTIME_STATE =
           ["postcss", "npm:8.4.38"],\
           ["prettier", "npm:3.2.5"],\
           ["react", "npm:18.2.0"],\
+          ["react-calendar", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.8.0"],\
           ["react-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:18.2.0"],\
           ["react-router-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.22.3"],\
           ["tailwindcss", "npm:3.4.3"],\
@@ -3261,6 +3359,27 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["map-age-cleaner", [\
+      ["npm:0.1.3", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/map-age-cleaner-npm-0.1.3-fd9e4b4aff-10c0.zip/node_modules/map-age-cleaner/",\
+        "packageDependencies": [\
+          ["map-age-cleaner", "npm:0.1.3"],\
+          ["p-defer", "npm:1.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["mem", [\
+      ["npm:8.1.1", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/mem-npm-8.1.1-4270f09409-10c0.zip/node_modules/mem/",\
+        "packageDependencies": [\
+          ["mem", "npm:8.1.1"],\
+          ["map-age-cleaner", "npm:0.1.3"],\
+          ["mimic-fn", "npm:3.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["merge2", [\
       ["npm:1.4.1", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/merge2-npm-1.4.1-a2507bd06c-10c0.zip/node_modules/merge2/",\
@@ -3277,6 +3396,15 @@ const RAW_RUNTIME_STATE =
           ["micromatch", "npm:4.0.5"],\
           ["braces", "npm:3.0.2"],\
           ["picomatch", "npm:2.3.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["mimic-fn", [\
+      ["npm:3.1.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/mimic-fn-npm-3.1.0-12d126ec66-10c0.zip/node_modules/mimic-fn/",\
+        "packageDependencies": [\
+          ["mimic-fn", "npm:3.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3550,6 +3678,15 @@ const RAW_RUNTIME_STATE =
           ["levn", "npm:0.4.1"],\
           ["prelude-ls", "npm:1.2.1"],\
           ["type-check", "npm:0.4.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["p-defer", [\
+      ["npm:1.0.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/p-defer-npm-1.0.0-4dfd0013f5-10c0.zip/node_modules/p-defer/",\
+        "packageDependencies": [\
+          ["p-defer", "npm:1.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3830,6 +3967,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["preact", [\
+      ["npm:10.12.1", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/preact-npm-10.12.1-fdb903e9a5-10c0.zip/node_modules/preact/",\
+        "packageDependencies": [\
+          ["preact", "npm:10.12.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["prelude-ls", [\
       ["npm:1.2.1", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/prelude-ls-npm-1.2.1-3e4d272a55-10c0.zip/node_modules/prelude-ls/",\
@@ -3868,6 +4014,18 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["prop-types", [\
+      ["npm:15.8.1", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/prop-types-npm-15.8.1-17c71ee7ee-10c0.zip/node_modules/prop-types/",\
+        "packageDependencies": [\
+          ["prop-types", "npm:15.8.1"],\
+          ["loose-envify", "npm:1.4.0"],\
+          ["object-assign", "npm:4.1.1"],\
+          ["react-is", "npm:16.13.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["punycode", [\
       ["npm:2.3.1", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/punycode-npm-2.3.1-97543c420d-10c0.zip/node_modules/punycode/",\
@@ -3896,6 +4054,37 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-calendar", [\
+      ["npm:4.8.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/react-calendar-npm-4.8.0-daa5462842-10c0.zip/node_modules/react-calendar/",\
+        "packageDependencies": [\
+          ["react-calendar", "npm:4.8.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.8.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-calendar-virtual-5e48a6d50b/4/AppData/Local/Yarn/Berry/cache/react-calendar-npm-4.8.0-daa5462842-10c0.zip/node_modules/react-calendar/",\
+        "packageDependencies": [\
+          ["react-calendar", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.8.0"],\
+          ["@types/react", "npm:18.2.79"],\
+          ["@types/react-dom", "npm:18.2.25"],\
+          ["@wojtekmaj/date-utils", "npm:1.5.1"],\
+          ["clsx", "npm:2.1.0"],\
+          ["get-user-locale", "npm:2.3.2"],\
+          ["prop-types", "npm:15.8.1"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:18.2.0"],\
+          ["warning", "npm:4.0.3"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["react-dom", [\
       ["npm:18.2.0", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/react-dom-npm-18.2.0-dd675bca1c-10c0.zip/node_modules/react-dom/",\
@@ -3916,6 +4105,15 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@types/react",\
           "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-is", [\
+      ["npm:16.13.1", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/react-is-npm-16.13.1-a9b9382b4f-10c0.zip/node_modules/react-is/",\
+        "packageDependencies": [\
+          ["react-is", "npm:16.13.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4638,6 +4836,16 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@types/vite",\
           "vite"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["warning", [\
+      ["npm:4.0.3", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/warning-npm-4.0.3-291e921d6d-10c0.zip/node_modules/warning/",\
+        "packageDependencies": [\
+          ["warning", "npm:4.0.3"],\
+          ["loose-envify", "npm:1.4.0"]\
         ],\
         "linkType": "HARD"\
       }]\
