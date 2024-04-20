@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import '~/styles/index.css';
-import { CurrentVotePage, VoteDetailPage } from '~/pages';
+import { PlannedVotePage, CurrentVotePage, VoteDetailPage } from '~/pages';
 
 const router = createBrowserRouter([
   {
     path: 'vote',
     children: [
+      { path: 'planned', element: <PlannedVotePage /> },
       { path: 'current', element: <CurrentVotePage /> },
       { path: ':id', element: <VoteDetailPage /> },
     ],

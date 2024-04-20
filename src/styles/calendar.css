@@ -1,0 +1,71 @@
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 24px;
+}
+
+.fc .fc-button.fc-button-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  border: none;
+  border-radius: 100%;
+  margin: 0;
+  background: none;
+  color: black;
+  font-size: 24px;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: none;
+}
+
+.fc .fc-button.fc-button-primary.fc-next-button:hover,
+.fc .fc-button.fc-button-primary.fc-prev-button:hover {
+  background: #f9fafb;
+  color: black;
+  box-shadow: none;
+}
+
+.fc .fc-button.fc-button-primary.fc-next-button:active,
+.fc .fc-button.fc-button-primary.fc-prev-button:active {
+  background: #f3f4f6;
+}
+
+.fc-toolbar-title {
+  font-weight: bold;
+}
+
+.fc-view.fc-dayGridMonth-view {
+  border: 1px solid #9ca3af;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.fc-theme-standard .fc-scrollgrid {
+  border: none;
+}
+
+.fc-theme-standard th {
+  border: none;
+  border-bottom: 1px solid #d1d5db;
+}
+.fc-theme-standard td {
+  border: none;
+  border-top: 1px solid #d1d5db;
+  border-left: 1px solid #d1d5db;
+  flex-direction: row;
+}
+
+.fc-scrollgrid-sync-inner .fc-daygrid-day-top {
+  flex-direction: row;
+}
+
+.fc-scrollgrid-sync-inner .fc-daygrid-day-top > a {
+  padding: 8px;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  background: #ecfeff;
+}
+
+.fc-day-other {
+  background: #f3f4f6;
+}
