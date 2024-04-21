@@ -7,6 +7,7 @@ type ButtonProps = {
   size?: 'large' | 'medium' | 'small';
   fullWidth?: boolean;
   disabled?: boolean;
+  className?: string;
 };
 
 export function Button({
@@ -18,10 +19,11 @@ export function Button({
   fullWidth = false,
   size = 'large',
   disabled = false,
+  className,
 }: ButtonProps) {
   return (
     <button
-      className={`flex border ${disabled ? 'cursor-default' : ''} items-center justify-center gap-1 rounded-lg font-semibold leading-tight border: ;
+      className={`${className} flex border ${disabled ? 'cursor-default' : ''} items-center justify-center gap-1 rounded-lg font-semibold leading-tight border: ;
       ${fullWidth ? 'w-full' : ''} ${size === 'large' ? 'p-3' : size === 'medium' ? 'px-3 py-1.5' : 'px-2 py-1 text-sm'}
       ${
         disabled

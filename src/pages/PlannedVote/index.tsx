@@ -5,7 +5,7 @@ import '~/styles/calendar.css';
 
 export function PlannedVotePage() {
   return (
-    <div className="flex flex-col gap-24 py-4 items-center">
+    <div className="flex flex-col gap-24 p-4 items-center">
       <Menu />
       <main className="flex flex-col gap-6 w-full max-w-[768px]">
         <header className="flex flex-col gap-1">

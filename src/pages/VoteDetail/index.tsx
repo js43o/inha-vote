@@ -23,9 +23,9 @@ export function VoteDetailPage() {
             </h2>
             <div className="font-semibold">실시간 투표율 20%</div>
           </div>
-          <div className="flex flex-col items-end justify-center">
+          <div className="sm:flex flex-col items-end justify-center hidden">
             <div>투표 종료까지</div>
-            <div className="text-3xl font-semibold">47:59:59</div>
+            <div className="text-3xl font-semibold leading-none">47:59:59</div>
           </div>
         </div>
         <ul className="flex flex-col gap-1">
