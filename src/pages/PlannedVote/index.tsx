@@ -1,9 +1,12 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { useNavigate } from 'react-router-dom';
 import { Menu } from '~/components';
 import '~/styles/calendar.css';
 
 export function PlannedVotePage() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col gap-24 p-4 items-center">
       <Menu />
@@ -20,11 +23,15 @@ export function PlannedVotePage() {
           eventColor="#0ea5e9"
           events={[
             {
+              voteId: 1,
               title: '2024년 총학생회 선거',
               start: '2024-04-15',
               end: '2024-04-19',
             },
           ]}
+          eventClick={(eventArg) =>
+            navigate(`/vote/${eventArg.event.extendedProps.voteId}`)
+          }
         />
       </main>
     </div>

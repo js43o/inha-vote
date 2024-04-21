@@ -1,8 +1,11 @@
-import { Button, Menu } from '~/components';
+import { useNavigate } from 'react-router-dom';
 import Undo from '~/assets/icons/undo.svg?react';
+import { Button, Menu } from '~/components';
 import { Candidate } from './Candidate';
 
 export function VoteDetailPage() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col gap-24 p-4 items-center">
       <Menu />
@@ -14,6 +17,7 @@ export function VoteDetailPage() {
             icon={<Undo width={20} />}
             text="이전으로"
             size="medium"
+            onClick={() => navigate('/vote/current')}
           />
         </header>
         <div className="text-white bg-sky-500 py-2 px-4 flex justify-between">
