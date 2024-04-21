@@ -2,7 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import '~/styles/index.css';
-import { PlannedVotePage, CurrentVotePage, VoteDetailPage } from '~/pages';
+import {
+  PlannedVotePage,
+  CurrentVotePage,
+  ClosedVotePage,
+  VoteDetailPage,
+} from '~/pages';
 
 const router = createBrowserRouter([
   {
@@ -10,6 +15,7 @@ const router = createBrowserRouter([
     children: [
       { path: 'planned', element: <PlannedVotePage /> },
       { path: 'current', element: <CurrentVotePage /> },
+      { path: 'closed', element: <ClosedVotePage /> },
       { path: ':id', element: <VoteDetailPage /> },
     ],
   },

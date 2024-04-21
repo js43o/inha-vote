@@ -18,7 +18,7 @@ export function VoteItem({
   participated,
 }: VoteItemProps) {
   return (
-    <li className="flex items-center justify-between p-4 border border-gray-300 bg-gray-50 rounded-lg">
+    <li className="flex items-center justify-between p-3 border border-gray-300 bg-gray-50 rounded-xl">
       <div>
         <div className="flex items-center gap-2 text-xl font-semibold">
           {title}
@@ -42,9 +42,9 @@ export function VoteItem({
           text={participated ? '투표 완료' : '투표하기'}
           icon={
             participated ? (
-              <Check width={20} className="fill-white" />
+              <Check className="fill-white" width={20} height={20} />
             ) : (
-              <ArrowNext width={20} className="fill-white" />
+              <ArrowNext className="fill-white" width={20} height={20} />
             )
           }
           iconPosition="right"
@@ -54,7 +54,7 @@ export function VoteItem({
       ) : (
         <Button
           text="투표 개요"
-          icon={<ArrowNext className="fill-white" width={20} />}
+          icon={<ArrowNext className="fill-white" width={20} height={20} />}
           iconPosition="right"
           size="medium"
         />

@@ -6,7 +6,7 @@ type SortTypeProps = {
 
 export function SortType({ selected }: SortTypeProps) {
   return (
-    <ul className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+    <ul className="flex items-center border border-gray-300 rounded-xl overflow-hidden">
       {SORT_TYPE.map(({ title, name }, idx) => (
         <li
           key={name}
