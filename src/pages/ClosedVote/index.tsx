@@ -1,7 +1,7 @@
 import Sort from '~/assets/icons/sort.svg?react';
 import { Menu } from '~/components';
 import { VoteItem } from '~/components';
-import { CheckCircle } from '~/components';
+import { ToggleInput } from '~/components';
 import { SortType } from '~/components/SortType';
 
 export function ClosedVotePage() {
@@ -14,10 +14,7 @@ export function ClosedVotePage() {
           <div>종료된 지난 투표 목록입니다.</div>
         </header>
         <div className="flex sm:flex-row flex-col gap-2 items-end sm:items-center justify-between">
-          <div className="flex items-center gap-1.5 font-semibold">
-            <CheckCircle />
-            내가 참여한 투표만 보기
-          </div>
+          <ToggleInput text="내가 참여한 투표만 보기" />
           <div className="flex items-center gap-2">
             <span className="flex items-center font-semibold">
               <Sort width={20} height={20} />

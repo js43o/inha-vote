@@ -57,6 +57,10 @@ export function VoteDetailPage() {
           <Candidate />
           <Candidate />
         </ul>
+        <div className="flex flex-col items-center gap-2 mt-16">
+          <div>위 내용을 모두 확인하셨나요?</div>
+          <Button text="투표권 발급받기" fullWidth />
+        </div>
       </main>
     </div>
   );

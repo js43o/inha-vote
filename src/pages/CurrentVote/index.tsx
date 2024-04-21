@@ -1,7 +1,7 @@
 import Sort from '~/assets/icons/sort.svg?react';
 import { Menu } from '~/components';
 import { VoteItem } from '~/components';
-import { CheckCircle } from '~/components';
+import { ToggleInput } from '~/components';
 import { SortType } from '~/components/SortType';
 
 export function CurrentVotePage() {
@@ -14,10 +14,7 @@ export function CurrentVotePage() {
           <div>현재 진행되고 있는 투표 목록입니다.</div>
         </header>
         <div className="flex sm:flex-row flex-col gap-2 items-end sm:items-center justify-between">
-          <div className="flex items-center gap-1.5 font-semibold">
-            <CheckCircle checked />
-            참여하지 않은 투표만 보기
-          </div>
+          <ToggleInput checked text="참여하지 않은 투표만 보기" />
           <div className="flex items-center gap-2">
             <span className="flex items-center font-semibold">
               <Sort width={20} height={20} />

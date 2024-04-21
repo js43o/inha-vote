@@ -20,7 +20,7 @@ export function VoteItem({
   participated,
 }: VoteItemProps) {
   return (
-    <li className="flex flex-col gap-2 sm:flex-row items-start sm:items-center justify-between p-3 border border-gray-300 bg-gray-50 rounded-xl">
+    <li className="flex flex-col gap-2 sm:flex-row items-start sm:items-center justify-between p-3 border border-gray-300 bg-gray-50 rounded-xl hover:-translate-y-0.5 transition-transform">
       <div>
         <div className="flex items-center gap-2 text-xl font-semibold">
           {title}
