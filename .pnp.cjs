@@ -31,6 +31,7 @@ const RAW_RUNTIME_STATE =
           ["@fullcalendar/react", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.1.11"],\
           ["@types/react", "npm:18.2.79"],\
           ["@types/react-dom", "npm:18.2.25"],\
+          ["@types/react-transition-group", "npm:4.4.10"],\
           ["@typescript-eslint/eslint-plugin", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:7.7.0"],\
           ["@typescript-eslint/parser", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:7.7.0"],\
           ["@vitejs/plugin-react", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.2.1"],\
@@ -44,6 +45,7 @@ const RAW_RUNTIME_STATE =
           ["react-calendar", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.8.0"],\
           ["react-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:18.2.0"],\
           ["react-router-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.22.3"],\
+          ["react-transition-group", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.4.5"],\
           ["tailwindcss", "npm:3.4.3"],\
           ["typescript", "patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"],\
           ["vite", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.9"],\
@@ -352,6 +354,16 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@babel/core",\
           "@types/babel__core"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@babel/runtime", [\
+      ["npm:7.24.4", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@babel-runtime-npm-7.24.4-1a974e2dd0-10c0.zip/node_modules/@babel/runtime/",\
+        "packageDependencies": [\
+          ["@babel/runtime", "npm:7.24.4"],\
+          ["regenerator-runtime", "npm:0.14.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1423,6 +1435,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/react-transition-group", [\
+      ["npm:4.4.10", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@types-react-transition-group-npm-4.4.10-5e11bed850-10c0.zip/node_modules/@types/react-transition-group/",\
+        "packageDependencies": [\
+          ["@types/react-transition-group", "npm:4.4.10"],\
+          ["@types/react", "npm:18.2.79"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/semver", [\
       ["npm:7.5.8", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@types-semver-npm-7.5.8-26073743d7-10c0.zip/node_modules/@types/semver/",\
@@ -2249,6 +2271,17 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["dom-helpers", [\
+      ["npm:5.2.1", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/dom-helpers-npm-5.2.1-b38bb4470b-10c0.zip/node_modules/dom-helpers/",\
+        "packageDependencies": [\
+          ["dom-helpers", "npm:5.2.1"],\
+          ["@babel/runtime", "npm:7.24.4"],\
+          ["csstype", "npm:3.1.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["dot-case", [\
       ["npm:3.0.4", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/dot-case-npm-3.0.4-09675b5521-10c0.zip/node_modules/dot-case/",\
@@ -2986,6 +3019,7 @@ const RAW_RUNTIME_STATE =
           ["@fullcalendar/react", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.1.11"],\
           ["@types/react", "npm:18.2.79"],\
           ["@types/react-dom", "npm:18.2.25"],\
+          ["@types/react-transition-group", "npm:4.4.10"],\
           ["@typescript-eslint/eslint-plugin", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:7.7.0"],\
           ["@typescript-eslint/parser", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:7.7.0"],\
           ["@vitejs/plugin-react", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.2.1"],\
@@ -2999,6 +3033,7 @@ const RAW_RUNTIME_STATE =
           ["react-calendar", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.8.0"],\
           ["react-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:18.2.0"],\
           ["react-router-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:6.22.3"],\
+          ["react-transition-group", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.4.5"],\
           ["tailwindcss", "npm:3.4.3"],\
           ["typescript", "patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"],\
           ["vite", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.9"],\
@@ -4178,6 +4213,36 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-transition-group", [\
+      ["npm:4.4.5", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/react-transition-group-npm-4.4.5-98ea4ef96e-10c0.zip/node_modules/react-transition-group/",\
+        "packageDependencies": [\
+          ["react-transition-group", "npm:4.4.5"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.4.5", {\
+        "packageLocation": "./.yarn/__virtual__/react-transition-group-virtual-6614fe56a9/4/AppData/Local/Yarn/Berry/cache/react-transition-group-npm-4.4.5-98ea4ef96e-10c0.zip/node_modules/react-transition-group/",\
+        "packageDependencies": [\
+          ["react-transition-group", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.4.5"],\
+          ["@babel/runtime", "npm:7.24.4"],\
+          ["@types/react", "npm:18.2.79"],\
+          ["@types/react-dom", "npm:18.2.25"],\
+          ["dom-helpers", "npm:5.2.1"],\
+          ["loose-envify", "npm:1.4.0"],\
+          ["prop-types", "npm:15.8.1"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["read-cache", [\
       ["npm:1.0.0", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/read-cache-npm-1.0.0-00fa89ed05-10c0.zip/node_modules/read-cache/",\
@@ -4194,6 +4259,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["readdirp", "npm:3.6.0"],\
           ["picomatch", "npm:2.3.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["regenerator-runtime", [\
+      ["npm:0.14.1", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/regenerator-runtime-npm-0.14.1-a6c97c609a-10c0.zip/node_modules/regenerator-runtime/",\
+        "packageDependencies": [\
+          ["regenerator-runtime", "npm:0.14.1"]\
         ],\
         "linkType": "HARD"\
       }]\
