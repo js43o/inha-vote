@@ -1,10 +1,16 @@
+import { useState } from 'react';
 import Sort from '~/assets/icons/sort.svg?react';
 import { Menu } from '~/components';
 import { VoteItem } from '~/components';
 import { ToggleInput } from '~/components';
 import { SortType } from '~/components/SortType';
+import { SortBy } from '~/lib/types';
 
 export function ClosedVotePage() {
+  const [sortBy, setSortBy] = useState<SortBy>('title');
+
+  const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
+
   return (
     <div className="flex flex-col gap-24 p-4 items-center">
       <Menu />
@@ -20,7 +26,7 @@ export function ClosedVotePage() {
               <Sort width={20} height={20} />
               정렬
             </span>
-            <SortType selected="title" />
+            <SortType selected={sortBy} onChangeSortBy={onChangeSortBy} />
           </div>
         </div>
         <ul className="flex flex-col gap-4">
