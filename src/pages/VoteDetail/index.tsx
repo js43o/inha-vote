@@ -5,12 +5,14 @@ import { Button, Menu } from '~/components';
 import { Candidate } from './Candidate';
 import { BallotIssueModal } from './BallotIssueModal';
 import { BallotValidationModal } from './BallotValidationModal';
+import { VotingModal } from './VotingModal';
 
 export function VoteDetailPage() {
   const navigate = useNavigate();
   const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);
   const [showBallotValidationModal, setShowBallotValidationModal] =
     useState(true);
+  const [showVotingModal, setShowVotingModal] = useState(false);
 
   return (
     <>
@@ -21,7 +23,12 @@ export function VoteDetailPage() {
       />
       <BallotValidationModal
         visible={showBallotValidationModal}
+        onShowVotingModal={() => setShowVotingModal(true)}
         onClose={() => setShowBallotValidationModal(false)}
+      />
+      <VotingModal
+        visible={showVotingModal}
+        onClose={() => setShowVotingModal(false)}
       />
       <div className="flex flex-col gap-24 p-4 items-center">
         <Menu />

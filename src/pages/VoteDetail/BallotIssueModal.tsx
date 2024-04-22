@@ -39,7 +39,7 @@ export function BallotIssueModal({
         <div className="text-red-600 font-semibold">
           위 주의사항을 정말 확인하셨나요?
         </div>
-        <div className="flex w-full gap-4">
+        <div className="flex w-full gap-2">
           <Button text="취소" onClick={onClose} theme="secondary" fullWidth />
           <Button
             text="예, 투표권을 발급합니다"

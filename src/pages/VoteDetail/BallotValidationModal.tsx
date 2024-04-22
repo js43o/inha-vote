@@ -4,12 +4,14 @@ import Upload from '~/assets/icons/upload.svg?react';
 
 type BallotValidationModalProps = {
   visible: boolean;
+  onShowVotingModal: () => void;
   onClose: () => void;
 };
 
 export function BallotValidationModal({
   visible,
   onClose,
+  onShowVotingModal,
 }: BallotValidationModalProps) {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
@@ -26,6 +28,11 @@ export function BallotValidationModal({
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     uploadBallot(e.target.files?.[0]);
+  };
+
+  const onNext = () => {
+    onClose();
+    onShowVotingModal();
   };
 
   return (
@@ -45,9 +52,9 @@ export function BallotValidationModal({
           </div>
         </label>
         <p>{uploadedFile?.name}</p>
-        <div className="flex w-full gap-4">
+        <div className="flex w-full gap-2">
           <Button text="취소" onClick={onClose} theme="secondary" fullWidth />
-          <Button text="다음" fullWidth disabled />
+          <Button text="다음" onClick={onNext} fullWidth disabled />
         </div>
       </>
     </Modal>

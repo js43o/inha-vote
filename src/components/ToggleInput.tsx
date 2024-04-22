@@ -2,18 +2,18 @@ import Check from '~/assets/icons/check.svg?react';
 
 type ToggleInputProps = {
   checked?: boolean;
-  text: string;
+  text?: string;
   onToggle: () => void;
 };
 
 export function ToggleInput({
   checked = false,
-  text,
+  text = '',
   onToggle,
 }: ToggleInputProps) {
   return (
     <div
-      className="group flex gap-1.5 items-center cursor-pointer p-1 pr-2.5 rounded-full"
+      className={`group flex gap-1.5 items-center cursor-pointer ${text ? 'p-1 pr-2.5' : 'p-2'} rounded-full`}
       onClick={onToggle}
     >
       <div
@@ -22,7 +22,7 @@ export function ToggleInput({
       >
         {checked && <Check width={16} height={16} className="fill-white" />}
       </div>
-      <span className="font-semibold">{text}</span>
+      {text && <span className="font-semibold">{text}</span>}
     </div>
   );
 }
