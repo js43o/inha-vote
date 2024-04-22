@@ -8,8 +8,11 @@ import { SortBy } from '~/lib/types';
 
 export function ClosedVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
+  const [showOnlyVoted, setShowOnlyVoted] = useState(false);
 
   const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
+
+  const toggleShowOnlyVoted = () => setShowOnlyVoted(!showOnlyVoted);
 
   return (
     <div className="flex flex-col gap-24 p-4 items-center">
@@ -20,7 +23,11 @@ export function ClosedVotePage() {
           <div>종료된 지난 투표 목록입니다.</div>
         </header>
         <div className="flex sm:flex-row flex-col gap-2 items-end sm:items-center justify-between">
-          <ToggleInput text="내가 참여한 투표만 보기" />
+          <ToggleInput
+            checked={showOnlyVoted}
+            text="내가 참여한 투표만 보기"
+            onToggle={toggleShowOnlyVoted}
+          />
           <div className="flex items-center gap-2">
             <span className="flex items-center font-semibold">
               <Sort width={20} height={20} />

@@ -8,8 +8,11 @@ import { SortBy } from '~/lib/types';
 
 export function CurrentVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
+  const [showOnlyUnvoted, setShowOnlyUnvoted] = useState(false);
 
   const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
+
+  const toggleShowOnlyUnvoted = () => setShowOnlyUnvoted(!showOnlyUnvoted);
 
   return (
     <div className="flex flex-col gap-24 p-4 items-center">
@@ -20,7 +23,11 @@ export function CurrentVotePage() {
           <div>현재 진행되고 있는 투표 목록입니다.</div>
         </header>
         <div className="flex sm:flex-row flex-col gap-2 items-end sm:items-center justify-between">
-          <ToggleInput checked text="참여하지 않은 투표만 보기" />
+          <ToggleInput
+            checked={showOnlyUnvoted}
+            text="참여하지 않은 투표만 보기"
+            onToggle={toggleShowOnlyUnvoted}
+          />
           <div className="flex items-center gap-2">
             <span className="flex items-center font-semibold">
               <Sort width={20} height={20} />
