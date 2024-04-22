@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Undo from '~/assets/icons/undo.svg?react';
 import { Button, Menu } from '~/components';
 import { Candidate } from './Candidate';
-import { useState } from 'react';
 import { BallotIssueModal } from './BallotIssueModal';
+import { BallotValidationModal } from './BallotValidationModal';
 
 export function VoteDetailPage() {
   const navigate = useNavigate();
-  const [showBallotIssueModal, setShowBallotIssueModal] = useState(true);
+  const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);
+  const [showBallotValidationModal, setShowBallotValidationModal] =
+    useState(true);
 
   return (
     <>
@@ -15,6 +18,10 @@ export function VoteDetailPage() {
         visible={showBallotIssueModal}
         onIssueBallot={() => {}}
         onClose={() => setShowBallotIssueModal(false)}
+      />
+      <BallotValidationModal
+        visible={showBallotValidationModal}
+        onClose={() => setShowBallotValidationModal(false)}
       />
       <div className="flex flex-col gap-24 p-4 items-center">
         <Menu />
