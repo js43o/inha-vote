@@ -7,3 +7,4 @@ export type RegisterInput = {
   carrier: 'SKT' | 'KT' | 'LG U+';
   phoneNumber: string;
 };
+export type LoginInput = Pick<RegisterInput, 'studentNumber' | 'password'>;

@@ -25,6 +25,7 @@ export function RegisterPage() {
 
   const requestRegistration = async () => {
     if (authenticationInput === '123123') {
+      // 패스키 등록 요청 및
       // 계정 등록 API 호출
       console.log('REGISTER:', getValues());
       setAuthenticationError(false);
@@ -189,7 +190,7 @@ export function RegisterPage() {
             </div>
           ) : (
             <Button
-              text="인증하기"
+              text="인증번호 전송"
               onClick={requestMobileAuthentication}
               fullWidth
             />
