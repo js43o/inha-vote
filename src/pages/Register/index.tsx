@@ -77,6 +77,7 @@ export function RegisterPage() {
                 pattern: /^[a-zA-Z가-힣\s]+$/,
               })}
               error={!!errors.name}
+              disabled={authenticationRequested}
               grouped
             />
             <Input
@@ -87,6 +88,7 @@ export function RegisterPage() {
                 pattern: /\d{8}/,
               })}
               error={!!errors.studentNumber}
+              disabled={authenticationRequested}
               grouped
             />
             <Input
@@ -98,6 +100,7 @@ export function RegisterPage() {
                 maxLength: 20,
               })}
               error={!!errors.password}
+              disabled={authenticationRequested}
               grouped
             />
             <Input
@@ -110,6 +113,7 @@ export function RegisterPage() {
                 validate: (value) => value === getValues('password'),
               })}
               error={!!errors.passwordConfirm}
+              disabled={authenticationRequested}
               grouped
               className="border-none"
             />
@@ -128,7 +132,12 @@ export function RegisterPage() {
             2. 휴대전화 인증
           </h2>
           <div className="border border-gray-400 rounded-lg overflow-hidden">
-            <Select label="통신사" {...register('carrier')} grouped>
+            <Select
+              label="통신사"
+              {...register('carrier')}
+              disabled={authenticationRequested}
+              grouped
+            >
               <option value="skt">SKT</option>
               <option value="kt">KT</option>
               <option value="lg">LG U+</option>

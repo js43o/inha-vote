@@ -13,11 +13,16 @@ export const Select = forwardRef<
   SelectProps &
     SelectHTMLAttributes<HTMLSelectElement> &
     ReturnType<UseFormRegister<RegisterInput>>
->(({ label, grouped, children, ...props }, ref) => (
+>(({ label, grouped, children, disabled, ...props }, ref) => (
   <div
-    className={`${grouped ? 'border-b border-gray-300' : 'border border-gray-400 rounded-lg'} relative bg-white  text-black`}
+    className={`${grouped ? 'border-b border-gray-300' : 'border border-gray-400 rounded-lg'} relative transition-colors ${disabled ? 'bg-gray-100' : 'bg-white'}`}
   >
-    <select className={`w-full p-2.5 `} {...props} ref={ref}>
+    <select
+      className={`w-full p-2.5 `}
+      disabled={disabled}
+      {...props}
+      ref={ref}
+    >
       {children}
     </select>
     <Expand width={20} height={20} className="absolute z-10 right-3 bottom-3" />
