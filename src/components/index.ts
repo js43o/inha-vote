@@ -4,3 +4,4 @@ export * from './Button';
 export * from './VoteItem';
 export * from './ToggleInput';
 export * from './Input';
+export * from './Select';
