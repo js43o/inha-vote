@@ -36,7 +36,7 @@ export function RegisterPage() {
   };
 
   return (
-    <div className="flex flex-col gap-24 p-4 h-full justify-center items-center">
+    <div className="flex flex-col grow gap-24 p-4 justify-center items-center">
       <Modal visible={showAuthenticationModal}>
         <>
           <h1 className="font-bold text-2xl">알림</h1>
@@ -55,6 +55,14 @@ export function RegisterPage() {
         <h1 className="flex items-center gap-1 font-bold text-3xl">
           계정 등록
         </h1>
+        <section className="flex flex-col gap-4">
+          <h2 className="text-xl font-bold">안내사항</h2>
+          <p>
+            이 사이트는 사용자의 보안을 위해 <b>패스키</b>를 사용합니다.{' '}
+            <b>오래된 버전</b>의 브라우저 및 OS, <b>블루투스</b>를 지원하지 않는
+            기기의 경우 패스키 생성에 제한이 있을 수 있습니다.
+          </p>
+        </section>
         <section className="flex flex-col gap-4">
           <h2 className="text-lg font-semibold text-gray-500">
             1. 기본 정보 입력
@@ -107,12 +115,12 @@ export function RegisterPage() {
             />
           </div>
           <div className="flex flex-col gap-1 text-sm text-red-500">
-            <p>
-              {errors.name && '이름은 20자 이하의 한글 또는 영문이어야 합니다.'}
-            </p>
-            <p>{errors.studentNumber && '학번은 8자리 숫자여야 합니다.'}</p>
-            <p>{errors.password && '비밀번호는 20자리 이하여야 합니다.'}</p>
-            <p>{errors.passwordConfirm && '비밀번호가 일치하지 않습니다.'}</p>
+            {errors.name && (
+              <p>이름은 20자 이하의 한글 또는 영문이어야 합니다.</p>
+            )}
+            {errors.studentNumber && <p>학번은 8자리 숫자여야 합니다.</p>}
+            {errors.password && <p>비밀번호는 20자리 이하여야 합니다.</p>}
+            {errors.passwordConfirm && <p>비밀번호가 일치하지 않습니다.</p>}
           </div>
         </section>
         <section className="flex flex-col gap-4">
@@ -151,20 +159,25 @@ export function RegisterPage() {
             className={`${authenticationRequested ? 'flex' : 'hidden'}`}
           />
           <div className="flex flex-col gap-1 text-sm text-red-500">
-            <p>
-              {errors.phoneNumber && '휴대전화번호는 11자리 숫자여야 합니다.'}
-            </p>
-            <p>{authenticationError && '인증번호가 일치하지 않습니다.'}</p>
+            {errors.phoneNumber && (
+              <p>휴대전화번호는 11자리 숫자여야 합니다.</p>
+            )}
+            {authenticationError && <p>인증번호가 일치하지 않습니다.</p>}
           </div>
         </section>
-        <div className="flex items-end h-full ">
+        <div className="flex items-end h-full">
           {authenticationRequested ? (
-            <Button
-              text="가입하기"
-              onClick={requestRegistration}
-              fullWidth
-              type="button"
-            />
+            <div className="flex flex-col items-center gap-1 w-full">
+              <p className="text-gray-500">
+                사용자 계정 및 <b>패스키</b>를 생성합니다.
+              </p>
+              <Button
+                text="계정 등록"
+                onClick={requestRegistration}
+                fullWidth
+                type="button"
+              />
+            </div>
           ) : (
             <Button
               text="인증하기"
