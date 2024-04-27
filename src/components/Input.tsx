@@ -1,31 +1,44 @@
 import { InputHTMLAttributes, forwardRef } from 'react';
-import { UseFormRegister } from 'react-hook-form';
-import { RegisterInput } from '~/lib/types';
 
 type InputProps = {
-  label?: string;
-  error?: string;
+  label: string;
+  error?: boolean;
+  grouped?: boolean;
 };
 
 export const Input = forwardRef<
   HTMLInputElement,
-  InputProps &
-    InputHTMLAttributes<HTMLInputElement> &
-    ReturnType<UseFormRegister<RegisterInput>>
->(({ onChange, onBlur, name, label, disabled, error, ...props }, ref) => (
-  <label
-    className={`flex flex-col gap-1 ${error ? 'text-red-500' : 'text-gray-500 '}`}
-  >
-    {label}
-    <input
-      className={`border min-w-0 w-full rounded-md p-2.5 text-black focus:border-gray-800 ${error ? 'border-red-500' : 'border-gray-400'} ${disabled ? 'bg-gray-100' : 'bg-white'}`}
-      name={name}
-      onChange={onChange}
-      onBlur={onBlur}
-      {...props}
-      ref={ref}
-      disabled={disabled}
-    />
-    <div className="text-sm">{error}</div>
-  </label>
-));
+  InputProps & InputHTMLAttributes<HTMLInputElement>
+>(
+  (
+    {
+      label,
+      className,
+      error = false,
+      grouped = false,
+      onChange,
+      onBlur,
+      ...props
+    },
+    ref,
+  ) =>
+    grouped ? (
+      <input
+        className={`${error ? 'bg-red-100' : 'bg-white'} border-b border-gray-300 min-w-0 w-full p-2.5 ${className}`}
+        placeholder={label}
+        onChange={onChange}
+        onBlur={onBlur}
+        {...props}
+        ref={ref}
+      />
+    ) : (
+      <input
+        className={`${error ? 'bg-red-100 border-red-500' : 'bg-white'} border border-gray-400 rounded-lg min-w-0 w-full p-2.5 ${className}`}
+        placeholder={label}
+        onChange={onChange}
+        onBlur={onBlur}
+        {...props}
+        ref={ref}
+      />
+    ),
+);

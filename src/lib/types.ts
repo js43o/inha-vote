@@ -6,5 +6,4 @@ export type RegisterInput = {
   passwordConfirm: string;
   carrier: 'SKT' | 'KT' | 'LG U+';
   phoneNumber: string;
-  authenticationNumber: string;
 };
