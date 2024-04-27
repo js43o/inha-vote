@@ -1,19 +1,27 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, Input, Select } from '~/components';
+import { Button, Input, Modal, Select } from '~/components';
 import { RegisterInput } from '~/lib/types';
 
 export function RegisterPage() {
-  const [mobileAuthenticationRequested, setMobileAuthenticationRequested] =
-    useState(false);
+  const [authenticationRequested, setAuthenticationRequested] = useState(false);
   const [authenticationInput, setAuthenticationInput] = useState('');
   const [authenticationError, setAuthenticationError] = useState(false);
+  const [showAuthenticationModal, setShowAuthenticationModal] = useState(false);
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
     getValues,
   } = useForm<RegisterInput>();
+
+  const requestMobileAuthentication = () => {
+    if (isValid) {
+      // 인증번호 전송 로직
+      setAuthenticationRequested(true);
+      setShowAuthenticationModal(true);
+    }
+  };
 
   const requestRegistration = async () => {
     if (authenticationInput === '123123') {
@@ -27,17 +35,19 @@ export function RegisterPage() {
     setAuthenticationError(true);
   };
 
-  const requestMobileAuthentication = () => {
-    if (isValid) {
-      // 인증번호 전송 로직
-      setMobileAuthenticationRequested(true);
-    }
-  };
-
-  console.log(errors);
-
   return (
     <div className="flex flex-col gap-24 p-4 h-full justify-center items-center">
+      <Modal visible={showAuthenticationModal}>
+        <>
+          <h1 className="font-bold text-2xl">알림</h1>
+          <div>인증번호가 전송되었습니다.</div>
+          <Button
+            text="확인"
+            fullWidth
+            onClick={() => setShowAuthenticationModal(false)}
+          />
+        </>
+      </Modal>
       <form
         className="max-w-80 w-full flex flex-col h-full justify-center gap-8"
         onSubmit={handleSubmit(requestMobileAuthentication)}
@@ -126,7 +136,7 @@ export function RegisterPage() {
                 pattern: /\d{11}/,
               })}
               error={!!errors.phoneNumber}
-              disabled={mobileAuthenticationRequested}
+              disabled={authenticationRequested}
               grouped
               className="border-none"
             />
@@ -138,7 +148,7 @@ export function RegisterPage() {
             onChange={(e) => setAuthenticationInput(e.target?.value)}
             name="authenticationNumber"
             error={!!authenticationError}
-            className={`${mobileAuthenticationRequested ? 'flex' : 'hidden'}`}
+            className={`${authenticationRequested ? 'flex' : 'hidden'}`}
           />
           <div className="flex flex-col gap-1 text-sm text-red-500">
             <p>
@@ -148,7 +158,7 @@ export function RegisterPage() {
           </div>
         </section>
         <div className="flex items-end h-full ">
-          {mobileAuthenticationRequested ? (
+          {authenticationRequested ? (
             <Button
               text="가입하기"
               onClick={requestRegistration}
