@@ -14,3 +14,5 @@ export const SORT_BY: { title: string; name: SortBy }[] = [
   { title: '종료일순', name: 'endDate' },
   { title: '투표율순', name: 'votingRate' },
 ];
+
+export const DAY_NAME_KOR = ['일', '월', '화', '수', '목', '금', '토'];

@@ -3,9 +3,29 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { useNavigate } from 'react-router-dom';
 import { Menu } from '~/components';
 import '~/styles/calendar.css';
+import { useEffect, useState } from 'react';
+import { getMockVoteList } from '~/lib/mockApi';
+import { getFormattedDateString } from '~/lib/utils';
+import { EventSourceInput } from '@fullcalendar/core/index.js';
 
 export function PlannedVotePage() {
   const navigate = useNavigate();
+  const [voteItems, setVoteItems] = useState<EventSourceInput>([]);
+
+  console.log(voteItems);
+
+  useEffect(() => {
+    getMockVoteList().then((voteItems) =>
+      setVoteItems(
+        voteItems.map(({ id, title, from, to }) => ({
+          id: id.toString(),
+          title,
+          start: getFormattedDateString(from, 'DATE_HYPHEN'),
+          end: getFormattedDateString(to, 'DATE_HYPHEN'),
+        })),
+      ),
+    );
+  }, []);
 
   return (
     <div className="flex flex-col gap-24 p-4 items-center">
@@ -21,17 +41,8 @@ export function PlannedVotePage() {
           fixedWeekCount={false}
           contentHeight="auto"
           eventColor="#0ea5e9"
-          events={[
-            {
-              voteId: 1,
-              title: '2024년 총학생회 선거',
-              start: '2024-04-15',
-              end: '2024-04-19',
-            },
-          ]}
-          eventClick={(eventArg) =>
-            navigate(`/vote/${eventArg.event.extendedProps.voteId}`)
-          }
+          events={voteItems}
+          eventClick={(eventArg) => navigate(`/vote/${eventArg.event.id}`)}
         />
       </main>
     </div>

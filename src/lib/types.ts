@@ -1,4 +1,5 @@
 export type SortBy = 'title' | 'endDate' | 'votingRate';
+
 export type RegisterInput = {
   name: string;
   studentNumber: string;
@@ -8,3 +9,10 @@ export type RegisterInput = {
   phoneNumber: string;
 };
 export type LoginInput = Pick<RegisterInput, 'studentNumber' | 'password'>;
+
+export type VoteItemResponse = {
+  title: string;
+  from: Date;
+  to: Date;
+  votingRate: number;
+};

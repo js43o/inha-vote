@@ -1,18 +1,47 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sort from '~/assets/icons/sort.svg?react';
-import { Menu } from '~/components';
-import { VoteItem } from '~/components';
-import { ToggleInput } from '~/components';
-import { SortType } from '~/components/SortType';
-import { SortBy } from '~/lib/types';
+import { SortBy, VoteItemResponse } from '~/lib/types';
+import { getMockVoteList } from '~/lib/mockApi';
+import { VoteItem, Menu, ToggleInput, SortType } from '~/components';
 
 export function CurrentVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
   const [showOnlyUnvoted, setShowOnlyUnvoted] = useState(false);
+  const [voteItems, setVoteItems] = useState<VoteItemResponse[]>([]);
 
   const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
 
   const toggleShowOnlyUnvoted = () => setShowOnlyUnvoted(!showOnlyUnvoted);
+
+  useEffect(() => {
+    getMockVoteList().then((voteItems) =>
+      setVoteItems(
+        voteItems.filter(
+          (voteItem) => voteItem.from < new Date() && voteItem.to > new Date(),
+        ),
+      ),
+    );
+  }, []);
+
+  useEffect(() => {
+    switch (sortBy) {
+      case 'title':
+        setVoteItems(
+          [...voteItems].sort((a, b) => a.title.localeCompare(b.title)),
+        );
+        break;
+      case 'endDate':
+        setVoteItems(
+          [...voteItems].sort((a, b) => a.to.getTime() - b.to.getTime()),
+        );
+        break;
+      case 'votingRate':
+        setVoteItems(
+          [...voteItems].sort((a, b) => b.votingRate - a.votingRate),
+        );
+        break;
+    }
+  }, [sortBy]);
 
   return (
     <div className="flex flex-col gap-24 p-4 items-center">
@@ -37,28 +66,16 @@ export function CurrentVotePage() {
           </div>
         </div>
         <ul className="flex flex-col gap-4">
-          <VoteItem
-            status="current"
-            title="2024학년도 총학생회 선거"
-            from="2024년 4월 3일(수) 06:00"
-            to="2024년 4월 5일(금) 18:30"
-            votingRate={70}
-            participated
-          />
-          <VoteItem
-            status="current"
-            title="2024학년도 총학생회 선거"
-            from="2024년 4월 3일(수) 06:00"
-            to="2024년 4월 5일(금) 18:30"
-            votingRate={70}
-          />
-          <VoteItem
-            status="current"
-            title="2024학년도 총학생회 선거"
-            from="2024년 4월 3일(수) 06:00"
-            to="2024년 4월 5일(금) 18:30"
-            votingRate={70}
-          />
+          {voteItems.map((voteItem, idx) => (
+            <VoteItem
+              key={idx}
+              title={voteItem.title}
+              from={voteItem.from}
+              to={voteItem.to}
+              votingRate={voteItem.votingRate.toFixed(2)}
+              participated
+            />
+          ))}
         </ul>
       </main>
     </div>
