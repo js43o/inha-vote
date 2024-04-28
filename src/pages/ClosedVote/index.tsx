@@ -5,39 +5,33 @@ import { VoteItem } from '~/components';
 import { ToggleInput } from '~/components';
 import { SortType } from '~/components/SortType';
 import { getMockVoteList } from '~/lib/mockApi';
-import { SortBy, VoteItemResponse } from '~/lib/types';
+import { SortBy, Vote } from '~/lib/types';
 
 export function ClosedVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
   const [showOnlyVoted, setShowOnlyVoted] = useState(false);
-  const [voteItems, setVoteItems] = useState<VoteItemResponse[]>([]);
+  const [votes, setVotes] = useState<Vote[]>([]);
 
   const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
 
   const toggleShowOnlyVoted = () => setShowOnlyVoted(!showOnlyVoted);
 
   useEffect(() => {
-    getMockVoteList().then((voteItems) =>
-      setVoteItems(voteItems.filter((voteItem) => voteItem.to < new Date())),
+    getMockVoteList().then((votes) =>
+      setVotes(votes.filter((vote) => vote.to < new Date())),
     );
   }, []);
 
   useEffect(() => {
     switch (sortBy) {
       case 'title':
-        setVoteItems(
-          [...voteItems].sort((a, b) => a.title.localeCompare(b.title)),
-        );
+        setVotes([...votes].sort((a, b) => a.title.localeCompare(b.title)));
         break;
       case 'endDate':
-        setVoteItems(
-          [...voteItems].sort((a, b) => a.to.getTime() - b.to.getTime()),
-        );
+        setVotes([...votes].sort((a, b) => a.to.getTime() - b.to.getTime()));
         break;
       case 'votingRate':
-        setVoteItems(
-          [...voteItems].sort((a, b) => b.votingRate - a.votingRate),
-        );
+        setVotes([...votes].sort((a, b) => b.votingRate - a.votingRate));
         break;
     }
   }, [sortBy]);
@@ -65,13 +59,13 @@ export function ClosedVotePage() {
           </div>
         </div>
         <ul className="flex flex-col gap-4">
-          {voteItems.map((voteItem, idx) => (
+          {votes.map((vote) => (
             <VoteItem
-              key={idx}
-              title={voteItem.title}
-              from={voteItem.from}
-              to={voteItem.to}
-              votingRate={voteItem.votingRate.toFixed(2)}
+              key={vote.id}
+              title={vote.title}
+              from={vote.from}
+              to={vote.to}
+              votingRate={vote.votingRate.toFixed(2)}
               participated
             />
           ))}

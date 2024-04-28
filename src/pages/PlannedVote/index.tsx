@@ -11,15 +11,13 @@ import { ONE_DAY_MS } from '~/lib/constants';
 
 export function PlannedVotePage() {
   const navigate = useNavigate();
-  const [voteItems, setVoteItems] = useState<EventSourceInput>([]);
-
-  console.log(voteItems);
+  const [voteSchedules, setVoteSchedules] = useState<EventSourceInput>([]);
 
   useEffect(() => {
-    getMockVoteList().then((voteItems) =>
-      setVoteItems(
-        voteItems
-          .filter((voteItem) => voteItem.from > new Date())
+    getMockVoteList().then((votes) =>
+      setVoteSchedules(
+        votes
+          .filter((vote) => vote.from > new Date())
           .map(({ id, title, from, to }) => ({
             id: id.toString(),
             title,
@@ -47,7 +45,7 @@ export function PlannedVotePage() {
           fixedWeekCount={false}
           contentHeight="auto"
           eventColor="#0ea5e9"
-          events={voteItems}
+          events={voteSchedules}
           eventClick={(eventArg) => navigate(`/vote/${eventArg.event.id}`)}
         />
       </main>

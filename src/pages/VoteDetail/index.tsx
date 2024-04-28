@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Undo from '~/assets/icons/undo.svg?react';
 import { Button, Menu } from '~/components';
-import { Candidate } from './Candidate';
+import { CandidateItem } from './CandidateItem';
 import { BallotIssueModal } from './BallotIssueModal';
 import { BallotValidationModal } from './BallotValidationModal';
 import { VotingModal } from './VotingModal';
@@ -83,8 +83,8 @@ export function VoteDetailPage() {
           </ul>
           <h2 className="text-2xl font-bold">후보자 정보</h2>
           <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <Candidate />
-            <Candidate />
+            <CandidateItem />
+            <CandidateItem />
           </ul>
           <div className="flex flex-col items-center gap-2 mt-16">
             <div>위 내용을 모두 확인하셨나요?</div>

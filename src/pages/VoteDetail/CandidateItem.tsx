@@ -1,4 +1,4 @@
-export function Candidate() {
+export function CandidateItem() {
   return (
     <li className="flex flex-col gap-4">
       <div className="bg-blue-800 h-96 rounded-xl" />

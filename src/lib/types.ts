@@ -10,9 +10,15 @@ export type RegisterInput = {
 };
 export type LoginInput = Pick<RegisterInput, 'studentNumber' | 'password'>;
 
-export type VoteItemResponse = {
+export type Vote = {
+  id: number;
   title: string;
   from: Date;
   to: Date;
   votingRate: number;
+};
+
+export type Candidate = {
+  id: number;
+  name: string;
 };

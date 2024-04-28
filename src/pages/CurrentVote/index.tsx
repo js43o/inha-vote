@@ -1,24 +1,22 @@
 import { useEffect, useState } from 'react';
 import Sort from '~/assets/icons/sort.svg?react';
-import { SortBy, VoteItemResponse } from '~/lib/types';
+import { SortBy, Vote } from '~/lib/types';
 import { getMockVoteList } from '~/lib/mockApi';
 import { VoteItem, Menu, ToggleInput, SortType } from '~/components';
 
 export function CurrentVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
   const [showOnlyUnvoted, setShowOnlyUnvoted] = useState(false);
-  const [voteItems, setVoteItems] = useState<VoteItemResponse[]>([]);
+  const [votes, setVotes] = useState<Vote[]>([]);
 
   const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
 
   const toggleShowOnlyUnvoted = () => setShowOnlyUnvoted(!showOnlyUnvoted);
 
   useEffect(() => {
-    getMockVoteList().then((voteItems) =>
-      setVoteItems(
-        voteItems.filter(
-          (voteItem) => voteItem.from < new Date() && voteItem.to > new Date(),
-        ),
+    getMockVoteList().then((votes) =>
+      setVotes(
+        votes.filter((vote) => vote.from < new Date() && vote.to > new Date()),
       ),
     );
   }, []);
@@ -26,19 +24,13 @@ export function CurrentVotePage() {
   useEffect(() => {
     switch (sortBy) {
       case 'title':
-        setVoteItems(
-          [...voteItems].sort((a, b) => a.title.localeCompare(b.title)),
-        );
+        setVotes([...votes].sort((a, b) => a.title.localeCompare(b.title)));
         break;
       case 'endDate':
-        setVoteItems(
-          [...voteItems].sort((a, b) => a.to.getTime() - b.to.getTime()),
-        );
+        setVotes([...votes].sort((a, b) => a.to.getTime() - b.to.getTime()));
         break;
       case 'votingRate':
-        setVoteItems(
-          [...voteItems].sort((a, b) => b.votingRate - a.votingRate),
-        );
+        setVotes([...votes].sort((a, b) => b.votingRate - a.votingRate));
         break;
     }
   }, [sortBy]);
@@ -66,13 +58,13 @@ export function CurrentVotePage() {
           </div>
         </div>
         <ul className="flex flex-col gap-4">
-          {voteItems.map((voteItem, idx) => (
+          {votes.map((vote, idx) => (
             <VoteItem
               key={idx}
-              title={voteItem.title}
-              from={voteItem.from}
-              to={voteItem.to}
-              votingRate={voteItem.votingRate.toFixed(2)}
+              title={vote.title}
+              from={vote.from}
+              to={vote.to}
+              votingRate={vote.votingRate.toFixed(2)}
               participated
             />
           ))}
