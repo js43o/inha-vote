@@ -69,3 +69,11 @@
 .fc-day-other {
   background: #f3f4f6;
 }
+
+.fc-day-sat {
+  color: #3b82f6;
+}
+
+.fc-day-sun {
+  color: #ef4444;
+}
