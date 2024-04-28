@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import Sort from '~/assets/icons/sort.svg?react';
-import { Menu } from '~/components';
-import { VoteItem } from '~/components';
-import { ToggleInput } from '~/components';
-import { SortType } from '~/components/SortType';
-import { getMockVoteList } from '~/lib/mockApi';
 import { SortBy, Vote } from '~/lib/types';
+import { getMockVoteList } from '~/lib/mockApi';
+import { VoteItem, Menu, ToggleInput, SortType } from '~/components';
 
 export function ClosedVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
-  const [showOnlyVoted, setShowOnlyVoted] = useState(false);
+  const [showOnlyParticipated, setShowOnlyParticipated] = useState(false);
   const [votes, setVotes] = useState<Vote[]>([]);
+
+  const [participatedVotes, setParticipatedVotes] = useState<number[]>([2]); // 온체인 투표 여부
 
   const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
 
-  const toggleShowOnlyVoted = () => setShowOnlyVoted(!showOnlyVoted);
+  const toggleShowOnlyParticipated = () =>
+    setShowOnlyParticipated(!showOnlyParticipated);
 
   useEffect(() => {
     getMockVoteList().then((votes) =>
@@ -46,9 +46,9 @@ export function ClosedVotePage() {
         </header>
         <div className="flex sm:flex-row flex-col gap-2 items-end sm:items-center justify-between">
           <ToggleInput
-            checked={showOnlyVoted}
+            checked={showOnlyParticipated}
             text="내가 참여한 투표만 보기"
-            onToggle={toggleShowOnlyVoted}
+            onToggle={toggleShowOnlyParticipated}
           />
           <div className="flex items-center gap-2">
             <span className="flex items-center font-semibold">
@@ -59,9 +59,18 @@ export function ClosedVotePage() {
           </div>
         </div>
         <ul className="flex flex-col gap-4">
-          {votes.map((vote) => (
-            <VoteItem key={vote.id} vote={vote} participated />
-          ))}
+          {votes
+            .filter(
+              (vote) =>
+                !showOnlyParticipated || participatedVotes.includes(vote.id),
+            )
+            .map((vote) => (
+              <VoteItem
+                key={vote.id}
+                vote={vote}
+                participated={participatedVotes.includes(vote.id)}
+              />
+            ))}
         </ul>
       </main>
     </div>

@@ -6,12 +6,15 @@ import { VoteItem, Menu, ToggleInput, SortType } from '~/components';
 
 export function CurrentVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
-  const [showOnlyUnvoted, setShowOnlyUnvoted] = useState(false);
+  const [showOnlyParticiable, setShowOnlyParticiable] = useState(false);
   const [votes, setVotes] = useState<Vote[]>([]);
+
+  const [participatedVotes, setParticipatedVotes] = useState<number[]>([5]); // 온체인 투표 여부
 
   const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
 
-  const toggleShowOnlyUnvoted = () => setShowOnlyUnvoted(!showOnlyUnvoted);
+  const toggleShowOnlyParticiable = () =>
+    setShowOnlyParticiable(!showOnlyParticiable);
 
   useEffect(() => {
     getMockVoteList().then((votes) =>
@@ -45,9 +48,9 @@ export function CurrentVotePage() {
         </header>
         <div className="flex sm:flex-row flex-col gap-2 items-end sm:items-center justify-between">
           <ToggleInput
-            checked={showOnlyUnvoted}
-            text="참여하지 않은 투표만 보기"
-            onToggle={toggleShowOnlyUnvoted}
+            checked={showOnlyParticiable}
+            text="참여 가능한 투표만 보기"
+            onToggle={toggleShowOnlyParticiable}
           />
           <div className="flex items-center gap-2">
             <span className="flex items-center font-semibold">
@@ -58,9 +61,18 @@ export function CurrentVotePage() {
           </div>
         </div>
         <ul className="flex flex-col gap-4">
-          {votes.map((vote) => (
-            <VoteItem key={vote.id} vote={vote} participated />
-          ))}
+          {votes
+            .filter(
+              (vote) =>
+                !showOnlyParticiable || !participatedVotes.includes(vote.id),
+            )
+            .map((vote) => (
+              <VoteItem
+                key={vote.id}
+                vote={vote}
+                participated={participatedVotes.includes(vote.id)}
+              />
+            ))}
         </ul>
       </main>
     </div>
