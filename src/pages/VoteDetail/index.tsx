@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Undo from '~/assets/icons/undo.svg?react';
+import Check from '~/assets/icons/check.svg?react';
 import { Button, Menu } from '~/components';
 import { Candidate, Vote } from '~/lib/types';
 import { getMockCandidateList, getMockVote } from '~/lib/mockApi';
@@ -16,6 +17,9 @@ export function VoteDetailPage() {
   const { id: voteId } = useParams();
   const [vote, setVote] = useState<Vote>();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
+
+  const [issued, setIssued] = useState(false); // 온체인 투표권 발급 여부
+  const [participated, setParticipated] = useState(false); // 온체인 투표 여부
 
   const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);
   const [showBallotValidationModal, setShowBallotValidationModal] =
@@ -104,12 +108,33 @@ export function VoteDetailPage() {
             ))}
           </ul>
           <div className="flex flex-col items-center gap-2 mt-16">
-            <div>위 내용을 모두 확인하셨나요?</div>
-            <Button
-              text="투표권 발급받기"
-              onClick={() => setShowBallotIssueModal(true)}
-              fullWidth
-            />
+            {getVoteStatus(vote) !== 'closed' && !participated && !issued ? (
+              <>
+                <div>위 내용을 모두 확인하셨나요?</div>
+                <Button
+                  text="투표권 발급받기"
+                  onClick={() => setShowBallotIssueModal(true)}
+                  fullWidth
+                />
+              </>
+            ) : getVoteStatus(vote) === 'current' && !participated && issued ? (
+              <Button
+                text="투표권으로 투표하기"
+                onClick={() => setShowBallotValidationModal(true)}
+                fullWidth
+              />
+            ) : participated ? (
+              <Button
+                text="투표 완료"
+                icon={<Check width={20} height={20} fill="white" />}
+                fullWidth
+                disabled
+              />
+            ) : getVoteStatus(vote) === 'closed' ? (
+              <Button text="투표 종료" fullWidth disabled />
+            ) : (
+              <Button text="투표 시작 전" fullWidth disabled />
+            )}
           </div>
         </main>
       </div>
