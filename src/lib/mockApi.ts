@@ -55,6 +55,7 @@ const mockVoteList: Vote[] = [
 const mockCandidateList: Candidate[] = [
   {
     id: 1,
+    affiliation: '컴퓨터공학과 18학번',
     name: '안뇽',
     imgSrc: '/src/assets/images/annyong.png',
     profiles: [
@@ -80,6 +81,7 @@ const mockCandidateList: Candidate[] = [
   },
   {
     id: 2,
+    affiliation: '컴퓨터공학과 19학번',
     name: '인덕',
     imgSrc: '/src/assets/images/induck.png',
     profiles: [

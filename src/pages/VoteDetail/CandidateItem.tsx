@@ -5,7 +5,7 @@ type CandidateItemProps = {
 };
 
 export function CandidateItem({
-  candidate: { name, imgSrc, profiles, promises, word },
+  candidate: { name, affiliation, imgSrc, profiles, promises, word },
 }: CandidateItemProps) {
   return (
     <li className="flex flex-col gap-4">
@@ -13,11 +13,8 @@ export function CandidateItem({
         <img src={imgSrc} className="overflow-hidden w-96 rounded-xl" />
       </div>
       <div className="flex flex-col items-center">
-        <div className="text-sm">컴퓨터공학과 19학번</div>
-        <div className="flex items-center font-semibold gap-2">
-          <div>기호 1번</div>
-          <div className="text-xl font-bold">{name}</div>
-        </div>
+        <p className="text-sm">{affiliation}</p>
+        <p className="text-xl font-bold">{name}</p>
       </div>
       <div className="grid md:grid-cols-1 grid-cols-2 gap-4">
         <section className="flex flex-col gap-2">
