@@ -109,6 +109,10 @@ export const getMockVoteList = async () => {
   return mockVoteList;
 };
 
+export const getMockVote = async (id: number) => {
+  return mockVoteList.find((vote) => vote.id === id);
+};
+
 export const getMockCandidateList = async () => {
   return mockCandidateList;
 };

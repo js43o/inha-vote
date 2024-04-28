@@ -1,25 +1,52 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Undo from '~/assets/icons/undo.svg?react';
 import { Button, Menu } from '~/components';
+import { Candidate, Vote } from '~/lib/types';
+import { getMockCandidateList, getMockVote } from '~/lib/mockApi';
 import { CandidateItem } from './CandidateItem';
 import { BallotIssueModal } from './BallotIssueModal';
 import { BallotValidationModal } from './BallotValidationModal';
 import { VotingModal } from './VotingModal';
-import { Candidate } from '~/lib/types';
-import { getMockCandidateList } from '~/lib/mockApi';
+import { getFormattedDateString, getVoteStatus } from '~/lib/utils';
+import { ONE_DAY_MS } from '~/lib/constants';
 
 export function VoteDetailPage() {
   const navigate = useNavigate();
+  const { id: voteId } = useParams();
+  const [vote, setVote] = useState<Vote>();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [remainingTime, setRemainingTime] = useState<string>('');
+
   const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);
   const [showBallotValidationModal, setShowBallotValidationModal] =
     useState(false);
   const [showVotingModal, setShowVotingModal] = useState(false);
 
   useEffect(() => {
+    if (!voteId) return;
+    getMockVote(Number(voteId)).then((vote) => setVote(vote));
     getMockCandidateList().then((candidates) => setCandidates(candidates));
-  }, []);
+  }, [voteId]);
+
+  useEffect(() => {
+    if (vote && getVoteStatus(vote) === 'current' && !remainingTime) {
+      window.setInterval(
+        () =>
+          setRemainingTime(
+            getFormattedDateString(
+              new Date(vote.to.getTime() - Date.now()),
+              'TIME_COLON',
+            ),
+          ),
+        1000,
+      );
+    }
+  }, [vote, remainingTime]);
+
+  if (!vote || !candidates) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -50,48 +77,60 @@ export function VoteDetailPage() {
               onClick={() => navigate('/vote/current')}
             />
           </header>
-          <div className="text-white bg-sky-500 py-2 px-4 flex justify-between">
+          <div className="text-white bg-blue-600 py-2 px-4 flex justify-between">
             <div className="flex flex-col justify-center">
-              <h2 className="text-2xl font-semibold">
-                2024학년도 인하대학교 총학생회 선거
-              </h2>
-              <div className="font-semibold">실시간 투표율 20%</div>
+              <h2 className="text-2xl font-semibold">{vote.title}</h2>
+              {getVoteStatus(vote) !== 'planned' && (
+                <div className="font-semibold">
+                  {getVoteStatus(vote) === 'current' ? '실시간' : '최종'} 투표율{' '}
+                  {vote.votingRate}%
+                </div>
+              )}
             </div>
             <div className="sm:flex flex-col items-end justify-center hidden">
-              <div>투표 종료까지</div>
-              <div className="text-3xl font-semibold leading-none">
-                47:59:59
-              </div>
+              {getVoteStatus(vote) === 'current' ? (
+                <>
+                  <div>투표 종료까지</div>
+                  <div className="text-3xl font-semibold leading-none">
+                    {remainingTime}
+                  </div>
+                </>
+              ) : getVoteStatus(vote) === 'planned' ? (
+                <>
+                  <div>투표 개시까지</div>
+                  <div className="text-3xl font-semibold leading-none">
+                    D-
+                    {Math.ceil(
+                      new Date(vote.from.getTime() - Date.now()).getTime() /
+                        ONE_DAY_MS,
+                    )}
+                  </div>
+                </>
+              ) : (
+                <div>종료됨</div>
+              )}
             </div>
           </div>
           <ul className="flex flex-col gap-1">
             <li className="flex">
-              <div className="w-20 text-gray-500">투표 기간</div>
+              <div className="w-20 text-gray-500">투표 시작일</div>
+              <div>{getFormattedDateString(vote.from, 'DATE_TIME_KOR')}</div>
+            </li>
+            <li className="flex">
+              <div className="w-20 text-gray-500 ">투표 종료일</div>
               <div className="font-semibold">
-                2024년 4월 3일 (수) ~ 2024년 4월 5일 (금)
+                {getFormattedDateString(vote.to, 'DATE_TIME_KOR')}
               </div>
             </li>
             <li className="flex">
-              <div className="w-20 text-gray-500 ">투표 시간</div>
-              <div>매일 06:00 ~ 18:30</div>
-            </li>
-            <li className="flex">
               <div className="w-20 text-gray-500 ">후보자 수</div>
-              <div>2명</div>
-            </li>
-            <li className="flex">
-              <div className="w-20 text-gray-500 ">개표 일정</div>
-              <div>2024년 4월 10일 (월)</div>
-            </li>
-            <li className="flex">
-              <div className="w-20 text-gray-500 ">결과 발표</div>
-              <div>2024년 4월 11일 (화) 10:00</div>
+              <div>{candidates.length}명</div>
             </li>
           </ul>
           <h2 className="text-2xl font-bold">후보자 정보</h2>
           <ul className="grid grid-cols-1 md:gap-4 gap-16 md:grid-cols-2">
             {candidates.map((candidate) => (
-              <CandidateItem candidate={candidate} />
+              <CandidateItem key={candidate.id} candidate={candidate} />
             ))}
           </ul>
           <div className="flex flex-col items-center gap-2 mt-16">

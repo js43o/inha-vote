@@ -23,8 +23,8 @@ export function CandidateItem({
         <section className="flex flex-col gap-2">
           <h3 className="text-xl font-bold">주요 약력</h3>
           <ul>
-            {profiles.map(({ year, contents }) => (
-              <li>
+            {profiles.map(({ year, contents }, idx) => (
+              <li key={idx}>
                 <b>{year}</b> {contents}
               </li>
             ))}
@@ -34,7 +34,7 @@ export function CandidateItem({
           <h3 className="text-xl font-bold">핵심 공약</h3>
           <ul>
             {promises.map((promise, idx) => (
-              <li>
+              <li key={idx}>
                 <b>{idx + 1}.</b> {promise}
               </li>
             ))}

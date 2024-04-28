@@ -65,7 +65,6 @@ export function CurrentVotePage() {
               from={vote.from}
               to={vote.to}
               votingRate={vote.votingRate.toFixed(2)}
-              participated
             />
           ))}
         </ul>
