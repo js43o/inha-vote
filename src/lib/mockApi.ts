@@ -45,7 +45,7 @@ const mockVoteList = [
     id: 7,
     title: '2024년 부반장 선거',
     from: new Date('2024-06-20'),
-    to: new Date('2024-07-01'),
+    to: new Date('2024-06-26'),
     votingRate: 66.55,
   },
 ];

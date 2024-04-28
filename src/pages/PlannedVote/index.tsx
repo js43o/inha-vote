@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { getMockVoteList } from '~/lib/mockApi';
 import { getFormattedDateString } from '~/lib/utils';
 import { EventSourceInput } from '@fullcalendar/core/index.js';
+import { ONE_DAY_MS } from '~/lib/constants';
 
 export function PlannedVotePage() {
   const navigate = useNavigate();
@@ -17,12 +18,17 @@ export function PlannedVotePage() {
   useEffect(() => {
     getMockVoteList().then((voteItems) =>
       setVoteItems(
-        voteItems.map(({ id, title, from, to }) => ({
-          id: id.toString(),
-          title,
-          start: getFormattedDateString(from, 'DATE_HYPHEN'),
-          end: getFormattedDateString(to, 'DATE_HYPHEN'),
-        })),
+        voteItems
+          .filter((voteItem) => voteItem.from > new Date())
+          .map(({ id, title, from, to }) => ({
+            id: id.toString(),
+            title,
+            start: getFormattedDateString(from, 'DATE_HYPHEN'),
+            end: getFormattedDateString(
+              new Date(to.getTime() + ONE_DAY_MS),
+              'DATE_HYPHEN',
+            ),
+          })),
       ),
     );
   }, []);

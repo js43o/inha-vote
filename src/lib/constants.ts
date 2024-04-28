@@ -3,6 +3,8 @@ import Vote from '~/assets/icons/vote.svg?react';
 import Register from '~/assets/icons/register.svg?react';
 import { SortBy } from './types';
 
+export const ONE_DAY_MS = 86400000;
+
 export const MENU_ITEMS = [
   { title: '예정된 투표', path: '/vote/planned', Icon: Calendar },
   { title: '진행 중인 투표', path: '/vote/current', Icon: Vote },
