@@ -13,14 +13,14 @@ import {
 
 const router = createBrowserRouter([
   {
-    path: 'vote',
+    path: 'votes',
     children: [
       { path: 'planned', element: <PlannedVotePage /> },
       { path: 'current', element: <CurrentVotePage /> },
       { path: 'closed', element: <ClosedVotePage /> },
-      { path: ':id', element: <VoteDetailPage /> },
     ],
   },
+  { path: 'vote/:id', element: <VoteDetailPage /> },
   { path: 'register', element: <RegisterPage /> },
   { path: 'login', element: <LoginPage /> },
 ]);

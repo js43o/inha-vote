@@ -58,7 +58,15 @@ export function VoteDetailPage() {
               icon={<Undo width={20} />}
               text="이전으로"
               size="medium"
-              onClick={() => navigate('/vote/current')}
+              onClick={() =>
+                navigate(
+                  getVoteStatus(vote) === 'current'
+                    ? '/votes/current'
+                    : getVoteStatus(vote) === 'planned'
+                      ? '/votes/planned'
+                      : '/votes/closed',
+                )
+              }
             />
           </header>
           <div className="text-white bg-blue-600 py-2 px-4 flex justify-between">
