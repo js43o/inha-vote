@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Undo from '~/assets/icons/undo.svg?react';
 import { Button, Menu } from '~/components';
@@ -6,13 +6,20 @@ import { CandidateItem } from './CandidateItem';
 import { BallotIssueModal } from './BallotIssueModal';
 import { BallotValidationModal } from './BallotValidationModal';
 import { VotingModal } from './VotingModal';
+import { Candidate } from '~/lib/types';
+import { getMockCandidateList } from '~/lib/mockApi';
 
 export function VoteDetailPage() {
   const navigate = useNavigate();
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);
   const [showBallotValidationModal, setShowBallotValidationModal] =
-    useState(true);
+    useState(false);
   const [showVotingModal, setShowVotingModal] = useState(false);
+
+  useEffect(() => {
+    getMockCandidateList().then((candidates) => setCandidates(candidates));
+  }, []);
 
   return (
     <>
@@ -82,9 +89,10 @@ export function VoteDetailPage() {
             </li>
           </ul>
           <h2 className="text-2xl font-bold">후보자 정보</h2>
-          <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <CandidateItem />
-            <CandidateItem />
+          <ul className="grid grid-cols-1 md:gap-4 gap-16 md:grid-cols-2">
+            {candidates.map((candidate) => (
+              <CandidateItem candidate={candidate} />
+            ))}
           </ul>
           <div className="flex flex-col items-center gap-2 mt-16">
             <div>위 내용을 모두 확인하셨나요?</div>

@@ -21,4 +21,8 @@ export type Vote = {
 export type Candidate = {
   id: number;
   name: string;
+  imgSrc: string;
+  profiles: { year: number; contents: string }[];
+  promises: string[];
+  word: string;
 };

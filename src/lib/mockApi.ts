@@ -1,4 +1,6 @@
-const mockVoteList = [
+import { Candidate, Vote } from './types';
+
+const mockVoteList: Vote[] = [
   {
     id: 1,
     title: '2022년 자치회 선거',
@@ -50,6 +52,63 @@ const mockVoteList = [
   },
 ];
 
+const mockCandidateList: Candidate[] = [
+  {
+    id: 1,
+    name: '안뇽',
+    imgSrc: '/src/assets/images/annyong.png',
+    profiles: [
+      {
+        year: 2020,
+        contents: '인하대학교 컴퓨터공학과 입학',
+      },
+      {
+        year: 2021,
+        contents: '인하대학교 인공지능공학과 부회장',
+      },
+      {
+        year: 2022,
+        contents: '인하대학교 전자공학과 회장',
+      },
+    ],
+    promises: [
+      '교내 전자출결시스템 도입',
+      '건물별 일일 CO2 배출량 제한',
+      '학생 및 교직원 대상 무료 학식 제공',
+    ],
+    word: '안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까,',
+  },
+  {
+    id: 2,
+    name: '인덕',
+    imgSrc: '/src/assets/images/induck.png',
+    profiles: [
+      {
+        year: 2020,
+        contents: '인하대학교 컴퓨터공학과 입학',
+      },
+      {
+        year: 2021,
+        contents: '인하대학교 인공지능공학과 부회장',
+      },
+      {
+        year: 2022,
+        contents: '인하대학교 전자공학과 회장',
+      },
+    ],
+    promises: [
+      '교내 전자출결시스템 도입',
+      '건물별 일일 CO2 배출량 제한',
+      '학생 및 교직원 대상 무료 학식 제공',
+    ],
+    word: '안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까, 안녕하십니까,',
+  },
+];
+
 export const getMockVoteList = async () => {
   return mockVoteList;
+};
+
+export const getMockCandidateList = async () => {
+  return mockCandidateList;
 };
