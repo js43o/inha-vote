@@ -58,14 +58,8 @@ export function CurrentVotePage() {
           </div>
         </div>
         <ul className="flex flex-col gap-4">
-          {votes.map((vote, idx) => (
-            <VoteItem
-              key={idx}
-              title={vote.title}
-              from={vote.from}
-              to={vote.to}
-              votingRate={vote.votingRate.toFixed(2)}
-            />
+          {votes.map((vote) => (
+            <VoteItem key={vote.id} vote={vote} participated />
           ))}
         </ul>
       </main>

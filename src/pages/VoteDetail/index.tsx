@@ -4,19 +4,18 @@ import Undo from '~/assets/icons/undo.svg?react';
 import { Button, Menu } from '~/components';
 import { Candidate, Vote } from '~/lib/types';
 import { getMockCandidateList, getMockVote } from '~/lib/mockApi';
+import { getFormattedDateString, getVoteStatus } from '~/lib/utils';
 import { CandidateItem } from './CandidateItem';
 import { BallotIssueModal } from './BallotIssueModal';
 import { BallotValidationModal } from './BallotValidationModal';
 import { VotingModal } from './VotingModal';
-import { getFormattedDateString, getVoteStatus } from '~/lib/utils';
-import { ONE_DAY_MS } from '~/lib/constants';
+import { RemainingTime } from './RemainingTime';
 
 export function VoteDetailPage() {
   const navigate = useNavigate();
   const { id: voteId } = useParams();
   const [vote, setVote] = useState<Vote>();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
-  const [remainingTime, setRemainingTime] = useState<string>('');
 
   const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);
   const [showBallotValidationModal, setShowBallotValidationModal] =
@@ -28,21 +27,6 @@ export function VoteDetailPage() {
     getMockVote(Number(voteId)).then((vote) => setVote(vote));
     getMockCandidateList().then((candidates) => setCandidates(candidates));
   }, [voteId]);
-
-  useEffect(() => {
-    if (vote && getVoteStatus(vote) === 'current' && !remainingTime) {
-      window.setInterval(
-        () =>
-          setRemainingTime(
-            getFormattedDateString(
-              new Date(vote.to.getTime() - Date.now()),
-              'TIME_COLON',
-            ),
-          ),
-        1000,
-      );
-    }
-  }, [vote, remainingTime]);
 
   if (!vote || !candidates) {
     return <div>Loading...</div>;
@@ -87,29 +71,7 @@ export function VoteDetailPage() {
                 </div>
               )}
             </div>
-            <div className="sm:flex flex-col items-end justify-center hidden">
-              {getVoteStatus(vote) === 'current' ? (
-                <>
-                  <div>투표 종료까지</div>
-                  <div className="text-3xl font-semibold leading-none">
-                    {remainingTime}
-                  </div>
-                </>
-              ) : getVoteStatus(vote) === 'planned' ? (
-                <>
-                  <div>투표 개시까지</div>
-                  <div className="text-3xl font-semibold leading-none">
-                    D-
-                    {Math.ceil(
-                      new Date(vote.from.getTime() - Date.now()).getTime() /
-                        ONE_DAY_MS,
-                    )}
-                  </div>
-                </>
-              ) : (
-                <div>종료됨</div>
-              )}
-            </div>
+            <RemainingTime vote={vote} />
           </div>
           <ul className="flex flex-col gap-1">
             <li className="flex">

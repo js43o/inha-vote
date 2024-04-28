@@ -1,21 +1,17 @@
+import { NavLink } from 'react-router-dom';
 import { Button } from './Button';
 import ArrowNext from '~/assets/icons/arrow_next.svg?react';
 import Check from '~/assets/icons/check.svg?react';
+import { Vote } from '~/lib/types';
 import { getFormattedDateString } from '~/lib/utils';
 
 type VoteItemProps = {
-  title: string;
-  from: Date;
-  to: Date;
-  votingRate: string;
+  vote: Vote;
   participated?: boolean;
 };
 
 export function VoteItem({
-  title,
-  from,
-  to,
-  votingRate,
+  vote: { id, title, from, to, votingRate },
   participated,
 }: VoteItemProps) {
   const currentDate = new Date();
@@ -49,23 +45,7 @@ export function VoteItem({
           </div>
         )}
       </div>
-      {status === 'current' ? (
-        <Button
-          text={participated ? '투표 완료' : '투표하기'}
-          icon={
-            participated ? (
-              <Check className="fill-white" width={20} height={20} />
-            ) : (
-              <ArrowNext className="fill-white" width={20} height={20} />
-            )
-          }
-          iconPosition="right"
-          size="medium"
-          disabled={participated ? true : false}
-          fullWidth
-          className="w-full sm:w-auto"
-        />
-      ) : (
+      <NavLink to={`/vote/${id}`}>
         <Button
           text="투표 개요"
           icon={<ArrowNext className="fill-white" width={20} height={20} />}
@@ -73,7 +53,7 @@ export function VoteItem({
           size="medium"
           className="w-full sm:w-auto"
         />
-      )}
+      </NavLink>
     </li>
   );
 }

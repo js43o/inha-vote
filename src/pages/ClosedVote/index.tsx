@@ -60,14 +60,7 @@ export function ClosedVotePage() {
         </div>
         <ul className="flex flex-col gap-4">
           {votes.map((vote) => (
-            <VoteItem
-              key={vote.id}
-              title={vote.title}
-              from={vote.from}
-              to={vote.to}
-              votingRate={vote.votingRate.toFixed(2)}
-              participated
-            />
+            <VoteItem key={vote.id} vote={vote} participated />
           ))}
         </ul>
       </main>
