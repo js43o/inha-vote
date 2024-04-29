@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { MENU_ITEMS } from '~/lib/constants';
+import { MENU_ITEMS } from '~/libs/constants';
 
 export function Menu() {
   return (

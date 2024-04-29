@@ -2,8 +2,8 @@ import { NavLink } from 'react-router-dom';
 import { Button } from './Button';
 import ArrowNext from '~/assets/icons/arrow_next.svg?react';
 import Check from '~/assets/icons/check.svg?react';
-import { Vote } from '~/lib/types';
-import { getFormattedDateString } from '~/lib/utils';
+import { Vote } from '~/libs/types';
+import { getFormattedDateString } from '~/libs/utils';
 
 type VoteItemProps = {
   vote: Vote;

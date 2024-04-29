@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Progress from '~/assets/icons/progress.svg?react';
 import { Button, Input, Modal, Select } from '~/components';
-import { usePassKey } from '~/lib/usePasskey';
-import { RegisterInput } from '~/lib/types';
+import { usePassKey } from '~/libs/hooks';
+import { RegisterInput } from '~/libs/types';
 import { ResultModal } from './ResultModal';
-import { useNavigate } from 'react-router-dom';
 
 export function RegisterPage() {
   const [authenticationRequested, setAuthenticationRequested] = useState(false);

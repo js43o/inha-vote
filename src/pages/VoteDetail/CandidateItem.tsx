@@ -1,4 +1,4 @@
-import { Candidate } from '~/lib/types';
+import { Candidate } from '~/libs/types';
 
 type CandidateItemProps = {
   candidate: Candidate;

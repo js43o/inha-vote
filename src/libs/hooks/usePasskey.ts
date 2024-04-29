@@ -11,7 +11,7 @@ import { bundlerActions, ENTRYPOINT_ADDRESS_V07 } from 'permissionless';
 import { useState } from 'react';
 import { createPublicClient, http, parseAbi, encodeFunctionData } from 'viem';
 import { sepolia } from 'viem/chains';
-import { AsyncStatus } from '~/lib/types';
+import { AsyncStatus } from '~/libs/types';
 
 const { VITE_BUNDLER_URL, VITE_PAYMASTER_URL, VITE_PASSKEY_SERVER_URL } =
   import.meta.env;

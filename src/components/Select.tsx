@@ -1,6 +1,6 @@
 import { SelectHTMLAttributes, forwardRef } from 'react';
 import { UseFormRegister } from 'react-hook-form';
-import { RegisterInput } from '~/lib/types';
+import { RegisterInput } from '~/libs/types';
 import Expand from '~/assets/icons/expand.svg?react';
 
 type SelectProps = {

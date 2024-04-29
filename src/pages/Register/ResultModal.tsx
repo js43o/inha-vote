@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal } from '~/components';
-import { AsyncStatus } from '~/lib/types';
+import { AsyncStatus } from '~/libs/types';
 
 type ResultModalProps = {
   visible: boolean;

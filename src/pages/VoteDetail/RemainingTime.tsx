@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ONE_DAY_MS } from '~/lib/constants';
-import { Vote } from '~/lib/types';
-import { getFormattedDateString, getVoteStatus } from '~/lib/utils';
+import { ONE_DAY_MS } from '~/libs/constants';
+import { Vote } from '~/libs/types';
+import { getFormattedDateString, getVoteStatus } from '~/libs/utils';
 
 type RemainingTimeProps = {
   vote: Vote;

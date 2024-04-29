@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { NavLink, Navigate, useNavigate } from 'react-router-dom';
-import { Button, Input } from '~/components';
-import { LoginInput } from '~/lib/types';
-import { usePassKey } from '~/lib/usePasskey';
-import { LoginFailureModal } from './LoginFailureModal';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Progress from '~/assets/icons/progress.svg?react';
+import { Button, Input } from '~/components';
+import { LoginInput } from '~/libs/types';
+import { usePassKey } from '~/libs/hooks';
+import { LoginFailureModal } from './LoginFailureModal';
 
 export function LoginPage() {
   const { register, handleSubmit } = useForm<LoginInput>();

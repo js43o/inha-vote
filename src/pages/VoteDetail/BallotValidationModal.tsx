@@ -1,6 +1,6 @@
 import { ChangeEvent, DragEvent, useState } from 'react';
-import { Button, Modal } from '~/components';
 import Upload from '~/assets/icons/upload.svg?react';
+import { Button, Modal } from '~/components';
 
 type BallotValidationModalProps = {
   visible: boolean;

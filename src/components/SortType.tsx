@@ -1,5 +1,5 @@
-import { SORT_BY } from '~/lib/constants';
-import { SortBy } from '~/lib/types';
+import { SORT_BY } from '~/libs/constants';
+import { SortBy } from '~/libs/types';
 
 type SortTypeProps = {
   selected: 'title' | 'endDate' | 'votingRate';

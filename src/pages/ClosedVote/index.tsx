@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Sort from '~/assets/icons/sort.svg?react';
-import { SortBy, Vote } from '~/lib/types';
-import { getMockVoteList } from '~/lib/mockApi';
+import { SortBy, Vote } from '~/libs/types';
+import { getMockVoteList } from '~/libs/mockApi';
 import { VoteItem, Menu, ToggleInput, SortType } from '~/components';
 
 export function ClosedVotePage() {
