@@ -9,6 +9,7 @@ import {
   VoteDetailPage,
   RegisterPage,
   LoginPage,
+  TestPage,
 } from '~/pages';
 
 const router = createBrowserRouter([
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
   { path: 'vote/:id', element: <VoteDetailPage /> },
   { path: 'register', element: <RegisterPage /> },
   { path: 'login', element: <LoginPage /> },
+  { path: 'test', element: <TestPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
