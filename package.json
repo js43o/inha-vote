@@ -16,6 +16,7 @@
     "@zerodev/passkey-validator": "^5.2.3",
     "@zerodev/sdk": "^5.2.10",
     "autoprefixer": "^10.4.19",
+    "buffer": "^6.0.3",
     "events": "^3.3.0",
     "permissionless": "^0.1.21",
     "postcss": "^8.4.38",
