@@ -13,6 +13,8 @@
     "@fullcalendar/core": "^6.1.11",
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/react": "^6.1.11",
+    "@zerodev/passkey-validator": "^5.2.3",
+    "@zerodev/sdk": "^5.2.10",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "react": "^18.2.0",

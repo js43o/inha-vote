@@ -606,6 +606,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/curves@npm:^1.3.0":
+  version: 1.4.0
+  resolution: "@noble/curves@npm:1.4.0"
+  dependencies:
+    "@noble/hashes": "npm:1.4.0"
+  checksum: 10c0/31fbc370df91bcc5a920ca3f2ce69c8cf26dc94775a36124ed8a5a3faf0453badafd2ee4337061ffea1b43c623a90ee8b286a5a81604aaf9563bdad7ff795d18
+  languageName: node
+  linkType: hard
+
+"@noble/hashes@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@noble/hashes@npm:1.4.0"
+  checksum: 10c0/8c3f005ee72e7b8f9cff756dfae1241485187254e3f743873e22073d63906863df5d4f13d441b7530ea614b7a093f0d889309f28b59850f33b66cb26a779a4a5
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -794,6 +810,22 @@ __metadata:
   version: 4.14.3
   resolution: "@rollup/rollup-win32-x64-msvc@npm:4.14.3"
   conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@simplewebauthn/browser@npm:^8.3.4":
+  version: 8.3.7
+  resolution: "@simplewebauthn/browser@npm:8.3.7"
+  dependencies:
+    "@simplewebauthn/typescript-types": "npm:^8.3.4"
+  checksum: 10c0/99e66f7cb6c9dc6c1891aa4a94161bf09ec239e1e4f27157d35658d797878220590bd82deb6b37c0a5b90d043d89655613f7e6bc8f938aaf0114c99f2c430796
+  languageName: node
+  linkType: hard
+
+"@simplewebauthn/typescript-types@npm:^8.3.4":
+  version: 8.3.4
+  resolution: "@simplewebauthn/typescript-types@npm:8.3.4"
+  checksum: 10c0/763384ad35c78d10b50b9108c3aee5e471cd4bf0d8ba3efb4a581901b57c1b5d3d425c2c86eb3f88823b4a86fd9d3d7d5bbb4d757c4eb8eeea427a4eb517a472
   languageName: node
   linkType: hard
 
@@ -1170,6 +1202,32 @@ __metadata:
   version: 1.5.1
   resolution: "@wojtekmaj/date-utils@npm:1.5.1"
   checksum: 10c0/7c213cca5ab6b84ef61b9aea2b9fb8a04bf4c9764b28a97ffc4ee46a3e81560532a74d106a6f8aeef4792e1aaa6ea3dfd3c4a639dddbea560eb3f33cd62b8d7d
+  languageName: node
+  linkType: hard
+
+"@zerodev/passkey-validator@npm:^5.2.3":
+  version: 5.2.3
+  resolution: "@zerodev/passkey-validator@npm:5.2.3"
+  dependencies:
+    "@noble/curves": "npm:^1.3.0"
+    "@simplewebauthn/browser": "npm:^8.3.4"
+  peerDependencies:
+    "@zerodev/sdk": ^5.2.1
+    permissionless: ^0.1.18
+    viem: ^2.9.17
+  checksum: 10c0/3ccb06d24bdeaf5d387647c667c2b0ac0b7515ba072fdfed2963a4d3e4e093fee128fa3bc92bb2dc7e6eeb166c258820a1f44b901ab5df9b11942777ece07f80
+  languageName: node
+  linkType: hard
+
+"@zerodev/sdk@npm:^5.2.10":
+  version: 5.2.10
+  resolution: "@zerodev/sdk@npm:5.2.10"
+  dependencies:
+    semver: "npm:^7.6.0"
+  peerDependencies:
+    permissionless: ^0.1.18
+    viem: ^2.9.17
+  checksum: 10c0/8df558822ed7b0d544bea2851db3b4642485cebff0230e4fbf9c1479c2ea9cd12b4a789248268b550f381db8c61aaa3af0d555f704824d2cde982c54f561df05
   languageName: node
   linkType: hard
 
@@ -2342,6 +2400,8 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.2.0"
     "@typescript-eslint/parser": "npm:^7.2.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
+    "@zerodev/passkey-validator": "npm:^5.2.3"
+    "@zerodev/sdk": "npm:^5.2.10"
     autoprefixer: "npm:^10.4.19"
     eslint: "npm:^8.57.0"
     eslint-plugin-react-hooks: "npm:^4.6.0"

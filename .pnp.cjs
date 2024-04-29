@@ -35,6 +35,8 @@ const RAW_RUNTIME_STATE =
           ["@typescript-eslint/eslint-plugin", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:7.7.0"],\
           ["@typescript-eslint/parser", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:7.7.0"],\
           ["@vitejs/plugin-react", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.2.1"],\
+          ["@zerodev/passkey-validator", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.3"],\
+          ["@zerodev/sdk", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.10"],\
           ["autoprefixer", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:10.4.19"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-plugin-react-hooks", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.6.0"],\
@@ -844,6 +846,25 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@noble/curves", [\
+      ["npm:1.4.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@noble-curves-npm-1.4.0-4eb1230962-10c0.zip/node_modules/@noble/curves/",\
+        "packageDependencies": [\
+          ["@noble/curves", "npm:1.4.0"],\
+          ["@noble/hashes", "npm:1.4.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@noble/hashes", [\
+      ["npm:1.4.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@noble-hashes-npm-1.4.0-9389282fd6-10c0.zip/node_modules/@noble/hashes/",\
+        "packageDependencies": [\
+          ["@noble/hashes", "npm:1.4.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@nodelib/fs.scandir", [\
       ["npm:2.1.5", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@nodelib-fs.scandir-npm-2.1.5-89c67370dd-10c0.zip/node_modules/@nodelib/fs.scandir/",\
@@ -1082,6 +1103,25 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/unplugged/@rollup-rollup-win32-x64-msvc-npm-4.14.3-44e9c9878e/node_modules/@rollup/rollup-win32-x64-msvc/",\
         "packageDependencies": [\
           ["@rollup/rollup-win32-x64-msvc", "npm:4.14.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@simplewebauthn/browser", [\
+      ["npm:8.3.7", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@simplewebauthn-browser-npm-8.3.7-c87c70c962-10c0.zip/node_modules/@simplewebauthn/browser/",\
+        "packageDependencies": [\
+          ["@simplewebauthn/browser", "npm:8.3.7"],\
+          ["@simplewebauthn/typescript-types", "npm:8.3.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@simplewebauthn/typescript-types", [\
+      ["npm:8.3.4", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@simplewebauthn-typescript-types-npm-8.3.4-87909f7896-10c0.zip/node_modules/@simplewebauthn/typescript-types/",\
+        "packageDependencies": [\
+          ["@simplewebauthn/typescript-types", "npm:8.3.4"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1709,6 +1749,65 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@wojtekmaj-date-utils-npm-1.5.1-e21d58f022-10c0.zip/node_modules/@wojtekmaj/date-utils/",\
         "packageDependencies": [\
           ["@wojtekmaj/date-utils", "npm:1.5.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@zerodev/passkey-validator", [\
+      ["npm:5.2.3", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@zerodev-passkey-validator-npm-5.2.3-fcadb6f70b-10c0.zip/node_modules/@zerodev/passkey-validator/",\
+        "packageDependencies": [\
+          ["@zerodev/passkey-validator", "npm:5.2.3"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.3", {\
+        "packageLocation": "./.yarn/__virtual__/@zerodev-passkey-validator-virtual-fe0dae64ec/4/AppData/Local/Yarn/Berry/cache/@zerodev-passkey-validator-npm-5.2.3-fcadb6f70b-10c0.zip/node_modules/@zerodev/passkey-validator/",\
+        "packageDependencies": [\
+          ["@zerodev/passkey-validator", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.3"],\
+          ["@noble/curves", "npm:1.4.0"],\
+          ["@simplewebauthn/browser", "npm:8.3.7"],\
+          ["@types/permissionless", null],\
+          ["@types/viem", null],\
+          ["@types/zerodev__sdk", null],\
+          ["@zerodev/sdk", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.10"],\
+          ["permissionless", null],\
+          ["viem", null]\
+        ],\
+        "packagePeers": [\
+          "@types/permissionless",\
+          "@types/viem",\
+          "@types/zerodev__sdk",\
+          "@zerodev/sdk",\
+          "permissionless",\
+          "viem"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@zerodev/sdk", [\
+      ["npm:5.2.10", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@zerodev-sdk-npm-5.2.10-825abff2f2-10c0.zip/node_modules/@zerodev/sdk/",\
+        "packageDependencies": [\
+          ["@zerodev/sdk", "npm:5.2.10"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.10", {\
+        "packageLocation": "./.yarn/__virtual__/@zerodev-sdk-virtual-b019072af4/4/AppData/Local/Yarn/Berry/cache/@zerodev-sdk-npm-5.2.10-825abff2f2-10c0.zip/node_modules/@zerodev/sdk/",\
+        "packageDependencies": [\
+          ["@zerodev/sdk", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.10"],\
+          ["@types/permissionless", null],\
+          ["@types/viem", null],\
+          ["permissionless", null],\
+          ["semver", "npm:7.6.0"],\
+          ["viem", null]\
+        ],\
+        "packagePeers": [\
+          "@types/permissionless",\
+          "@types/viem",\
+          "permissionless",\
+          "viem"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3024,6 +3123,8 @@ const RAW_RUNTIME_STATE =
           ["@typescript-eslint/eslint-plugin", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:7.7.0"],\
           ["@typescript-eslint/parser", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:7.7.0"],\
           ["@vitejs/plugin-react", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.2.1"],\
+          ["@zerodev/passkey-validator", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.3"],\
+          ["@zerodev/sdk", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:5.2.10"],\
           ["autoprefixer", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:10.4.19"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-plugin-react-hooks", "virtual:6db70139753103c8e7b4cf763e0536160bc52f5007fa72b8b58eeec400ae5c79bf55715846a4b899a6d2a475d07d131283a6062197cc05cf3052371b45ff7709#npm:4.6.0"],\
