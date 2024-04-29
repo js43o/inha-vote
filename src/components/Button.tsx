@@ -26,16 +26,15 @@ export function Button({
   return (
     <button
       type={type}
-      className={`${className} flex border text-nowrap ${disabled ? 'cursor-default' : ''} items-center justify-center gap-1 rounded-lg font-semibold leading-tight border: ;
-      ${fullWidth ? 'w-full' : ''} ${size === 'large' ? 'p-3' : size === 'medium' ? 'px-3 py-1.5' : 'px-2 py-1 text-sm'}
-      ${
+      className={`${className} flex border text-nowrap items-center justify-center gap-1 rounded-lg font-semibold leading-tight ${fullWidth ? 'w-full' : ''} ${size === 'large' ? 'p-3' : size === 'medium' ? 'px-3 py-1.5' : 'px-2 py-1 text-sm'} ${
         disabled
-          ? 'text-white bg-gray-300 border-gray-300'
+          ? 'text-white bg-gray-300 border-gray-300 cursor-default'
           : theme === 'primary'
             ? 'border-gray-800 bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-900'
             : 'border-gray-300 bg-gray-50 text-black hover:bg-white active:bg-gray-100'
       }`}
-      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
+      onClick={onClick}
     >
       {iconPosition === 'left' ? (
         <>

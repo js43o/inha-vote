@@ -1,19 +1,44 @@
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { Button, Input } from '~/components';
 import { LoginInput } from '~/lib/types';
+import { usePassKey } from '~/lib/usePasskey';
+import { LoginFailureModal } from './LoginFailureModal';
+import Progress from '~/assets/icons/progress.svg?react';
 
 export function LoginPage() {
   const { register, handleSubmit } = useForm<LoginInput>();
+  const [showResultModal, setShowResultModal] = useState(false);
+  const { loginStatus, loginPasskey } = usePassKey();
+  const navigate = useNavigate();
 
-  const onLogin: SubmitHandler<LoginInput> = (data) => {
-    // 패스키 인증 요청 및
+  const onLogin: SubmitHandler<LoginInput> = async (data) => {
+    // 패스키 인증 요청
+    await loginPasskey();
+
     // 로그인 API 호출
     console.log('LOGIN:', data);
+    if (loginStatus === 'SUCCESS') {
+      navigate('/votes/current');
+    }
   };
+
+  useEffect(() => {
+    if (loginStatus === 'SUCCESS') {
+      return navigate('/votes/current');
+    }
+
+    setShowResultModal(loginStatus === 'FAILURE' ? true : false);
+  }, [loginStatus]);
 
   return (
     <div className="flex flex-col grow gap-24 p-4 justify-center items-center">
+      <LoginFailureModal
+        visible={showResultModal}
+        result={loginStatus}
+        onClose={() => setShowResultModal(false)}
+      />
       <form
         className="max-w-80 w-full flex flex-col h-full justify-center gap-8"
         onSubmit={handleSubmit(onLogin)}
@@ -43,7 +68,21 @@ export function LoginPage() {
             className="border-none"
           />
         </div>
-        <Button text="로그인" fullWidth />
+        <Button
+          text={loginStatus === 'LOADING' ? '처리 중...' : '로그인'}
+          icon={
+            loginStatus === 'LOADING' ? (
+              <Progress
+                width={20}
+                height={20}
+                fill="white"
+                className="animate-spin-fast"
+              />
+            ) : undefined
+          }
+          fullWidth
+          disabled={loginStatus === 'LOADING'}
+        />
       </form>
       <div className="flex gap-2 items-center">
         <p className="text-gray-500">아직 계정이 없나요?</p>
