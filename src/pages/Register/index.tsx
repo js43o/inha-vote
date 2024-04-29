@@ -1,19 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Progress from '~/assets/icons/progress.svg?react';
 import { Button, Input, Modal, Select } from '~/components';
+import { usePassKey } from '~/lib/usePasskey';
 import { RegisterInput } from '~/lib/types';
+import { ResultModal } from './ResultModal';
+import { useNavigate } from 'react-router-dom';
 
 export function RegisterPage() {
   const [authenticationRequested, setAuthenticationRequested] = useState(false);
   const [authenticationInput, setAuthenticationInput] = useState('');
   const [authenticationError, setAuthenticationError] = useState(false);
   const [showAuthenticationModal, setShowAuthenticationModal] = useState(false);
+
+  const [showResultModal, setShowResultModal] = useState(false);
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
     getValues,
   } = useForm<RegisterInput>();
+  const { registerStatus, registerPasskey } = usePassKey();
 
   const requestMobileAuthentication = () => {
     if (isValid) {
@@ -25,8 +32,10 @@ export function RegisterPage() {
 
   const requestRegistration = async () => {
     if (authenticationInput === '123123') {
-      // 패스키 등록 요청 및
-      // 계정 등록 API 호출
+      // 패스키 등록 요청
+      await registerPasskey(getValues('studentNumber'));
+
+      // TODO: 계정 등록 API 호출
       console.log('REGISTER:', getValues());
       setAuthenticationError(false);
 
@@ -35,6 +44,14 @@ export function RegisterPage() {
 
     setAuthenticationError(true);
   };
+
+  useEffect(() => {
+    setShowResultModal(
+      registerStatus === 'SUCCESS' || registerStatus === 'FAILURE'
+        ? true
+        : false,
+    );
+  }, [registerStatus]);
 
   return (
     <div className="flex flex-col grow gap-24 p-4 justify-center items-center">
@@ -49,6 +66,11 @@ export function RegisterPage() {
           />
         </>
       </Modal>
+      <ResultModal
+        visible={showResultModal}
+        result={registerStatus}
+        onClose={() => setShowResultModal(false)}
+      />
       <form
         className="max-w-80 w-full flex flex-col h-full justify-center gap-8"
         onSubmit={handleSubmit(requestMobileAuthentication)}
@@ -182,10 +204,21 @@ export function RegisterPage() {
                 사용자 계정 및 <b>패스키</b>를 생성합니다.
               </p>
               <Button
-                text="계정 등록"
+                text={registerStatus === 'LOADING' ? '처리 중...' : '계정 등록'}
                 onClick={requestRegistration}
+                icon={
+                  registerStatus === 'LOADING' ? (
+                    <Progress
+                      width={20}
+                      height={20}
+                      fill="white"
+                      className="animate-spin-fast"
+                    />
+                  ) : undefined
+                }
                 fullWidth
                 type="button"
+                disabled={registerStatus === 'LOADING'}
               />
             </div>
           ) : (

@@ -27,3 +27,5 @@ export type Candidate = {
   promises: string[];
   word: string;
 };
+
+export type AsyncStatus = 'INITIAL' | 'LOADING' | 'SUCCESS' | 'FAILURE';
