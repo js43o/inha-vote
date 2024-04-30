@@ -54,6 +54,7 @@ const mockVoteList: Vote[] = [
 
 const mockCandidateList: Candidate[] = [
   {
+    elected: true,
     id: 1,
     affiliation: '컴퓨터공학과 18학번',
     name: '안뇽',

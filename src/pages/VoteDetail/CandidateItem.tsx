@@ -1,16 +1,26 @@
 import { Candidate } from '~/libs/types';
+import Release from '~/assets/icons/release.svg?react';
 
 type CandidateItemProps = {
   candidate: Candidate;
 };
 
 export function CandidateItem({
-  candidate: { name, affiliation, imgSrc, profiles, promises, word },
+  candidate: { name, affiliation, imgSrc, profiles, promises, word, elected },
 }: CandidateItemProps) {
   return (
     <li className="flex flex-col gap-4">
-      <div className="flex justify-center">
-        <img src={imgSrc} className="overflow-hidden w-96 rounded-xl" />
+      <div className="flex justify-center self-center relative">
+        {elected && (
+          <div className="flex items-center gap-1 text-2xl font-bold text-amber-400 absolute top-4 right-5 z-10">
+            <Release width={48} height={48} className="fill-amber-400" />
+            당선
+          </div>
+        )}
+        <img
+          src={imgSrc}
+          className={`overflow-hidden w-96 rounded-2xl ${elected && 'border-8 border-amber-400'}`}
+        />
       </div>
       <div className="flex flex-col items-center">
         <p className="text-sm">{affiliation}</p>

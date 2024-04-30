@@ -26,6 +26,7 @@ export type Candidate = {
   profiles: { year: number; contents: string }[];
   promises: string[];
   word: string;
+  elected?: boolean;
 };
 
 export type AsyncStatus = 'INITIAL' | 'LOADING' | 'SUCCESS' | 'FAILURE';
