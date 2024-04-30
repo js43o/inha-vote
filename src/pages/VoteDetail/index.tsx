@@ -75,7 +75,7 @@ export function VoteDetailPage() {
           </header>
           <div className="text-white bg-blue-600 py-2 px-4 flex justify-between">
             <div className="flex flex-col justify-center">
-              <h2 className="text-2xl font-semibold">{vote.title}</h2>
+              <h2 className="text-2xl font-semibold break-all">{vote.title}</h2>
               {getVoteStatus(vote) !== 'planned' && (
                 <div className="font-semibold">
                   {getVoteStatus(vote) === 'current' ? '실시간' : '최종'} 투표율{' '}

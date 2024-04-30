@@ -24,9 +24,11 @@ export function VoteItem({
 
   return (
     <li className="flex flex-col gap-2 sm:flex-row items-start sm:items-center justify-between p-3 border border-gray-300 bg-gray-50 rounded-xl transition-transform">
-      <div>
+      <div className="flex flex-col min-w-0 max-w-full">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          {title}
+          <div className="text-nowrap whitespace-nowrap overflow-hidden text-ellipsis shrink grow">
+            {title}
+          </div>
           {participated && (
             <span className="text-nowrap flex items-center text-sm font-semibold text-sky-500 fill-sky-500">
               <Check width={20} height={20} />
@@ -35,8 +37,15 @@ export function VoteItem({
           )}
         </div>
         <div className="gap-0 flex flex-col sm:flex-row sm:gap-1 text-gray-500 text-sm sm:text-base">
-          <div>{getFormattedDateString(from, 'DATE_TIME_KOR')}</div>{' '}
-          <div>~ {getFormattedDateString(to, 'DATE_TIME_KOR')}</div>
+          <p className="flex gap-2">
+            <span className="sm:hidden font-bold">투표 시작</span>
+            {getFormattedDateString(from, 'DATE_TIME_KOR')}
+          </p>
+          <p className="flex gap-2 sm:gap-1">
+            <span className="sm:hidden font-semibold">투표 종료</span>
+            <span className="hidden sm:block font-semibold">~</span>
+            {getFormattedDateString(to, 'DATE_TIME_KOR')}
+          </p>
         </div>
         {status !== 'planned' && (
           <div className="text-gray-500 font-semibold text-sm sm:text-base">
@@ -45,13 +54,13 @@ export function VoteItem({
           </div>
         )}
       </div>
-      <NavLink to={`/vote/${id}`}>
+      <NavLink to={`/vote/${id}`} className={`w-full sm:w-auto`}>
         <Button
           text="투표 개요"
           icon={<ArrowNext className="fill-white" width={20} height={20} />}
           iconPosition="right"
           size="medium"
-          className="w-full sm:w-auto"
+          fullWidth
         />
       </NavLink>
     </li>
