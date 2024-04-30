@@ -112,31 +112,6 @@ export function RegisterPage() {
               error={!!errors.studentNumber}
               disabled={authenticationRequested}
               grouped
-            />
-            <Input
-              label="비밀번호"
-              type="password"
-              maxLength={20}
-              {...register('password', {
-                required: true,
-                maxLength: 20,
-              })}
-              error={!!errors.password}
-              disabled={authenticationRequested}
-              grouped
-            />
-            <Input
-              label="비밀번호 확인"
-              type="password"
-              maxLength={20}
-              {...register('passwordConfirm', {
-                required: true,
-                maxLength: 20,
-                validate: (value) => value === getValues('password'),
-              })}
-              error={!!errors.passwordConfirm}
-              disabled={authenticationRequested}
-              grouped
               className="border-none"
             />
           </div>
@@ -145,8 +120,6 @@ export function RegisterPage() {
               <p>이름은 20자 이하의 한글 또는 영문이어야 합니다.</p>
             )}
             {errors.studentNumber && <p>학번은 8자리 숫자여야 합니다.</p>}
-            {errors.password && <p>비밀번호는 20자리 이하여야 합니다.</p>}
-            {errors.passwordConfirm && <p>비밀번호가 일치하지 않습니다.</p>}
           </div>
         </section>
         <section className="flex flex-col gap-4">

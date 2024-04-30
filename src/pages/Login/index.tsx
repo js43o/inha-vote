@@ -1,28 +1,14 @@
 import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Progress from '~/assets/icons/progress.svg?react';
 import { Button, Input } from '~/components';
-import { LoginInput } from '~/libs/types';
 import { usePassKey } from '~/libs/hooks';
 import { LoginFailureModal } from './LoginFailureModal';
 
 export function LoginPage() {
-  const { register, handleSubmit } = useForm<LoginInput>();
   const [showResultModal, setShowResultModal] = useState(false);
   const { loginStatus, loginPasskey } = usePassKey();
   const navigate = useNavigate();
-
-  const onLogin: SubmitHandler<LoginInput> = async (data) => {
-    // 패스키 인증 요청
-    await loginPasskey();
-
-    // 로그인 API 호출
-    console.log('LOGIN:', data);
-    if (loginStatus === 'SUCCESS') {
-      navigate('/votes/current');
-    }
-  };
 
   useEffect(() => {
     if (loginStatus === 'SUCCESS') {
@@ -41,46 +27,24 @@ export function LoginPage() {
       />
       <form
         className="max-w-80 w-full flex flex-col h-full justify-center gap-8"
-        onSubmit={handleSubmit(onLogin)}
+        onSubmit={(e) => e.preventDefault()}
       >
         <h1 className="flex justify-center gap-1 font-bold text-4xl">
           INHA_VOTE
         </h1>
-        <div className="border border-gray-400 rounded-lg overflow-hidden group">
-          <Input
-            label="학번"
-            maxLength={8}
-            {...register('studentNumber', {
-              required: true,
-              pattern: /\d{8}/,
-            })}
-            grouped
-          />
-          <Input
-            label="비밀번호"
-            type="password"
-            maxLength={20}
-            {...register('password', {
-              required: true,
-              maxLength: 20,
-            })}
-            grouped
-            className="border-none"
-          />
-        </div>
         <Button
-          text={loginStatus === 'LOADING' ? '처리 중...' : '로그인'}
+          text={loginStatus === 'LOADING' ? '처리 중...' : '패스키로 로그인'}
           icon={
-            loginStatus === 'LOADING' ? (
+            loginStatus === 'LOADING' && (
               <Progress
                 width={20}
                 height={20}
                 fill="white"
                 className="animate-spin-fast"
               />
-            ) : undefined
+            )
           }
-          fullWidth
+          onClick={loginPasskey}
           disabled={loginStatus === 'LOADING'}
         />
       </form>
