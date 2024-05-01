@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Progress from '~/assets/icons/progress.svg?react';
-import { Button, Input } from '~/components';
+import { Button } from '~/components';
 import { usePassKey } from '~/libs/hooks';
 import { LoginFailureModal } from './LoginFailureModal';
 
@@ -19,7 +19,7 @@ export function LoginPage() {
   }, [loginStatus]);
 
   return (
-    <div className="flex flex-col grow gap-24 p-4 justify-center items-center">
+    <div className="flex flex-col grow p-4 justify-center items-center">
       <LoginFailureModal
         visible={showResultModal}
         result={loginStatus}

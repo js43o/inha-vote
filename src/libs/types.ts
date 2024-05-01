@@ -27,3 +27,31 @@ export type Candidate = {
 };
 
 export type AsyncStatus = 'INITIAL' | 'LOADING' | 'SUCCESS' | 'FAILURE';
+
+export type Gender = 'MAN' | 'WOMAN';
+
+export type College = 'BUSINESS' | 'HUMANITIES' | 'ENGINEERING';
+
+export type VoteStatistics = {
+  voteId: number;
+  candidates: CandidateStatistics[];
+};
+
+export type CandidateStatistics = {
+  id: number;
+  totalNumberOfVotes: number;
+  numberOfVotesBy: NumberOfVotesBy;
+};
+
+export type NumberOfVotesBy = {
+  college: {
+    business: number;
+    humanities: number;
+    engineering: number;
+    natural: number;
+  };
+  gender: {
+    man: number;
+    woman: number;
+  };
+};

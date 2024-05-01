@@ -11,6 +11,7 @@ import { BallotIssueModal } from './BallotIssueModal';
 import { BallotValidationModal } from './BallotValidationModal';
 import { VotingModal } from './VotingModal';
 import { RemainingTime } from './RemainingTime';
+import { StatisticsSection } from './StatisticsSection';
 
 export function VoteDetailPage() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export function VoteDetailPage() {
     getMockCandidateList().then((candidates) => setCandidates(candidates));
   }, [voteId]);
 
-  if (!vote || !candidates) {
+  if (!voteId || !vote || !candidates) {
     return <div>Loading...</div>;
   }
 
@@ -75,7 +76,7 @@ export function VoteDetailPage() {
           </header>
           <div className="text-white bg-blue-600 py-2 px-4 flex justify-between">
             <div className="flex flex-col justify-center">
-              <h2 className="text-2xl font-semibold break-all">{vote.title}</h2>
+              <h2 className="text-2xl font-bold break-all">{vote.title}</h2>
               {getVoteStatus(vote) !== 'planned' && (
                 <div className="font-semibold">
                   {getVoteStatus(vote) === 'current' ? '실시간' : '최종'} 투표율{' '}
@@ -107,35 +108,42 @@ export function VoteDetailPage() {
               <CandidateItem key={candidate.id} candidate={candidate} />
             ))}
           </ul>
-          <div className="flex flex-col items-center gap-2 mt-16">
-            {getVoteStatus(vote) !== 'closed' && !participated && !issued ? (
-              <>
-                <div>위 내용을 모두 확인하셨나요?</div>
+          {getVoteStatus(vote) === 'closed' ? (
+            <StatisticsSection
+              voteId={Number(voteId)}
+              candidates={candidates}
+            />
+          ) : (
+            <div className="flex flex-col items-center gap-2 mt-16">
+              {!participated && !issued ? (
+                <>
+                  <div>위 내용을 모두 확인하셨나요?</div>
+                  <Button
+                    text="투표권 발급받기"
+                    onClick={() => setShowBallotIssueModal(true)}
+                    fullWidth
+                  />
+                </>
+              ) : getVoteStatus(vote) === 'current' &&
+                !participated &&
+                issued ? (
                 <Button
-                  text="투표권 발급받기"
-                  onClick={() => setShowBallotIssueModal(true)}
+                  text="투표권으로 투표하기"
+                  onClick={() => setShowBallotValidationModal(true)}
                   fullWidth
                 />
-              </>
-            ) : getVoteStatus(vote) === 'current' && !participated && issued ? (
-              <Button
-                text="투표권으로 투표하기"
-                onClick={() => setShowBallotValidationModal(true)}
-                fullWidth
-              />
-            ) : participated ? (
-              <Button
-                text="투표 완료"
-                icon={<Check width={20} height={20} fill="white" />}
-                fullWidth
-                disabled
-              />
-            ) : getVoteStatus(vote) === 'closed' ? (
-              <Button text="투표 종료" fullWidth disabled />
-            ) : (
-              <Button text="투표 시작 전" fullWidth disabled />
-            )}
-          </div>
+              ) : participated ? (
+                <Button
+                  text="투표 완료"
+                  icon={<Check width={20} height={20} fill="white" />}
+                  fullWidth
+                  disabled
+                />
+              ) : (
+                <Button text="투표 시작 전" fullWidth disabled />
+              )}
+            </div>
+          )}
         </main>
       </div>
     </>

@@ -1,4 +1,4 @@
-import { Candidate, Vote } from './types';
+import { Candidate, Vote, VoteStatistics } from './types';
 
 const mockVoteList: Vote[] = [
   {
@@ -108,6 +108,38 @@ const mockCandidateList: Candidate[] = [
   },
 ];
 
+const mockVoteStatistics: VoteStatistics = {
+  voteId: 1,
+  candidates: [
+    {
+      id: 1,
+      totalNumberOfVotes: 70,
+      numberOfVotesBy: {
+        gender: { man: 30, woman: 40 },
+        college: {
+          business: 20,
+          humanities: 15,
+          engineering: 15,
+          natural: 20,
+        },
+      },
+    },
+    {
+      id: 2,
+      totalNumberOfVotes: 30,
+      numberOfVotesBy: {
+        college: {
+          business: 5,
+          humanities: 5,
+          engineering: 10,
+          natural: 10,
+        },
+        gender: { man: 20, woman: 10 },
+      },
+    },
+  ],
+};
+
 export const getMockVoteList = async () => {
   return mockVoteList;
 };
@@ -118,4 +150,8 @@ export const getMockVote = async (id: number) => {
 
 export const getMockCandidateList = async () => {
   return mockCandidateList;
+};
+
+export const getMockVoteStatistics = async () => {
+  return mockVoteStatistics;
 };
