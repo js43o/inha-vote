@@ -11,7 +11,7 @@ export function ChartBar({
   value,
   total,
   slim = false,
-  color = 'bg-sky-400',
+  color = 'bg-gradient-to-r from-sky-400 to-blue-500',
 }: ChartBarProps) {
   return (
     <div className={`flex items-center gap-2 ${slim && 'text-sm'}`}>
