@@ -23,10 +23,10 @@ export function VoteItem({
         : 'closed';
 
   return (
-    <li className="flex flex-col gap-2 sm:flex-row items-start sm:items-center justify-between p-3 border border-gray-300 bg-gray-50 rounded-xl transition-transform">
-      <div className="flex flex-col min-w-0 max-w-full">
+    <li className="flex flex-col gap-2 sm:gap-4 sm:flex-row items-start sm:items-center justify-between p-3 border border-gray-300 bg-gray-50 rounded-xl transition-transform">
+      <div className="flex grow flex-col min-w-0 max-w-full">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          <div className="text-nowrap whitespace-nowrap overflow-hidden text-ellipsis shrink grow">
+          <div className="text-nowrap whitespace-nowrap overflow-hidden text-ellipsis shrink">
             {title}
           </div>
           {participated && (
