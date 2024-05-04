@@ -25,6 +25,8 @@ export function useVoting() {
     const commitment = r[1];
     const nullifierHash = r[2];
 
+    console.log(commitment, nullifierHash);
+
     const tx = {
       to: '', // Mixer 주소
       value: BigInt(0), // 투표 토큰
