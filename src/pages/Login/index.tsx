@@ -26,7 +26,7 @@ export function LoginPage() {
         onClose={() => setShowResultModal(false)}
       />
       <form
-        className="max-w-80 w-full flex flex-col h-full justify-center gap-8"
+        className="max-w-64 w-full flex flex-col h-full justify-center gap-8"
         onSubmit={(e) => e.preventDefault()}
       >
         <h1 className="flex justify-center gap-1 font-bold text-4xl">

@@ -5,3 +5,4 @@ export * from './VoteDetail';
 export * from './Register';
 export * from './Login';
 export * from './Test';
+export * from './NoPage';

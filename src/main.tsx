@@ -10,6 +10,7 @@ import {
   RegisterPage,
   LoginPage,
   TestPage,
+  NoPage,
 } from '~/pages';
 
 const router = createBrowserRouter([
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
   { path: 'register', element: <RegisterPage /> },
   { path: 'login', element: <LoginPage /> },
   { path: '/', element: <TestPage /> },
+  { path: '*', element: <NoPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
