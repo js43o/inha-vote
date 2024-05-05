@@ -1,32 +1,19 @@
 import { randomHex } from 'web3-utils';
 import wc from '~/libs/circuit/witness_calculator.js';
+import {
+  BN256ToBin,
+  BN256ToHex,
+  getRandomFutureDate,
+  reverseCoordinate,
+} from '../utils';
+import { ONE_DAY_MS, ONE_HOUR_MS } from '../constants';
+import { VotingProof } from '../types';
+import { getFormattedDateString } from '~/libs/utils';
 
 export function useVoting() {
-  const BN256ToBin = (str: string) => {
-    let r = BigInt(str).toString(2);
-    return `${[...Array(256 - r.length)].map((_) => '0').join('')}${r}`;
-  };
-
-  const BN256ToHex = (n: string) => {
-    let str = BigInt(n).toString(16);
-    str = `0x${str}${[...Array(64 - str.length)].map((_) => '0').join('')}`;
-    return str;
-  };
-
-  const BNToDecimal = (bn: string) => {
-    return BigInt(bn).toString();
-  };
-
-  const reverseCoordinate = (p: string[]) => {
-    let r = [0, 0];
-    r[0] = Number(p[1]);
-    r[1] = Number(p[0]);
-    return r;
-  };
-
   const preVote = async () => {
-    const secret = BigInt(randomHex(32)).toString();
-    const nullifier = BigInt(randomHex(32)).toString();
+    const secret = BigInt(randomHex(32));
+    const nullifier = BigInt(randomHex(32));
 
     const input = {
       secret: BN256ToBin(secret).split(''),
@@ -53,28 +40,30 @@ export function useVoting() {
       value: value,
       data: tornadoInterface.encodeFunctionData('deposit', [commitment]),
     };
-
+    */
     try {
+      /*
       const txHash = await window.ethereum.request({
         method: 'eth_sendTransaction',
         params: [tx],
       });
+      */
 
-      const proofElements = {
-        nullifierHash: `${nullifierHash}`,
+      const votingProof: VotingProof = {
+        nullifierHash: nullifierHash.toString(),
         secret: secret,
         nullifier: nullifier,
-        commitment: `${commitment}`,
-        txHash: txHash,
+        commitment: commitment.toString(),
+        txHash: '',
+        votingAvailable: getRandomFutureDate(ONE_DAY_MS * 3, ONE_HOUR_MS),
       };
 
-      console.log(proofElements);
+      console.log(votingProof);
 
-      updateProofElements(btoa(JSON.stringify(proofElements)));
+      return btoa(JSON.stringify(votingProof));
     } catch (e) {
       console.log(e);
     }
-    */
   };
 
   const finalVote = async (proofString: string) => {
@@ -84,7 +73,15 @@ export function useVoting() {
     }
 
     try {
-      const proofElements = JSON.parse(atob(proofString));
+      const votingProof: VotingProof = JSON.parse(atob(proofString));
+
+      if (votingProof.votingAvailable > new Date()) {
+        console.log(
+          `투표 가능 시각이 아닙니다. (${getFormattedDateString(votingProof.votingAvailable, 'DATE_TIME_KOR')}부터 투표 가능)`,
+        );
+
+        return;
+      }
 
       /*
       receipt = await window.ethereum.request({
@@ -107,10 +104,10 @@ export function useVoting() {
 
       const proofInput = {
         // root: BNToDecimal(decodedData.root),
-        nullifierHash: proofElements.nullifierHash,
+        nullifierHash: votingProof.nullifierHash,
         // recipient: BNToDecimal(account.address),
-        secret: BN256ToBin(proofElements.secret).split(''),
-        nullifier: BN256ToBin(proofElements.nullifier).split(''),
+        secret: BN256ToBin(votingProof.secret).split(''),
+        nullifier: BN256ToBin(votingProof.nullifier).split(''),
         // hashPairings: decodedData.hashPairings.map((n) => BNToDecimal(n)),
         // hashDirections: decodedData.pairDirection,
       };
@@ -129,6 +126,8 @@ export function useVoting() {
         proof.pi_c.slice(0, 2).map(BN256ToHex),
         publicSignals.slice(0, 2).map(BN256ToHex),
       ];
+
+      console.log(callInputs);
 
       /*
       const callData = tornadoInterface.encodeFunctionData(

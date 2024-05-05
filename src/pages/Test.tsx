@@ -1,7 +1,7 @@
 import { useVoting } from '~/libs/hooks/useVoting';
 
 export function TestPage() {
-  const { preVote } = useVoting();
+  const { preVote, finalVote } = useVoting();
 
   preVote();
 

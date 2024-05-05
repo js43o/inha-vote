@@ -30,3 +30,30 @@ export const getVoteStatus = ({ from, to }: Vote) => {
       ? 'planned'
       : 'closed';
 };
+
+export const BN256ToBin = (bn: bigint | string) => {
+  let r = typeof bn === 'string' ? BigInt(bn).toString(2) : bn.toString(2);
+  return `${[...Array(256 - r.length)].map((_) => '0').join('')}${r}`;
+};
+
+export const BN256ToHex = (bn: bigint | string) => {
+  let str = typeof bn === 'string' ? BigInt(bn).toString(16) : bn.toString(16);
+  str = `0x${str}${[...Array(64 - str.length)].map((_) => '0').join('')}`;
+  return str;
+};
+
+export const BNToDecimal = (bn: bigint | string) => {
+  return typeof bn === 'string' ? BigInt(bn).toString() : bn.toString();
+};
+
+export const reverseCoordinate = (p: string[]) => {
+  let r = Array<bigint>(2);
+  r[0] = BigInt(p[1]);
+  r[1] = BigInt(p[0]);
+  return r;
+};
+
+export const getRandomFutureDate = (maxMs: number, minMs: number) => {
+  const ms = Math.min(minMs + Math.random() * maxMs, maxMs);
+  return new Date(Date.now() + ms);
+};

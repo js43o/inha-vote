@@ -55,3 +55,12 @@ export type NumberOfVotesBy = {
     woman: number;
   };
 };
+
+export type VotingProof = {
+  nullifierHash: string;
+  secret: bigint;
+  nullifier: bigint;
+  commitment: string;
+  txHash: string;
+  votingAvailable: Date;
+};
