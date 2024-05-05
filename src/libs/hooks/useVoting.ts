@@ -1,14 +1,17 @@
 import { randomHex } from 'web3-utils';
+import CryptoJS from 'crypto-js';
 import wc from '~/libs/circuit/witness_calculator.js';
 import {
   BN256ToBin,
   BN256ToHex,
   getRandomFutureDate,
   reverseCoordinate,
-} from '../utils';
-import { ONE_DAY_MS, ONE_HOUR_MS } from '../constants';
-import { VotingProof } from '../types';
-import { getFormattedDateString } from '~/libs/utils';
+  getFormattedDateString,
+} from '~/libs/utils';
+import { ONE_DAY_MS, ONE_HOUR_MS } from '~/libs/constants';
+import { VotingProof } from '~/libs/types';
+
+const CRYPTO_SECRET = import.meta.env.VITE_CRYPTO_SECRET;
 
 export function useVoting() {
   const preVote = async () => {
@@ -56,7 +59,10 @@ export function useVoting() {
         votingAvailable: getRandomFutureDate(ONE_DAY_MS * 3, ONE_HOUR_MS),
       };
 
-      return btoa(JSON.stringify(votingProof));
+      return CryptoJS.AES.encrypt(
+        JSON.stringify(votingProof),
+        CRYPTO_SECRET,
+      ).toString();
     } catch (e) {
       console.log(e);
     }
@@ -70,7 +76,9 @@ export function useVoting() {
 
     try {
       const votingProof: VotingProof = JSON.parse(
-        atob(proofString),
+        CryptoJS.AES.decrypt(proofString, CRYPTO_SECRET).toString(
+          CryptoJS.enc.Utf8,
+        ),
         (key, value) => (key === 'votingAvailable' ? new Date(value) : value),
       );
 
