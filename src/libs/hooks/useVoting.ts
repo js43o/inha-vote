@@ -29,8 +29,6 @@ export function useVoting() {
     const commitment = r[1];
     const nullifierHash = r[2];
 
-    console.log(commitment, nullifierHash);
-
     /*
     const value = ethers.BigNumber.from('100000000000000000').toHexString();
 
@@ -51,14 +49,12 @@ export function useVoting() {
 
       const votingProof: VotingProof = {
         nullifierHash: nullifierHash.toString(),
-        secret: secret,
-        nullifier: nullifier,
+        secret: secret.toString(),
+        nullifier: nullifier.toString(),
         commitment: commitment.toString(),
         txHash: '',
         votingAvailable: getRandomFutureDate(ONE_DAY_MS * 3, ONE_HOUR_MS),
       };
-
-      console.log(votingProof);
 
       return btoa(JSON.stringify(votingProof));
     } catch (e) {
@@ -73,9 +69,14 @@ export function useVoting() {
     }
 
     try {
-      const votingProof: VotingProof = JSON.parse(atob(proofString));
+      const votingProof: VotingProof = JSON.parse(
+        atob(proofString),
+        (key, value) => (key === 'votingAvailable' ? new Date(value) : value),
+      );
 
-      if (votingProof.votingAvailable > new Date()) {
+      console.log(votingProof);
+
+      if (new Date(votingProof.votingAvailable) > new Date()) {
         console.log(
           `투표 가능 시각이 아닙니다. (${getFormattedDateString(votingProof.votingAvailable, 'DATE_TIME_KOR')}부터 투표 가능)`,
         );

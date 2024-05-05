@@ -58,8 +58,8 @@ export type NumberOfVotesBy = {
 
 export type VotingProof = {
   nullifierHash: string;
-  secret: bigint;
-  nullifier: bigint;
+  secret: string;
+  nullifier: string;
   commitment: string;
   txHash: string;
   votingAvailable: Date;
