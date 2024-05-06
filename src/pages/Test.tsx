@@ -18,9 +18,10 @@ export function TestPage() {
 
   useEffect(() => {
     const fetchPreVote = async () => {
-      const response = await preVote();
+      const response = await preVote(1, new Date());
       if (response) {
-        const blob = new Blob([response]);
+        const { votingAvailable, contents } = response;
+        const blob = new Blob([contents]);
         const url = window.URL.createObjectURL(blob);
         setBallotUrl(url);
       }

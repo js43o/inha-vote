@@ -40,8 +40,8 @@ export function VoteDetailPage() {
   return (
     <>
       <BallotIssueModal
+        vote={vote}
         visible={showBallotIssueModal}
-        onIssueBallot={() => {}}
         onClose={() => setShowBallotIssueModal(false)}
       />
       <BallotValidationModal

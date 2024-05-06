@@ -14,7 +14,7 @@ import { VotingProof } from '~/libs/types';
 const CRYPTO_SECRET = import.meta.env.VITE_CRYPTO_SECRET;
 
 export function useVoting() {
-  const preVote = async () => {
+  const preVote = async (voteId: number, startDate: Date) => {
     const secret = BigInt(randomHex(32));
     const nullifier = BigInt(randomHex(32));
 
@@ -50,19 +50,27 @@ export function useVoting() {
       });
       */
 
+      const votingAvailable =
+        startDate < new Date()
+          ? getRandomFutureDate(ONE_DAY_MS * 3, ONE_HOUR_MS)
+          : startDate;
+
       const votingProof: VotingProof = {
         nullifierHash: nullifierHash.toString(),
         secret: secret.toString(),
         nullifier: nullifier.toString(),
         commitment: commitment.toString(),
         txHash: '',
-        votingAvailable: getRandomFutureDate(ONE_DAY_MS * 3, ONE_HOUR_MS),
+        votingAvailable,
       };
 
-      return CryptoJS.AES.encrypt(
-        JSON.stringify(votingProof),
-        CRYPTO_SECRET,
-      ).toString();
+      return {
+        votingAvailable,
+        contents: CryptoJS.AES.encrypt(
+          JSON.stringify(votingProof),
+          CRYPTO_SECRET,
+        ).toString(),
+      };
     } catch (e) {
       console.log(e);
     }
