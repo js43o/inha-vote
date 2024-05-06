@@ -8,8 +8,7 @@ import { getMockCandidateList, getMockVote } from '~/libs/mockApi';
 import { getFormattedDateString, getVoteStatus } from '~/libs/utils';
 import { CandidateItem } from './CandidateItem';
 import { BallotIssueModal } from './BallotIssueModal';
-import { BallotValidationModal } from './BallotValidationModal';
-import { VotingModal } from './VotingModal';
+import { BallotValidationModal } from './VotingModal';
 import { RemainingTime } from './RemainingTime';
 import { StatisticsSection } from './StatisticsSection';
 
@@ -19,7 +18,7 @@ export function VoteDetailPage() {
   const [vote, setVote] = useState<Vote>();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
 
-  const [issued, setIssued] = useState(false); // 온체인 투표권 발급 여부
+  const [issued, setIssued] = useState(true); // 온체인 투표권 발급 여부
   const [participated, setParticipated] = useState(false); // 온체인 투표 여부
 
   const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);
@@ -46,12 +45,7 @@ export function VoteDetailPage() {
       />
       <BallotValidationModal
         visible={showBallotValidationModal}
-        onShowVotingModal={() => setShowVotingModal(true)}
         onClose={() => setShowBallotValidationModal(false)}
-      />
-      <VotingModal
-        visible={showVotingModal}
-        onClose={() => setShowVotingModal(false)}
       />
       <div className="flex flex-col gap-24 p-4 items-center">
         <Menu />

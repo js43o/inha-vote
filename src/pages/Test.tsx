@@ -3,7 +3,7 @@ import { Button } from '~/components';
 import { useVoting } from '~/libs/hooks/useVoting';
 
 export function TestPage() {
-  const { preVote, finalVote } = useVoting();
+  const { preVote, validateBallot, finalVote } = useVoting();
   const [ballotUrl, setBallotUrl] = useState<string>('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
@@ -34,7 +34,8 @@ export function TestPage() {
     const fetchFinalVote = async () => {
       if (uploadedFile) {
         const contents = await uploadedFile.text();
-        await finalVote(contents);
+        const ballot = validateBallot(contents);
+        if (typeof ballot !== 'string') await finalVote(ballot);
       }
     };
 

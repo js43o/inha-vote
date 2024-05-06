@@ -76,12 +76,7 @@ export function useVoting() {
     }
   };
 
-  const finalVote = async (proofString: string) => {
-    if (!proofString) {
-      alert('Please input the proof of deposit string.');
-      return;
-    }
-
+  const validateBallot = (proofString: string) => {
     try {
       const votingProof: VotingProof = JSON.parse(
         CryptoJS.AES.decrypt(proofString, CRYPTO_SECRET).toString(
@@ -89,17 +84,18 @@ export function useVoting() {
         ),
         (key, value) => (key === 'votingAvailable' ? new Date(value) : value),
       );
-
-      console.log(votingProof);
-
       if (new Date(votingProof.votingAvailable) > new Date()) {
-        console.log(
-          `투표 가능 시각이 아닙니다. (${getFormattedDateString(votingProof.votingAvailable, 'DATE_TIME_KOR')}부터 투표 가능)`,
-        );
-
-        return;
+        return `투표 가능 시각이 아닙니다.|(${getFormattedDateString(votingProof.votingAvailable, 'DATE_TIME_KOR')}부터 투표 가능)`;
       }
 
+      return votingProof;
+    } catch (e) {
+      return '잘못된 투표권 파일입니다.';
+    }
+  };
+
+  const finalVote = async (votingProof: VotingProof) => {
+    try {
       /*
       receipt = await window.ethereum.request({
         method: 'eth_getTransactionReceipt',
@@ -181,5 +177,5 @@ export function useVoting() {
     }
   };
 
-  return { preVote, finalVote };
+  return { preVote, validateBallot, finalVote };
 }
