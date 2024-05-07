@@ -44,6 +44,8 @@ export function VoteDetailPage() {
         onClose={() => setShowBallotIssueModal(false)}
       />
       <BallotValidationModal
+        vote={vote}
+        candidates={candidates}
         visible={showBallotValidationModal}
         onClose={() => setShowBallotValidationModal(false)}
       />

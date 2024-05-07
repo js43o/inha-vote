@@ -2,14 +2,18 @@ import { ChangeEvent, DragEvent, useState } from 'react';
 import Upload from '~/assets/icons/upload.svg?react';
 import { Button, Modal, ToggleInput } from '~/components';
 import { useVoting } from '~/libs/hooks/useVoting';
-import { VotingProof } from '~/libs/types';
+import { Candidate, Vote, VotingProof } from '~/libs/types';
 
 type BallotValidationModalProps = {
+  vote: Vote;
+  candidates: Candidate[];
   visible: boolean;
   onClose: () => void;
 };
 
 export function BallotValidationModal({
+  vote,
+  candidates,
   visible,
   onClose,
 }: BallotValidationModalProps) {
@@ -100,38 +104,33 @@ export function BallotValidationModal({
         <>
           <div className="text-2xl font-bold">최종 후보 선택</div>
           <ul className="w-full flex flex-col gap-4">
-            <li className="flex items-center gap-4">
-              <div className="bg-blue-800 w-20 h-20 rounded-xl" />
-              <div className="flex flex-col grow items-start">
-                <p>기호 1번</p>
-                <p className="text-lg font-semibold">안뇽</p>
-              </div>
-              <ToggleInput
-                checked={selectedCandidate === 0}
-                onToggle={() => onSelectCandidate(0)}
-              />
-            </li>
-            <li className="flex items-center gap-4">
-              <div className="bg-sky-500 w-20 h-20 rounded-xl" />
-              <div className="flex flex-col grow items-start">
-                <p>기호 2번</p>
-                <p className="text-lg font-semibold">인덕</p>
-              </div>
-              <ToggleInput
-                checked={selectedCandidate === 1}
-                onToggle={() => onSelectCandidate(1)}
-              />
-            </li>
+            {candidates.map((candidate) => (
+              <li key={candidate.id} className="flex items-center gap-4">
+                <img
+                  src={candidate.imgSrc}
+                  className="overflow-hidden w-20 h-20 rounded-xl"
+                />
+                <div className="flex flex-col grow items-start">
+                  <p className="text-sm">{candidate.affiliation}</p>
+                  <p className="text-lg font-semibold">{candidate.name}</p>
+                </div>
+                <ToggleInput
+                  text="선택"
+                  checked={selectedCandidate === candidate.id}
+                  onToggle={() => onSelectCandidate(candidate.id)}
+                />
+              </li>
+            ))}
           </ul>
           <div
             className={`flex flex-col gap-2 items-center overflow-hidden ${selectedCandidate === null ? 'h-0' : 'h-auto'}`}
           >
             <p className="text-center font-semibold text-red-600">
-              해당 선택은 취소할 수 없으며,
+              해당 결정은 취소할 수 없으며,
               <br />
               실제 투표수 반영까지는 몇 분 정도 소요될 수 있습니다.
             </p>
-            <p>확인했다면 '결정' 버튼을 누르세요.</p>
+            <p>모두 확인했다면 '결정' 버튼을 누르세요.</p>
           </div>
           <div className="flex w-full gap-2">
             <Button
