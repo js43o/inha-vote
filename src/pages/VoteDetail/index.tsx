@@ -18,7 +18,7 @@ export function VoteDetailPage() {
   const [vote, setVote] = useState<Vote>();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
 
-  const [issued, setIssued] = useState(true); // 온체인 투표권 발급 여부
+  const [issued, setIssued] = useState(false); // 온체인 투표권 발급 여부
   const [participated, setParticipated] = useState(false); // 온체인 투표 여부
 
   const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);

@@ -28,9 +28,10 @@ export type Candidate = {
 
 export type AsyncStatus = 'INITIAL' | 'LOADING' | 'SUCCESS' | 'FAILURE';
 
-export type Gender = 'MAN' | 'WOMAN';
-
-export type College = 'BUSINESS' | 'HUMANITIES' | 'ENGINEERING';
+export type SimpleVoteStatistics = {
+  voteId: number;
+  candidates: { candidateId: number; ratio: number }[];
+};
 
 export type VoteStatistics = {
   voteId: number;

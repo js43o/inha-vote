@@ -84,10 +84,10 @@ export function BallotValidationModal({
           {error && (
             <p className="font-semibold text-red-600 text-center">
               {error.split('|').map((str, idx) => (
-                <>
+                <span key={idx}>
                   {str}
                   {idx < error.split('|').length - 1 && <br />}
-                </>
+                </span>
               ))}
             </p>
           )}

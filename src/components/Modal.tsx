@@ -20,7 +20,7 @@ export function Modal({ visible, children }: ModalProps) {
             pointerEvents: state === 'entered' ? 'auto' : 'none',
           }}
         >
-          <div className="flex min-w-80 max-w-[540px] animate-modal flex-col items-center gap-6 rounded-2xl border border-gray-300 bg-white px-4 py-8 sm:p-8 shadow-lg">
+          <div className="flex m-4 min-w-80 max-w-[540px] animate-modal flex-col items-center gap-6 rounded-2xl border border-gray-300 bg-white px-4 py-8 sm:p-8 shadow-lg">
             {children}
           </div>
         </div>
