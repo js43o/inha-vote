@@ -5,7 +5,10 @@ export const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-export const register = async (studentNumber: string, address: string) => {
+export const registerAddress = async (
+  studentNumber: string,
+  address: string,
+) => {
   try {
     // DB에 studentNumber가 존재해야 함
     const response = await client.put(`/user/${studentNumber}`, {

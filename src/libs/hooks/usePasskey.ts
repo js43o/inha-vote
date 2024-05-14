@@ -77,6 +77,8 @@ export function usePassKey() {
     // localStorage에 커널 계정 및 클라이언트 저장
     localStorage.setItem('kernelAccount', JSON.stringify(kernelAccount));
     localStorage.setItem('kernelClient', JSON.stringify(kernelClient));
+
+    return kernelAccount.address;
   };
 
   // localStorage에 저장된 커널 계정 및 클라이언트 반환
@@ -105,9 +107,10 @@ export function usePassKey() {
       });
 
       // 계정 및 클라이언트 생성
-      await createAccountAndClient(passkeyValidator);
-
+      const address = await createAccountAndClient(passkeyValidator);
       setRegisterStatus('SUCCESS');
+
+      return address;
     } catch (e) {
       console.log(e);
       setRegisterStatus('FAILURE');
@@ -127,7 +130,6 @@ export function usePassKey() {
 
       // 똑같이 계정 및 클라이언트 생성
       await createAccountAndClient(passkeyValidator);
-
       setLoginStatus('SUCCESS');
     } catch (e) {
       console.log(e);
