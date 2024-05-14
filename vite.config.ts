@@ -4,9 +4,9 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react(), svgr()],
-    cacheDir: './.vite',
-    resolve: {
-        alias: [{ find: '~', replacement: '/src' }],
-    },
+  plugins: [react(), svgr()],
+  cacheDir: './.vite',
+  resolve: {
+    alias: [{ find: '~', replacement: '/src' }],
+  },
 });

@@ -3,13 +3,13 @@ import { Candidate, SimpleVoteStatistics, Vote, VoteStatistics } from './types';
 
 export const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
 });
 
 export const register = async (studentNumber: string, address: string) => {
   try {
+    // DB에 studentNumber가 존재해야 함
     const response = await client.put(`/user/${studentNumber}`, {
-      Id: address,
+      Address: address,
     });
 
     return response.status;
@@ -44,30 +44,46 @@ export const getVotes = async () => {
 
 export const getCandidates = async (voteId: number) => {
   try {
-    const responseOfCandidates = await client.get<
+    const responseOfCandidateIds = await client.get<
       {
         CID: number;
-        Name: string;
-        Img: string;
-        Profile: string;
       }[]
     >(`/vote_details/${voteId}/candidate`);
-    const responseOfPromises = await Promise.all(
-      responseOfCandidates.data.map(({ CID }) =>
-        client.get<{ Content: string }[]>(`/vote_details/${voteId}/${CID}`),
+    const responseOfCandidates = await Promise.all(
+      responseOfCandidateIds.data.map(({ CID }) =>
+        client.get<{
+          name: string;
+          department: string;
+          student_id: number;
+          img_url: string;
+          profile_lists: string[];
+          content_lists: string[];
+          talk: string;
+        }>(`/vote_details/${voteId}/${CID}`),
       ),
     );
-    const candidates: Candidate[] = responseOfCandidates.data.map(
-      ({ CID, Name, Img, Profile }, idx) => ({
-        id: CID,
-        affiliation: '',
-        name: Name,
-        imgSrc: Img,
-        profiles: [
-          { year: Number(Profile.slice(0, 4)), contents: Profile.slice(5) },
-        ],
-        word: '',
-        promises: responseOfPromises[idx].data.map(({ Content }) => Content),
+    const candidates: Candidate[] = responseOfCandidates.map(
+      ({
+        data: {
+          name,
+          department,
+          student_id,
+          img_url,
+          profile_lists,
+          content_lists,
+          talk,
+        },
+      }) => ({
+        id: student_id,
+        affiliation: department,
+        name,
+        imgSrc: img_url,
+        profiles: profile_lists.map((profile) => ({
+          year: Number(profile.slice(0, 4)) || 2024,
+          contents: profile.slice(5),
+        })),
+        word: talk,
+        promises: content_lists,
       }),
     );
 
