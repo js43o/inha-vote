@@ -16,7 +16,7 @@ export function LoginPage() {
     }
 
     setShowResultModal(loginStatus === 'FAILURE' ? true : false);
-  }, [loginStatus]);
+  }, [loginStatus, navigate]);
 
   return (
     <div className="flex flex-col grow p-4 justify-center items-center">

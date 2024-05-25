@@ -26,7 +26,7 @@ export function StatisticsSection({
     if (voteId) {
       getMockVoteStatistics().then(setVoteStatistics);
     }
-  }, []);
+  }, [voteId]);
 
   if (!voteStatistics) return <>통계 불러오는 중...</>;
 

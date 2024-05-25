@@ -25,13 +25,19 @@ export function ClosedVotePage() {
   useEffect(() => {
     switch (sortBy) {
       case 'title':
-        setVotes([...votes].sort((a, b) => a.title.localeCompare(b.title)));
+        setVotes((votes) =>
+          [...votes].sort((a, b) => a.title.localeCompare(b.title)),
+        );
         break;
       case 'endDate':
-        setVotes([...votes].sort((a, b) => a.to.getTime() - b.to.getTime()));
+        setVotes((votes) =>
+          [...votes].sort((a, b) => a.to.getTime() - b.to.getTime()),
+        );
         break;
       case 'votingRate':
-        setVotes([...votes].sort((a, b) => b.votingRate - a.votingRate));
+        setVotes((votes) =>
+          [...votes].sort((a, b) => b.votingRate - a.votingRate),
+        );
         break;
     }
   }, [sortBy]);

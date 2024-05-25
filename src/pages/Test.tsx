@@ -28,7 +28,7 @@ export function TestPage() {
     };
 
     fetchPreVote();
-  }, []);
+  }, [preVote]);
 
   useEffect(() => {
     const fetchFinalVote = async () => {
@@ -40,7 +40,7 @@ export function TestPage() {
     };
 
     fetchFinalVote();
-  }, [uploadedFile]);
+  }, [uploadedFile, finalVote, validateBallot]);
 
   return (
     <div className="p-4 flex flex-col gap-4">
