@@ -44,7 +44,7 @@ export function PlannedVotePage() {
           headerToolbar={{ start: 'prev', center: 'title', end: 'next' }}
           fixedWeekCount={false}
           contentHeight="auto"
-          eventColor="#0ea5e9"
+          eventColor="#2563EB"
           events={voteSchedules}
           eventClick={(eventArg) => navigate(`/vote/${eventArg.event.id}`)}
         />

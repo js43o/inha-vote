@@ -18,7 +18,7 @@ export function ToggleInput({
     >
       <div
         className={`w-5 h-5 flex items-center justify-center rounded-full
-        ${checked ? 'bg-sky-500 group-hover:bg-sky-400 group-active:bg-sky-600' : 'border-2 border-gray-800 bg-gray-50 group-hover:bg-white group-hover:border-gray-700 group-active:bg-gray-100 group-active:bg-border-900'}`}
+        ${checked ? 'bg-blue-600 group-hover:bg-blue-500 group-active:bg-blue-700' : 'border-2 border-gray-800 bg-white group-hover:border-gray-700 group-active:bg-gray-100 group-active:bg-border-900'}`}
       >
         {checked && <Check width={16} height={16} className="fill-white" />}
       </div>

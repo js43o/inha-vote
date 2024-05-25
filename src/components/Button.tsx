@@ -30,7 +30,7 @@ export function Button({
         disabled
           ? 'text-white bg-gray-300 border-gray-300 cursor-default'
           : theme === 'primary'
-            ? 'border-gray-800 bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-900'
+            ? 'border-transparent bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700'
             : 'border-gray-300 bg-gray-50 text-black hover:bg-white active:bg-gray-100'
       }`}
       disabled={disabled}

@@ -13,7 +13,7 @@ export function SortType({ selected, onChangeSortBy }: SortTypeProps) {
         <li
           key={name}
           className={`flex py-1 px-3 ${idx < SORT_BY.length - 1 ? 'border-r' : ''} border-r-gray-200
-          ${selected === name ? 'bg-gray-800 text-white font-semibold' : 'bg-gray-50 hover:bg-white active:bg-gray-100 cursor-pointer'}`}
+          ${selected === name ? 'bg-blue-600 text-white font-semibold' : 'bg-gray-50 hover:bg-white active:bg-gray-100 cursor-pointer'}`}
           onClick={() => onChangeSortBy(name)}
         >
           {title}

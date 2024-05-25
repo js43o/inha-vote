@@ -63,7 +63,7 @@
 }
 
 .fc .fc-daygrid-day.fc-day-today {
-  background: #ecfeff;
+  background: #ecf8ff;
 }
 
 .fc-day-other {
@@ -71,7 +71,7 @@
 }
 
 .fc-day-sat {
-  color: #3b82f6;
+  color: #2563EB;
 }
 
 .fc-day-sun {

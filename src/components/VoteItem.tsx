@@ -23,14 +23,16 @@ export function VoteItem({
         : 'closed';
 
   return (
-    <li className="flex flex-col gap-2 sm:gap-4 sm:flex-row items-start sm:items-center justify-between p-3 border border-gray-300 bg-gray-50 rounded-xl transition-transform">
+    <li
+      className={`flex flex-col gap-2 sm:gap-4 sm:flex-row items-start sm:items-center justify-between p-3 border ${status === 'current' ? 'border-blue-300 bg-blue-50' : 'border-gray-300 bg-gray-50'} rounded-xl`}
+    >
       <div className="flex grow flex-col min-w-0 max-w-full">
         <div className="flex items-center gap-2 text-xl font-semibold">
           <div className="text-nowrap whitespace-nowrap overflow-hidden text-ellipsis shrink">
             {title}
           </div>
           {participated && (
-            <span className="text-nowrap flex items-center text-sm font-semibold text-sky-500 fill-sky-500">
+            <span className="text-nowrap flex items-center text-sm font-semibold text-blue-600 fill-blue-600">
               <Check width={20} height={20} />
               참여함
             </span>

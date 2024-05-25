@@ -53,8 +53,8 @@ export function CurrentVotePage() {
             onToggle={toggleShowOnlyParticiable}
           />
           <div className="flex items-center gap-2">
-            <span className="flex items-center font-semibold">
-              <Sort width={20} height={20} />
+            <span className="flex items-center">
+              <Sort width={18} height={18} className="fill-black" />
               정렬
             </span>
             <SortType selected={sortBy} onChangeSortBy={onChangeSortBy} />
