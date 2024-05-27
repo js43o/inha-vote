@@ -12,17 +12,23 @@ import {
   TestPage,
   NoPage,
 } from '~/pages';
+import { Layout } from './components/Layout';
 
 const router = createBrowserRouter([
   {
     path: 'votes',
+    element: <Layout />,
     children: [
       { path: 'planned', element: <PlannedVotePage /> },
       { path: 'current', element: <CurrentVotePage /> },
       { path: 'closed', element: <ClosedVotePage /> },
     ],
   },
-  { path: 'vote/:id', element: <VoteDetailPage /> },
+  {
+    path: 'vote',
+    element: <Layout padding={false} />,
+    children: [{ path: ':id', element: <VoteDetailPage /> }],
+  },
   { path: 'register', element: <RegisterPage /> },
   { path: 'login', element: <LoginPage /> },
   { path: '/', element: <TestPage /> },

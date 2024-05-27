@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         default: 'Pretendard',
+        serif: 'SejonghospitalBold',
       },
       animation: {
         'spin-fast': 'spin 0.5s linear infinite',

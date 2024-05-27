@@ -31,14 +31,14 @@ export function RemainingTime({ vote }: RemainingTimeProps) {
         Number(remainingTime.split(':')[0]) < 100 ? (
           <>
             <div>투표 종료까지</div>
-            <div className="text-3xl font-semibold leading-none">
+            <div className="text-3xl font-bold leading-none">
               {remainingTime}
             </div>
           </>
         ) : (
           <>
             <div>투표 종료까지</div>
-            <div className="text-3xl font-semibold leading-none">
+            <div className="text-3xl font-bold leading-none">
               D-
               {Math.ceil(
                 new Date(vote.to.getTime() - Date.now()).getTime() / ONE_DAY_MS,
@@ -49,7 +49,7 @@ export function RemainingTime({ vote }: RemainingTimeProps) {
       ) : getVoteStatus(vote) === 'planned' ? (
         <>
           <div>투표 개시까지</div>
-          <div className="text-3xl font-semibold leading-none">
+          <div className="text-3xl font-bold leading-none">
             D-
             {Math.ceil(
               new Date(vote.from.getTime() - Date.now()).getTime() / ONE_DAY_MS,

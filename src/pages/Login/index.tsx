@@ -29,7 +29,7 @@ export function LoginPage() {
         className="max-w-64 w-full flex flex-col h-full justify-center gap-8"
         onSubmit={(e) => e.preventDefault()}
       >
-        <h1 className="flex justify-center gap-1 font-bold text-4xl">
+        <h1 className="flex justify-center gap-1 font-black text-4xl">
           INHA_VOTE
         </h1>
         <Button

@@ -6,7 +6,6 @@ import { EventSourceInput } from '@fullcalendar/core/index.js';
 import { getMockVoteList } from '~/libs/mockApi';
 import { getFormattedDateString } from '~/libs/utils';
 import { ONE_DAY_MS } from '~/libs/constants';
-import { Menu } from '~/components';
 import '~/styles/calendar.css';
 
 export function PlannedVotePage() {
@@ -32,23 +31,20 @@ export function PlannedVotePage() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-24 p-4 items-center">
-      <Menu />
-      <main className="flex flex-col gap-6 w-full max-w-[768px]">
-        <header className="flex flex-col gap-1">
-          <h1 className="text-3xl font-bold">예정된 투표</h1>
-          <div>예정된 투표 목록을 달력으로 표시합니다.</div>
-        </header>
-        <FullCalendar
-          plugins={[dayGridPlugin]}
-          headerToolbar={{ start: 'prev', center: 'title', end: 'next' }}
-          fixedWeekCount={false}
-          contentHeight="auto"
-          eventColor="#2563EB"
-          events={voteSchedules}
-          eventClick={(eventArg) => navigate(`/vote/${eventArg.event.id}`)}
-        />
-      </main>
-    </div>
+    <main className="flex flex-col gap-6 w-full">
+      <header className="flex flex-col gap-1">
+        <h1 className="text-3xl font-bold">예정된 투표</h1>
+        <div>예정된 투표 목록을 달력으로 표시합니다.</div>
+      </header>
+      <FullCalendar
+        plugins={[dayGridPlugin]}
+        headerToolbar={{ start: 'prev', center: 'title', end: 'next' }}
+        fixedWeekCount={false}
+        contentHeight="auto"
+        eventColor="#2563EB"
+        events={voteSchedules}
+        eventClick={(eventArg) => navigate(`/vote/${eventArg.event.id}`)}
+      />
+    </main>
   );
 }

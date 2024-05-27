@@ -13,7 +13,7 @@ export function ToggleInput({
 }: ToggleInputProps) {
   return (
     <div
-      className={`group flex gap-1.5 items-center cursor-pointer ${text ? 'p-1 pr-2.5' : 'p-2'} rounded-full`}
+      className={`group flex gap-1.5 items-center cursor-pointer rounded-full ${text ? 'p-1 pr-2.5' : 'p-2'}`}
       onClick={onToggle}
     >
       <div

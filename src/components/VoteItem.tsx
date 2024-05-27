@@ -24,7 +24,7 @@ export function VoteItem({
 
   return (
     <li
-      className={`flex flex-col gap-2 sm:gap-4 sm:flex-row items-start sm:items-center justify-between p-3 border ${status === 'current' ? 'border-blue-300 bg-blue-50' : 'border-gray-300 bg-gray-50'} rounded-xl`}
+      className={`flex flex-col gap-2 sm:gap-4 sm:flex-row items-start sm:items-center justify-between p-3 border rounded-xl hover:translate-x-1 hover:brightness-105 transition-transform ${status === 'current' ? 'border-blue-300 bg-blue-50' : 'border-gray-300 bg-gray-50'}`}
     >
       <div className="flex grow flex-col min-w-0 max-w-full">
         <div className="flex items-center gap-2 text-xl font-semibold">
@@ -50,7 +50,9 @@ export function VoteItem({
           </p>
         </div>
         {status !== 'planned' && (
-          <div className="text-gray-500 font-semibold text-sm sm:text-base">
+          <div
+            className={`${status === 'closed' ? 'text-gray-500' : 'text-blue-500'} font-semibold text-sm sm:text-base`}
+          >
             {status === 'closed' ? '최종 투표율' : '실시간 투표율'} {votingRate}
             %
           </div>

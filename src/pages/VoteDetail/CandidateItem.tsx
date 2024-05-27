@@ -19,12 +19,12 @@ export function CandidateItem({
         )}
         <img
           src={imgSrc}
-          className={`overflow-hidden w-96 rounded-2xl ${elected && 'border-8 border-amber-400'}`}
+          className={`overflow-hidden shadow-md w-96 rounded-2xl ${elected && 'border-8 border-amber-400'}`}
         />
       </div>
       <div className="flex flex-col items-center">
-        <p className="text-sm">{affiliation}</p>
-        <p className="text-xl font-bold">{name}</p>
+        <p>{affiliation}</p>
+        <p className="text-xl font-bold font-serif">{name}</p>
       </div>
       <div className="grid md:grid-cols-1 grid-cols-2 gap-4">
         <section className="flex flex-col gap-2">

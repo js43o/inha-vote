@@ -31,7 +31,7 @@ export function StatisticsSection({
   if (!voteStatistics) return <>통계 불러오는 중...</>;
 
   return (
-    <section className="flex flex-col w-full gap-4">
+    <section className="flex flex-col w-full gap-4 px-4 md:px-8">
       <h2 className="flex justify-between">
         <span className="text-2xl font-bold">투표 통계</span>
         <span className="text-lg text-gray-500">
