@@ -68,7 +68,9 @@ export function VoteDetailPage() {
             }
           />
         </header>
-        <div className="text-white bg-blue-600 py-3 flex justify-between px-4 md:px-8 shadow-md">
+        <div
+          className={`text-white ${getVoteStatus(vote) === 'current' ? 'bg-blue-600' : 'bg-gray-500'} py-3 flex justify-between px-4 md:px-8 shadow-md`}
+        >
           <div className="flex flex-col justify-center leading-tight">
             <h2 className="text-2xl font-bold break-all font-serif">
               {vote.title}

@@ -24,7 +24,7 @@ export const Input = forwardRef<
     ref,
   ) => (
     <input
-      className={`${error ? 'bg-red-100 border-red-500' : disabled ? 'bg-gray-100' : 'bg-white'} ${grouped ? 'border-b border-gray-300 ' : 'border border-gray-400 rounded-lg'} min-w-0 w-full p-2.5 transition-colors ${className}`}
+      className={`${error ? 'bg-red-100 border-danger' : disabled ? 'bg-gray-100' : 'bg-white'} ${grouped ? 'border-b border-gray-300 ' : 'border border-gray-400 rounded-lg'} min-w-0 w-full p-2.5 transition-colors ${className}`}
       placeholder={label}
       onChange={onChange}
       onBlur={onBlur}

@@ -82,7 +82,7 @@ export function BallotValidationModal({
             </div>
           </label>
           {error && (
-            <p className="font-semibold text-red-600 text-center">
+            <p className="font-semibold text-danger text-center">
               {error.split('|').map((str, idx) => (
                 <span key={idx}>
                   {str}
@@ -125,7 +125,7 @@ export function BallotValidationModal({
           <div
             className={`flex flex-col gap-2 items-center overflow-hidden ${selectedCandidate === null ? 'h-0' : 'h-auto'}`}
           >
-            <p className="text-center font-semibold text-red-600">
+            <p className="text-center font-semibold text-danger">
               해당 결정은 취소할 수 없으며,
               <br />
               실제 투표수 반영까지는 몇 분 정도 소요될 수 있습니다.

@@ -4,6 +4,7 @@ import { useVoting } from '~/libs/hooks/useVoting';
 import { getFormattedDateString } from '~/libs/utils';
 import { Vote } from '~/libs/types';
 import Progress from '~/assets/icons/progress.svg?react';
+import CheckCircle from '~/assets/icons/check_circle.svg?react';
 
 type BallotIssueModalProps = {
   vote: Vote;
@@ -61,7 +62,7 @@ export function BallotIssueModal({
               </div>
             </div>
           </div>
-          <div className="text-red-600 font-semibold">
+          <div className="text-danger font-semibold">
             위 주의사항을 정말 확인하셨나요?
           </div>
           <div className="flex w-full gap-2">
@@ -87,13 +88,14 @@ export function BallotIssueModal({
       ) : (
         <>
           <div className="text-2xl font-bold">투표권 발급됨</div>
+          <CheckCircle className="w-24 h-24 fill-blue-300 animate-completed" />
           <div className="flex flex-col items-center gap-1">
             <p>
               투표 가능 시각은{' '}
-              <b className="font-semibold text-red-600">{availableDate}</b>
+              <b className="font-semibold text-danger">{availableDate}</b>
               부터입니다.
             </p>
-            <p className="">버튼을 눌러서 발급된 투표권을 다운로드하세요.</p>
+            <p>하단의 버튼을 눌러서 발급된 투표권을 다운로드하세요.</p>
           </div>
           <a href={ballotUrl} download="ballot.secret" className="w-full">
             <Button text="투표권 다운로드" fullWidth onClick={onClose} />

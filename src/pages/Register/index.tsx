@@ -119,7 +119,7 @@ export function RegisterPage() {
               className="border-none"
             />
           </div>
-          <div className="flex flex-col gap-1 text-sm text-red-500">
+          <div className="flex flex-col gap-1 text-sm text-danger">
             {errors.name && (
               <p>이름은 20자 이하의 한글 또는 영문이어야 합니다.</p>
             )}
@@ -166,7 +166,7 @@ export function RegisterPage() {
             error={!!authenticationError}
             className={`${authenticationRequested ? 'flex' : 'hidden'}`}
           />
-          <div className="flex flex-col gap-1 text-sm text-red-500">
+          <div className="flex flex-col gap-1 text-sm text-danger">
             {errors.phoneNumber && (
               <p>휴대전화번호는 11자리 숫자여야 합니다.</p>
             )}
