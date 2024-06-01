@@ -1,5 +1,5 @@
 import { Candidate } from '~/libs/types';
-import Release from '~/assets/icons/release.svg?react';
+import Elected from '~/assets/icons/elected.svg?react';
 
 type CandidateItemProps = {
   candidate: Candidate;
@@ -10,21 +10,23 @@ export function CandidateItem({
 }: CandidateItemProps) {
   return (
     <li className="flex flex-col gap-4">
-      <div className="flex justify-center self-center relative">
-        {elected && (
-          <div className="flex items-center gap-1 text-2xl font-bold text-amber-400 absolute top-4 right-5 z-10">
-            <Release width={48} height={48} className="fill-amber-400" />
-            당선
-          </div>
-        )}
-        <img
-          src={imgSrc}
-          className={`overflow-hidden shadow-md w-96 rounded-2xl ${elected && 'border-8 border-amber-400'}`}
-        />
-      </div>
-      <div className="flex flex-col items-center">
-        <p>{affiliation}</p>
-        <p className="text-xl font-bold font-serif">{name}</p>
+      <div className="flex flex-col gap-4 mb-4">
+        <div className="flex self-center relative">
+          {elected && (
+            <div className="flex items-center gap-1 text-2xl font-bold bg-yellow-300 text-amber-700 absolute top-1 right-1 p-2 rounded-bl-lg rounded-tr-lg z-10 font-serif">
+              <Elected width={32} height={32} className="fill-amber-700" />
+              당선
+            </div>
+          )}
+          <img
+            src={imgSrc}
+            className={`overflow-hidden shadow-md w-96 rounded-xl ${elected && 'border-8 border-yellow-300'}`}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <p>{affiliation}</p>
+          <p className="text-xl font-bold font-serif">{name}</p>
+        </div>
       </div>
       <div className="grid md:grid-cols-1 grid-cols-2 gap-4">
         <section className="flex flex-col gap-2">
