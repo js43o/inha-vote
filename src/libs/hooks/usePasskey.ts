@@ -1,4 +1,5 @@
 import {
+  KernelValidator,
   createKernelAccount,
   createKernelAccountClient,
   createZeroDevPaymasterClient,
@@ -39,7 +40,12 @@ export function usePassKey() {
     });
 
   // 커널 계정 및 커널 클라이언트 생성 함수
-  const createAccountAndClient = async (passkeyValidator: any) => {
+  const createAccountAndClient = async (
+    passkeyValidator: KernelValidator<
+      '0x0000000071727De22E5E9d8BAf0edAc6f37da032',
+      string
+    >,
+  ) => {
     // 패스키 검증자를 받아서 커널 계정을 생성함
     const kernelAccount = await createKernelAccount(getPublicClient(), {
       plugins: {

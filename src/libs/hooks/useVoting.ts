@@ -1,4 +1,4 @@
-import { randomHex } from 'web3-utils';
+import { randomBytes, toBigInt } from 'ethers';
 import CryptoJS from 'crypto-js';
 import wc from '~/libs/circuit/witness_calculator.js';
 import {
@@ -15,13 +15,18 @@ const CRYPTO_SECRET = import.meta.env.VITE_CRYPTO_SECRET;
 
 export function useVoting() {
   const preVote = async (voteId: number, startDate: Date) => {
-    const secret = BigInt(randomHex(32));
-    const nullifier = BigInt(randomHex(32));
+    const secret = toBigInt(randomBytes(32));
+    const nullifier = toBigInt(randomBytes(32));
+
+    console.log('secret', secret);
+    console.log('nullifier', nullifier);
 
     const input = {
       secret: BN256ToBin(secret).split(''),
       nullifier: BN256ToBin(nullifier).split(''),
     };
+
+    console.log('input', input);
 
     const res = await fetch('/deposit.wasm');
     const buffer = await res.arrayBuffer();
@@ -31,6 +36,9 @@ export function useVoting() {
 
     const commitment = r[1];
     const nullifierHash = r[2];
+
+    console.log('commitment', commitment);
+    console.log('nullifierHash', nullifierHash);
 
     /*
     const value = ethers.BigNumber.from('100000000000000000').toHexString();
@@ -73,24 +81,6 @@ export function useVoting() {
       };
     } catch (e) {
       console.log(e);
-    }
-  };
-
-  const validateBallot = (proofString: string) => {
-    try {
-      const votingProof: VotingProof = JSON.parse(
-        CryptoJS.AES.decrypt(proofString, CRYPTO_SECRET).toString(
-          CryptoJS.enc.Utf8,
-        ),
-        (key, value) => (key === 'votingAvailable' ? new Date(value) : value),
-      );
-      if (new Date(votingProof.votingAvailable) > new Date()) {
-        return `투표 가능 시각이 아닙니다.|(${getFormattedDateString(votingProof.votingAvailable, 'DATE_TIME_KOR')}부터 투표 가능)`;
-      }
-
-      return votingProof;
-    } catch (e) {
-      return '잘못된 투표권 파일입니다.';
     }
   };
 
@@ -177,5 +167,23 @@ export function useVoting() {
     }
   };
 
-  return { preVote, validateBallot, finalVote };
+  const validateBallot = (proofString: string) => {
+    try {
+      const votingProof: VotingProof = JSON.parse(
+        CryptoJS.AES.decrypt(proofString, CRYPTO_SECRET).toString(
+          CryptoJS.enc.Utf8,
+        ),
+        (key, value) => (key === 'votingAvailable' ? new Date(value) : value),
+      );
+      if (new Date(votingProof.votingAvailable) > new Date()) {
+        return `투표 가능 시각이 아닙니다.|(${getFormattedDateString(votingProof.votingAvailable, 'DATE_TIME_KOR')}부터 투표 가능)`;
+      }
+
+      return votingProof;
+    } catch (e) {
+      return '잘못된 투표권 파일입니다.';
+    }
+  };
+
+  return { preVote, finalVote, validateBallot };
 }

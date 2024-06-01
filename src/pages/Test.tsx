@@ -3,7 +3,7 @@ import { Button } from '~/components';
 import { useVoting } from '~/libs/hooks/useVoting';
 
 export function TestPage() {
-  const { preVote, validateBallot, finalVote } = useVoting();
+  const { preVote, finalVote, validateBallot } = useVoting();
   const [ballotUrl, setBallotUrl] = useState<string>('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
@@ -19,7 +19,7 @@ export function TestPage() {
   useEffect(() => {
     const fetchPreVote = async () => {
       const response = await preVote(1, new Date());
-      if (response) {
+      if (response && !ballotUrl) {
         const { votingAvailable, contents } = response;
         const blob = new Blob([contents]);
         const url = window.URL.createObjectURL(blob);
@@ -28,7 +28,7 @@ export function TestPage() {
     };
 
     fetchPreVote();
-  }, [preVote]);
+  }, [preVote, ballotUrl]);
 
   useEffect(() => {
     const fetchFinalVote = async () => {

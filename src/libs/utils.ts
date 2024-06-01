@@ -32,7 +32,7 @@ export const getVoteStatus = ({ from, to }: Vote) => {
 };
 
 export const BN256ToBin = (bn: bigint | string) => {
-  let r = typeof bn === 'string' ? BigInt(bn).toString(2) : bn.toString(2);
+  const r = typeof bn === 'string' ? BigInt(bn).toString(2) : bn.toString(2);
   return `${[...Array(256 - r.length)].map((_) => '0').join('')}${r}`;
 };
 
@@ -47,7 +47,7 @@ export const BNToDecimal = (bn: bigint | string) => {
 };
 
 export const reverseCoordinate = (p: string[]) => {
-  let r = Array<bigint>(2);
+  const r = Array<bigint>(2);
   r[0] = BigInt(p[1]);
   r[1] = BigInt(p[0]);
   return r;
