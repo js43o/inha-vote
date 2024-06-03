@@ -11,8 +11,21 @@ export const registerAddress = async (
 ) => {
   try {
     // DB에 studentNumber가 존재해야 함
-    const response = await client.put(`/user/${studentNumber}`, {
+    const response = await client.put(`/user/${studentNumber}/address`, {
       Address: address,
+    });
+
+    return response.status;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const registerSalt = async (studentNumber: string, salt: string) => {
+  try {
+    // DB에 studentNumber가 존재해야 함
+    const response = await client.put(`/user/${studentNumber}/salt`, {
+      Salt: salt,
     });
 
     return response.status;
