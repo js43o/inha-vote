@@ -10,12 +10,34 @@ export const registerAddress = async (
   address: string,
 ) => {
   try {
-    // DB에 studentNumber가 존재해야 함
+    // DB에 studentNumber가 이미 존재해야 함
     const response = await client.put(`/user/${studentNumber}/address`, {
       Address: address,
     });
 
     return response.status;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getUser = async (studentNumber: string) => {
+  try {
+    const response = await client.get<{
+      UID: number;
+      Code: number;
+      Address: string;
+      Salt: string;
+      Dep: string;
+    }>(`/user/${studentNumber}`);
+    const { UID, Code, Address, Salt, Dep } = response.data;
+    return {
+      id: UID,
+      studentNumber: Code,
+      address: Address,
+      salt: Salt,
+      department: Dep,
+    };
   } catch (e) {
     console.log(e);
   }

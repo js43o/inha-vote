@@ -1,8 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Button } from '~/components';
+import { usePassKey } from '~/libs/hooks';
 import { useVoting } from '~/libs/hooks/useVoting';
 
 export function TestPage() {
+  const { loginPasskey } = usePassKey();
   const { preVote, finalVote, validateBallot } = useVoting();
   const [ballotUrl, setBallotUrl] = useState<string>('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -16,31 +18,30 @@ export function TestPage() {
     uploadBallot(e.target.files?.[0]);
   };
 
-  useEffect(() => {
-    const fetchPreVote = async () => {
-      const response = await preVote(1, new Date());
-      if (response && !ballotUrl) {
-        const { votingAvailable, contents } = response;
-        const blob = new Blob([contents]);
-        const url = window.URL.createObjectURL(blob);
-        setBallotUrl(url);
-      }
-    };
+  const onPreVote = async () => {
+    const kernelClient = await loginPasskey();
+    if (!kernelClient) {
+      throw new Error('preVote - 로그인 실패');
+    }
 
-    fetchPreVote();
-  }, [preVote, ballotUrl]);
+    console.log('kernelClient:', kernelClient);
 
-  useEffect(() => {
-    const fetchFinalVote = async () => {
-      if (uploadedFile) {
-        const contents = await uploadedFile.text();
-        const ballot = validateBallot(contents);
-        if (typeof ballot !== 'string') await finalVote(ballot);
-      }
-    };
+    const response = await preVote(kernelClient, new Date());
+    if (response && !ballotUrl) {
+      const { contents } = response;
+      const blob = new Blob([contents]);
+      const url = window.URL.createObjectURL(blob);
+      setBallotUrl(url);
+    }
+  };
 
-    fetchFinalVote();
-  }, [uploadedFile, finalVote, validateBallot]);
+  const onFinalVote = async () => {
+    if (uploadedFile) {
+      const contents = await uploadedFile.text();
+      const ballot = validateBallot(contents);
+      if (typeof ballot !== 'string') await finalVote(ballot);
+    }
+  };
 
   return (
     <div className="p-4 flex flex-col gap-4">
@@ -51,6 +52,8 @@ export function TestPage() {
         </a>
       )}
       <input type="file" onChange={onChange} />
+      <Button text="preVote" onClick={onPreVote} />
+      <Button text="finalVote" onClick={onFinalVote} />
     </div>
   );
 }

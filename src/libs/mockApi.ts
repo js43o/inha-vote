@@ -26,7 +26,7 @@ const mockVoteList: Vote[] = [
     id: 4,
     title: '2024년 자치회 선거',
     from: new Date('2024-04-10'),
-    to: new Date('2024-05-15'),
+    to: new Date('2024-06-21'),
     votingRate: 90.78,
   },
   {
@@ -40,7 +40,7 @@ const mockVoteList: Vote[] = [
     id: 6,
     title: '2024년 부회장 선거',
     from: new Date('2024-04-26'),
-    to: new Date('2024-06-01'),
+    to: new Date('2024-06-22'),
     votingRate: 66.55,
   },
   {

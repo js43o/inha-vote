@@ -9,73 +9,80 @@ import {
   getFormattedDateString,
 } from '~/libs/utils';
 import { ONE_DAY_MS, ONE_HOUR_MS } from '~/libs/constants';
-import { VotingProof } from '~/libs/types';
+import { Ballot } from '~/libs/types';
+import { encodeFunctionData, parseAbi } from 'viem';
+import { bundlerActions } from 'permissionless';
+import { KernelAccountClient } from '@zerodev/sdk';
+import { ENTRYPOINT_ADDRESS_V07_TYPE } from 'permissionless/types';
 
 const CRYPTO_SECRET = import.meta.env.VITE_CRYPTO_SECRET;
 
+const Tokenaddress = '0x725314746e727f586E9FCA65AeD5dBe45aA71B99';
+const Tornadoaddress = '0x716473Fb4E7cD49c7d1eC7ec6d7490A03d9dA332';
+
+const TORNADO_CONTRACT_ABI = parseAbi([
+  'function deposit(uint256 _commitment, address tokenAddress) external',
+]);
+
 export function useVoting() {
-  const preVote = async (voteId: number, startDate: Date) => {
-    const secret = toBigInt(randomBytes(32));
-    const nullifier = toBigInt(randomBytes(32));
-
-    console.log('secret', secret);
-    console.log('nullifier', nullifier);
-
-    const input = {
-      secret: BN256ToBin(secret).split(''),
-      nullifier: BN256ToBin(nullifier).split(''),
-    };
-
-    console.log('input', input);
-
+  const preVote = async (
+    kernelClient: KernelAccountClient<ENTRYPOINT_ADDRESS_V07_TYPE>,
+    startDate: Date,
+  ) => {
     const res = await fetch('/deposit.wasm');
     const buffer = await res.arrayBuffer();
     const depositWC = await wc(buffer);
 
-    const r = await depositWC.calculateWitness(input, 0);
-
-    const commitment = r[1];
-    const nullifierHash = r[2];
-
-    console.log('commitment', commitment);
-    console.log('nullifierHash', nullifierHash);
-
-    /*
-    const value = ethers.BigNumber.from('100000000000000000').toHexString();
-
-    const tx = {
-      to: tornadoAddress,
-      from: account.address,
-      value: value,
-      data: tornadoInterface.encodeFunctionData('deposit', [commitment]),
+    const secret = toBigInt(randomBytes(32));
+    const nullifier = toBigInt(randomBytes(32));
+    const input = {
+      secret: BN256ToBin(secret).split(''),
+      nullifier: BN256ToBin(nullifier).split(''),
     };
-    */
-    try {
-      /*
-      const txHash = await window.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [tx],
-      });
-      */
+    const [_, commitment, nullifierHash] = await depositWC.calculateWitness(
+      input,
+      0,
+    );
 
-      const votingAvailable =
+    const userOpHash = await kernelClient.sendUserOperation({
+      userOperation: {
+        callData: await kernelClient.account!.encodeCallData({
+          to: Tornadoaddress,
+          value: BigInt(0),
+          data: encodeFunctionData({
+            abi: TORNADO_CONTRACT_ABI,
+            functionName: 'deposit',
+            args: [commitment, Tokenaddress],
+          }),
+        }),
+      },
+    });
+    const bundlerClient = kernelClient.extend(
+      bundlerActions(kernelClient.account!.entryPoint),
+    );
+    const receipt = await bundlerClient.waitForUserOperationReceipt({
+      hash: userOpHash,
+    });
+
+    try {
+      const votingAvailableDate =
         startDate < new Date()
           ? getRandomFutureDate(ONE_DAY_MS * 3, ONE_HOUR_MS)
           : startDate;
 
-      const votingProof: VotingProof = {
+      const ballot: Ballot = {
         nullifierHash: nullifierHash.toString(),
         secret: secret.toString(),
         nullifier: nullifier.toString(),
         commitment: commitment.toString(),
         txHash: '',
-        votingAvailable,
+        votingAvailableDate,
       };
 
       return {
-        votingAvailable,
+        votingAvailableDate,
         contents: CryptoJS.AES.encrypt(
-          JSON.stringify(votingProof),
+          JSON.stringify(ballot),
           CRYPTO_SECRET,
         ).toString(),
       };
@@ -84,7 +91,7 @@ export function useVoting() {
     }
   };
 
-  const finalVote = async (votingProof: VotingProof) => {
+  const finalVote = async (ballot: Ballot) => {
     try {
       /*
       receipt = await window.ethereum.request({
@@ -107,10 +114,10 @@ export function useVoting() {
 
       const proofInput = {
         // root: BNToDecimal(decodedData.root),
-        nullifierHash: votingProof.nullifierHash,
+        nullifierHash: ballot.nullifierHash,
         // recipient: BNToDecimal(account.address),
-        secret: BN256ToBin(votingProof.secret).split(''),
-        nullifier: BN256ToBin(votingProof.nullifier).split(''),
+        secret: BN256ToBin(ballot.secret).split(''),
+        nullifier: BN256ToBin(ballot.nullifier).split(''),
         // hashPairings: decodedData.hashPairings.map((n) => BNToDecimal(n)),
         // hashDirections: decodedData.pairDirection,
       };
@@ -169,17 +176,18 @@ export function useVoting() {
 
   const validateBallot = (proofString: string) => {
     try {
-      const votingProof: VotingProof = JSON.parse(
+      const ballot: Ballot = JSON.parse(
         CryptoJS.AES.decrypt(proofString, CRYPTO_SECRET).toString(
           CryptoJS.enc.Utf8,
         ),
-        (key, value) => (key === 'votingAvailable' ? new Date(value) : value),
+        (key, value) =>
+          key === 'votingAvailableDate' ? new Date(value) : value,
       );
-      if (new Date(votingProof.votingAvailable) > new Date()) {
-        return `투표 가능 시각이 아닙니다.|(${getFormattedDateString(votingProof.votingAvailable, 'DATE_TIME_KOR')}부터 투표 가능)`;
+      if (new Date(ballot.votingAvailableDate) > new Date()) {
+        return `투표 가능 시각이 아닙니다.|(${getFormattedDateString(ballot.votingAvailableDate, 'DATE_TIME_KOR')}부터 투표 가능)`;
       }
 
-      return votingProof;
+      return ballot;
     } catch (e) {
       return '잘못된 투표권 파일입니다.';
     }

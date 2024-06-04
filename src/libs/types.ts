@@ -57,11 +57,11 @@ export type NumberOfVotesBy = {
   };
 };
 
-export type VotingProof = {
+export type Ballot = {
   nullifierHash: string;
   secret: string;
   nullifier: string;
   commitment: string;
   txHash: string;
-  votingAvailable: Date;
+  votingAvailableDate: Date;
 };

@@ -5,7 +5,6 @@ import { Button, Input, Modal, Select } from '~/components';
 import { usePassKey } from '~/libs/hooks';
 import { RegisterInput } from '~/libs/types';
 import { ResultModal } from './ResultModal';
-import { registerAddress } from '~/libs/api';
 
 export function RegisterPage() {
   const [authenticationRequested, setAuthenticationRequested] = useState(false);
@@ -32,14 +31,7 @@ export function RegisterPage() {
 
   const requestRegistration = async () => {
     if (authenticationInput === '123123') {
-      // 패스키 등록 요청
-      const address = await registerPasskey(getValues('studentNumber'));
-
-      // 계정 등록 API 호출
-      if (address) {
-        await registerAddress(getValues('studentNumber'), address);
-      }
-
+      await registerPasskey(getValues('studentNumber'));
       setAuthenticationError(false);
 
       return;
@@ -111,7 +103,6 @@ export function RegisterPage() {
               maxLength={8}
               {...register('studentNumber', {
                 required: true,
-                pattern: /\d{8}/,
               })}
               error={!!errors.studentNumber}
               disabled={authenticationRequested}

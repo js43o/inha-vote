@@ -2,7 +2,7 @@ import { ChangeEvent, DragEvent, useState } from 'react';
 import Upload from '~/assets/icons/upload.svg?react';
 import { Button, Modal, ToggleInput } from '~/components';
 import { useVoting } from '~/libs/hooks/useVoting';
-import { Candidate, Vote, VotingProof } from '~/libs/types';
+import { Candidate, Vote, Ballot } from '~/libs/types';
 
 type BallotValidationModalProps = {
   vote: Vote;
@@ -17,7 +17,7 @@ export function BallotValidationModal({
   visible,
   onClose,
 }: BallotValidationModalProps) {
-  const [ballot, setBallot] = useState<VotingProof | null>(null);
+  const [ballot, setBallot] = useState<Ballot | null>(null);
   const [error, setError] = useState('');
   const [selectedCandidate, setSelectedCandidate] = useState<number | null>(
     null,
