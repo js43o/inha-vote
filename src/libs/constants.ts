@@ -24,16 +24,16 @@ export const DAY_NAME_KOR = ['일', '월', '화', '수', '목', '금', '토'];
 
 export const CONTRACT = {
   VOTING_BOX: {
-    ADDRESS: '0x987Aa6E80e995d6A76C4d061eE324fc760Ea9F61',
+    ADDRESS: '0x6F4064E02E17cA3536DB73a42Bf61Df4D582C8e7',
     ABI: parseAbi([
       'function studentSaltTable(uint) public view returns (uint)',
       'function owner() public view returns (address)',
     ]),
   },
   TOKEN: {
-    ADDRESS: '0x725314746e727f586E9FCA65AeD5dBe45aA71B99',
+    ADDRESS: '0xcb039ac85Bc4605fa8aA236123340aB82cb00D04',
   },
   TORNADO: {
-    ADDRESS: '0x716473Fb4E7cD49c7d1eC7ec6d7490A03d9dA332',
+    ADDRESS: '0x68Ead197152775a983fE058E6149Dc1Ac480Aa44',
   },
 };

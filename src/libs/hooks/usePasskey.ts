@@ -1,4 +1,3 @@
-import { ethers, toBigInt } from 'ethers';
 import {
   createPasskeyValidator,
   getPasskeyValidator,
@@ -6,12 +5,9 @@ import {
 import { ENTRYPOINT_ADDRESS_V07 } from 'permissionless';
 import { useState } from 'react';
 import { AsyncStatus } from '~/libs/types';
-import { getUser, registerAddress } from '~/libs/api';
-import {
-  getKernelClient,
-  getPublicClient,
-  getSaltOnchain,
-} from '~/libs/contract';
+import { getKernelClient, getPublicClient } from '~/libs/contract';
+import { useAtom } from 'jotai';
+import { kernelClientAtomKey } from '~/libs/atom';
 
 const entryPoint = ENTRYPOINT_ADDRESS_V07;
 const { VITE_PASSKEY_SERVER_URL } = import.meta.env;
@@ -19,6 +15,7 @@ const { VITE_PASSKEY_SERVER_URL } = import.meta.env;
 export function usePassKey() {
   const [registerStatus, setRegisterStatus] = useState<AsyncStatus>('INITIAL');
   const [loginStatus, setLoginStatus] = useState<AsyncStatus>('INITIAL');
+  const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
 
   /*   const test = async () => {
     const data = await getPublicClient().readContract({
@@ -41,6 +38,7 @@ export function usePassKey() {
       // 계정 및 클라이언트 생성
       const kernelClient = await getKernelClient(passkeyValidator);
       console.log('kernelClient:', kernelClient);
+      setKernelClientAtom(kernelClient);
 
       /*  // 사용자 address를 DB에 등록
       await registerAddress(studentNumber, kernelClient.account.address);
@@ -88,6 +86,8 @@ export function usePassKey() {
         entryPoint,
       });
       kernelClient = await getKernelClient(passkeyValidator);
+      console.log('kernelClient:', kernelClient);
+      setKernelClientAtom(kernelClient);
       setLoginStatus('SUCCESS');
     } catch (e) {
       console.log(e);

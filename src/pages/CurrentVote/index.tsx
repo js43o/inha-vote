@@ -3,13 +3,15 @@ import Sort from '~/assets/icons/sort.svg?react';
 import { SortBy, Vote } from '~/libs/types';
 import { getMockVoteList } from '~/libs/mockApi';
 import { VoteItem, Menu, ToggleInput, SortType } from '~/components';
+import { useAtom } from 'jotai';
+import { kernelClientAtomKey } from '~/libs/atom';
 
 export function CurrentVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
   const [showOnlyParticiable, setShowOnlyParticiable] = useState(false);
   const [votes, setVotes] = useState<Vote[]>([]);
-
   const [participatedVotes, setParticipatedVotes] = useState<number[]>([5]); // 온체인 투표 여부
+  const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
 
   const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
 

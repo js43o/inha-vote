@@ -1,5 +1,8 @@
+import { useAtom } from 'jotai';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Button } from '~/components';
+import { kernelClientAtomKey } from '~/libs/atom';
 import { usePassKey } from '~/libs/hooks';
 import { useVoting } from '~/libs/hooks/useVoting';
 
@@ -8,6 +11,7 @@ export function TestPage() {
   const { preVote, finalVote, validateBallot } = useVoting();
   const [ballotUrl, setBallotUrl] = useState<string>('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
 
   const uploadBallot = (file?: File) => {
     if (!file) return;
@@ -54,6 +58,8 @@ export function TestPage() {
       <input type="file" onChange={onChange} />
       <Button text="preVote" onClick={onPreVote} />
       <Button text="finalVote" onClick={onFinalVote} />
+      {kernelClientAtom?.account?.address}
+      <NavLink to="/votes/current">이동</NavLink>
     </div>
   );
 }

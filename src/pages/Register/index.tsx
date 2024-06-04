@@ -23,14 +23,15 @@ export function RegisterPage() {
 
   const requestMobileAuthentication = () => {
     if (isValid) {
-      // 인증번호 전송 로직
+      // TODO: 인증번호 전송 로직
       setAuthenticationRequested(true);
       setShowAuthenticationModal(true);
     }
   };
 
   const requestRegistration = async () => {
-    if (authenticationInput === '123123') {
+    // TODO: 인증번호 검증 로직
+    if (authenticationInput) {
       await registerPasskey(getValues('studentNumber'));
       setAuthenticationError(false);
 
