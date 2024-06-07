@@ -4,10 +4,16 @@ import {
 } from '@zerodev/passkey-validator';
 import { ENTRYPOINT_ADDRESS_V07 } from 'permissionless';
 import { useState } from 'react';
-import { AsyncStatus } from '~/libs/types';
-import { getKernelClient, getPublicClient } from '~/libs/contract';
 import { useAtom } from 'jotai';
+import { ethers, toBigInt } from 'ethers';
+import {
+  getKernelClient,
+  getPublicClient,
+  getSaltOnchain,
+} from '~/libs/contract';
 import { kernelClientAtomKey } from '~/libs/atom';
+import { getUser, registerAddress } from '~/libs/api';
+import { AsyncStatus } from '~/libs/types';
 
 const entryPoint = ENTRYPOINT_ADDRESS_V07;
 const { VITE_PASSKEY_SERVER_URL } = import.meta.env;
@@ -40,7 +46,7 @@ export function usePassKey() {
       console.log('kernelClient:', kernelClient);
       setKernelClientAtom(kernelClient);
 
-      /*  // 사용자 address를 DB에 등록
+      // 사용자 address를 DB에 등록
       await registerAddress(studentNumber, kernelClient.account.address);
 
       // 학번으로 salt 가져오기 (백엔드 API)
@@ -66,7 +72,7 @@ export function usePassKey() {
         setRegisterStatus('FAILURE');
         console.log('SALT 값이 일치하지 않습니다.');
         return;
-      } */
+      }
 
       // TODO: 검증 성공 시 백엔드 투표권 할당 API 호출
       // await ...

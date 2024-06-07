@@ -8,7 +8,7 @@ import {
   reverseCoordinate,
   getFormattedDateString,
 } from '~/libs/utils';
-import { ONE_DAY_MS, ONE_HOUR_MS } from '~/libs/constants';
+import { CONTRACT, ONE_DAY_MS, ONE_HOUR_MS } from '~/libs/constants';
 import { Ballot } from '~/libs/types';
 import { encodeFunctionData, parseAbi } from 'viem';
 import { bundlerActions } from 'permissionless';
@@ -17,18 +17,16 @@ import { ENTRYPOINT_ADDRESS_V07_TYPE } from 'permissionless/types';
 
 const CRYPTO_SECRET = import.meta.env.VITE_CRYPTO_SECRET;
 
-const Tokenaddress = '0x725314746e727f586E9FCA65AeD5dBe45aA71B99';
-const Tornadoaddress = '0x716473Fb4E7cD49c7d1eC7ec6d7490A03d9dA332';
-
-const TORNADO_CONTRACT_ABI = parseAbi([
-  'function deposit(uint256 _commitment, address tokenAddress) external',
-]);
-
 export function useVoting() {
   const preVote = async (
     kernelClient: KernelAccountClient<ENTRYPOINT_ADDRESS_V07_TYPE>,
     startDate: Date,
   ) => {
+    if (!kernelClient) {
+      console.log('잘못된 커널 클라이언트');
+      return;
+    }
+
     const res = await fetch('/deposit.wasm');
     const buffer = await res.arrayBuffer();
     const depositWC = await wc(buffer);
@@ -47,12 +45,12 @@ export function useVoting() {
     const userOpHash = await kernelClient.sendUserOperation({
       userOperation: {
         callData: await kernelClient.account!.encodeCallData({
-          to: Tornadoaddress,
+          to: CONTRACT.TORNADO.ADDRESS as `0x${string}`,
           value: BigInt(0),
           data: encodeFunctionData({
-            abi: TORNADO_CONTRACT_ABI,
+            abi: CONTRACT.TORNADO.ABI,
             functionName: 'deposit',
-            args: [commitment, Tokenaddress],
+            args: [commitment, CONTRACT.TOKEN.ADDRESS as `0x${string}`],
           }),
         }),
       },

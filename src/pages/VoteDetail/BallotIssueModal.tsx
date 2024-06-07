@@ -5,6 +5,9 @@ import { getFormattedDateString } from '~/libs/utils';
 import { Vote } from '~/libs/types';
 import Progress from '~/assets/icons/progress.svg?react';
 import CheckCircle from '~/assets/icons/check_circle.svg?react';
+import { useAtom } from 'jotai';
+import { kernelClientAtomKey } from '~/libs/atom';
+import { useNavigate } from 'react-router-dom';
 
 type BallotIssueModalProps = {
   vote: Vote;
@@ -13,25 +16,34 @@ type BallotIssueModalProps = {
 };
 
 export function BallotIssueModal({
-  vote: { id, from },
+  vote: { from },
   visible,
   onClose,
 }: BallotIssueModalProps) {
   const [loading, setLoading] = useState(false);
   const [ballotUrl, setBallotUrl] = useState<string>('');
   const [availableDate, setAvailableDate] = useState('');
+  const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
   const { preVote } = useVoting();
+  const navigate = useNavigate();
 
   const onIssueBallot = async () => {
+    if (!kernelClientAtom) {
+      navigate('/login');
+      return;
+    }
+
     setLoading(true);
-    const response = await preVote(id, from);
+    const response = await preVote(kernelClientAtom, from);
     if (!response) return;
 
-    const { votingAvailable, contents } = response;
+    const { votingAvailableDate, contents } = response;
     const blob = new Blob([contents]);
     const url = window.URL.createObjectURL(blob);
 
-    setAvailableDate(getFormattedDateString(votingAvailable, 'DATE_TIME_KOR'));
+    setAvailableDate(
+      getFormattedDateString(votingAvailableDate, 'DATE_TIME_KOR'),
+    );
     setBallotUrl(url);
     setLoading(false);
   };

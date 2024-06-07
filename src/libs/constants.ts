@@ -35,5 +35,8 @@ export const CONTRACT = {
   },
   TORNADO: {
     ADDRESS: '0x68Ead197152775a983fE058E6149Dc1Ac480Aa44',
+    ABI: parseAbi([
+      'function deposit(uint256 _commitment, address tokenAddress) external',
+    ]),
   },
 };
