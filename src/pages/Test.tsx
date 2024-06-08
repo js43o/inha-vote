@@ -1,7 +1,9 @@
+import axios from 'axios';
 import { useAtom } from 'jotai';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button } from '~/components';
+import { registerStudentNumberToOnChain } from '~/libs/api';
 import { kernelClientAtomKey } from '~/libs/atom';
 import { usePassKey } from '~/libs/hooks';
 import { useVoting } from '~/libs/hooks/useVoting';
@@ -46,6 +48,10 @@ export function TestPage() {
       if (typeof ballot !== 'string') await finalVote(ballot);
     }
   };
+
+  useEffect(() => {
+    registerStudentNumberToOnChain('12345').then(console.log);
+  }, []);
 
   return (
     <div className="p-4 flex flex-col gap-4">

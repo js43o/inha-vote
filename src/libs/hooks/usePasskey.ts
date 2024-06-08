@@ -12,7 +12,11 @@ import {
   getSaltOnchain,
 } from '~/libs/contract';
 import { kernelClientAtomKey } from '~/libs/atom';
-import { getUser, registerAddress } from '~/libs/api';
+import {
+  getUser,
+  registerAddress,
+  registerStudentNumberToOnChain,
+} from '~/libs/api';
 import { AsyncStatus } from '~/libs/types';
 
 const entryPoint = ENTRYPOINT_ADDRESS_V07;
@@ -47,7 +51,15 @@ export function usePassKey() {
       setKernelClientAtom(kernelClient);
 
       // 사용자 address를 DB에 등록
-      await registerAddress(studentNumber, kernelClient.account.address);
+      const res1 = await registerAddress(
+        studentNumber,
+        kernelClient.account.address,
+      );
+
+      // 사용자 address를 온체인에 등록
+      const res2 = await registerStudentNumberToOnChain(studentNumber);
+
+      console.log(res1, res2);
 
       // 학번으로 salt 가져오기 (백엔드 API)
       const user = await getUser(studentNumber);

@@ -152,3 +152,16 @@ export const getVoteResult = async (voteId: number) => {
     console.log(e);
   }
 };
+
+export const registerStudentNumberToOnChain = async (studentNumber: string) => {
+  try {
+    const response = await axios({
+      method: 'get',
+      url: `${import.meta.env.VITE_CHAIN_API_URL}allocateAddress?code=${studentNumber}`,
+      timeout: 60 * 1000,
+    });
+    return response.status;
+  } catch (e) {
+    console.log(e);
+  }
+};

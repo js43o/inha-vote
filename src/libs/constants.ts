@@ -24,17 +24,17 @@ export const DAY_NAME_KOR = ['일', '월', '화', '수', '목', '금', '토'];
 
 export const CONTRACT = {
   VOTING_BOX: {
-    ADDRESS: '0x6F4064E02E17cA3536DB73a42Bf61Df4D582C8e7',
+    ADDRESS: '0xD4d6A26CdeAb40F61C430aB25baEb2C0c23b88aD',
     ABI: parseAbi([
       'function studentSaltTable(uint) public view returns (uint)',
       'function owner() public view returns (address)',
     ]),
   },
   TOKEN: {
-    ADDRESS: '0xcb039ac85Bc4605fa8aA236123340aB82cb00D04',
+    ADDRESS: '0x4C8c9967f90E0C66452ca3577639187A3b3e9eF3',
   },
   TORNADO: {
-    ADDRESS: '0x68Ead197152775a983fE058E6149Dc1Ac480Aa44',
+    ADDRESS: '0xF93da63aC52634D1996AC0dE7EdFd3fa5dcF5cd6',
     ABI: parseAbi([
       'function deposit(uint256 _commitment, address tokenAddress) external',
     ]),
