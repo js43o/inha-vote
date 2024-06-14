@@ -33,7 +33,7 @@ export function StatisticsSection({
   return (
     <section className="flex flex-col w-full gap-4 px-4 md:px-8">
       <h2 className="flex justify-between">
-        <span className="text-2xl font-bold">투표 통계</span>
+        <span className="text-2xl font-bold">투표 통계 (개발 예정)</span>
         <span className="text-lg text-gray-500">
           총 <span className="font-bold">{allTotalNumberOfVotes}표</span> 중
         </span>

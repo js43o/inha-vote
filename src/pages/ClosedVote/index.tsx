@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import Sort from '~/assets/icons/sort.svg?react';
 import { SortBy, Vote } from '~/libs/types';
-import { getMockVoteList } from '~/libs/mockApi';
 import { VoteItem, Menu, ToggleInput, SortType } from '~/components';
+import { getVotes } from '~/libs/api';
 
 export function ClosedVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
@@ -17,8 +17,8 @@ export function ClosedVotePage() {
     setShowOnlyParticipated(!showOnlyParticipated);
 
   useEffect(() => {
-    getMockVoteList().then((votes) =>
-      setVotes(votes.filter((vote) => vote.to < new Date())),
+    getVotes().then((votes) =>
+      setVotes(votes?.filter((vote) => vote.to < new Date()) || []),
     );
   }, []);
 

@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { Candidate, SimpleVoteStatistics, Vote, VoteStatistics } from './types';
-import { CONTRACT } from './constants';
+import { Candidate, SimpleVoteStatistics, Vote } from './types';
 
 export const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,

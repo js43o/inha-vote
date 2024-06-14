@@ -3,20 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { EventSourceInput } from '@fullcalendar/core/index.js';
-import { getMockVoteList } from '~/libs/mockApi';
 import { getFormattedDateString } from '~/libs/utils';
 import { ONE_DAY_MS } from '~/libs/constants';
 import '~/styles/calendar.css';
+import { getVotes } from '~/libs/api';
 
 export function PlannedVotePage() {
   const navigate = useNavigate();
   const [voteSchedules, setVoteSchedules] = useState<EventSourceInput>([]);
 
   useEffect(() => {
-    getMockVoteList().then((votes) =>
+    getVotes().then((votes) =>
       setVoteSchedules(
         votes
-          .filter((vote) => vote.from > new Date())
+          ?.filter((vote) => vote.from > new Date())
           .map(({ id, title, from, to }) => ({
             id: id.toString(),
             title,
@@ -25,7 +25,7 @@ export function PlannedVotePage() {
               new Date(to.getTime() + ONE_DAY_MS),
               'DATE_HYPHEN',
             ),
-          })),
+          })) || [],
       ),
     );
   }, []);

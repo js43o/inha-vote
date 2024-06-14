@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Undo from '~/assets/icons/undo.svg?react';
 import Check from '~/assets/icons/check.svg?react';
-import { Button, Menu } from '~/components';
+import { Button } from '~/components';
 import { Candidate, Vote } from '~/libs/types';
-import { getMockCandidateList, getMockVote } from '~/libs/mockApi';
 import { getFormattedDateString, getVoteStatus } from '~/libs/utils';
 import { CandidateItem } from './CandidateItem';
 import { BallotIssueModal } from './BallotIssueModal';
@@ -14,6 +13,7 @@ import { StatisticsSection } from './StatisticsSection';
 import { checkBallotIssuedOnchain } from '~/libs/contract';
 import { useAtom } from 'jotai';
 import { kernelClientAtomKey } from '~/libs/atom';
+import { getCandidates, getVotes } from '~/libs/api';
 
 export function VoteDetailPage() {
   const navigate = useNavigate();
@@ -36,10 +36,12 @@ export function VoteDetailPage() {
         return navigate('/login');
       }
 
-      const vote = await getMockVote(Number(voteId));
+      const vote = (await getVotes())?.find(
+        (vote) => vote.id === Number(voteId),
+      );
       setVote(vote);
-      const candidates = await getMockCandidateList();
-      setCandidates(candidates);
+      const candidates = await getCandidates(Number(voteId));
+      setCandidates(candidates || []);
 
       const address = kernelClientAtom.account?.address;
       const issued = await checkBallotIssuedOnchain(address);

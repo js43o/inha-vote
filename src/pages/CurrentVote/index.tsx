@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import Sort from '~/assets/icons/sort.svg?react';
 import { SortBy, Vote } from '~/libs/types';
-import { getMockVoteList } from '~/libs/mockApi';
 import { VoteItem, Menu, ToggleInput, SortType } from '~/components';
 import { useAtom } from 'jotai';
 import { kernelClientAtomKey } from '~/libs/atom';
+import { getVotes } from '~/libs/api';
 
 export function CurrentVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
@@ -19,9 +19,11 @@ export function CurrentVotePage() {
     setShowOnlyParticiable(!showOnlyParticiable);
 
   useEffect(() => {
-    getMockVoteList().then((votes) =>
+    getVotes().then((votes) =>
       setVotes(
-        votes.filter((vote) => vote.from < new Date() && vote.to > new Date()),
+        votes?.filter(
+          (vote) => vote.from < new Date() && vote.to > new Date(),
+        ) || [],
       ),
     );
   }, []);
