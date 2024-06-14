@@ -16,7 +16,7 @@ import { bundlerActions } from 'permissionless';
 import { KernelAccountClient } from '@zerodev/sdk';
 import { ENTRYPOINT_ADDRESS_V07_TYPE } from 'permissionless/types';
 import { getCandidateAddressOnchain } from '../contract';
-import { getRecieptOnChain, getTornado } from '../api';
+import { finalVoteOnChain, getRecieptOnChain } from '../api';
 
 const CRYPTO_SECRET = import.meta.env.VITE_CRYPTO_SECRET;
 
@@ -121,6 +121,7 @@ export function useVoting() {
       );
 
       const address = await getCandidateAddressOnchain(index);
+      console.log(address);
       const proofInput = {
         root: BNToDecimal(decodedData.root),
         nullifierHash: ballot.nullifierHash,
@@ -140,15 +141,23 @@ export function useVoting() {
       );
 
       const callInputs = [
-        proof.pi_a.slice(0, 2).map(BN256ToHex).map(BigInt),
+        proof.pi_a.slice(0, 2).map(BN256ToHex),
         proof.pi_b
           .slice(0, 2)
-          .map((row) => reverseCoordinate(row.map(BN256ToHex))),
+          .map((row) => reverseCoordinate(row.map(BN256ToHex)))
+          .map((row) => row.toString()),
         proof.pi_c.slice(0, 2).map(BN256ToHex),
         publicSignals.slice(0, 2).map(BN256ToHex),
       ];
 
-      const userOpHash = await kernelClient.sendUserOperation({
+      const response = await finalVoteOnChain(
+        callInputs,
+        CONTRACT.TOKEN.ADDRESS,
+        address,
+      );
+      return response;
+
+      /* const userOpHash = await kernelClient.sendUserOperation({
         userOperation: {
           callData: await kernelClient.account!.encodeCallData({
             to: CONTRACT.TORNADO.ADDRESS as `0x${string}`,
@@ -174,7 +183,7 @@ export function useVoting() {
       const receipt2 = await bundlerClient.waitForUserOperationReceipt({
         hash: userOpHash,
       });
-      console.log(receipt2);
+      console.log(receipt2); */
     } catch (e) {
       console.log(e);
     }

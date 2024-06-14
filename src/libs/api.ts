@@ -153,6 +153,8 @@ export const getVoteResult = async (voteId: number) => {
   }
 };
 
+// 블록체인 서버 API
+
 export const registerStudentNumberToOnChain = async (studentNumber: string) => {
   try {
     const response = await axios({
@@ -184,8 +186,8 @@ export const getRecieptOnChain = async (txHash: string) => {
   return response.data.result;
 };
 
-export const getTornado = async (
-  callInputs: (string[] | bigint[][])[],
+export const finalVoteOnChain = async (
+  callInputs: (string[] | string[][])[],
   tokenAddress: string,
   candidateAddress: string,
 ) => {
@@ -199,5 +201,5 @@ export const getTornado = async (
     },
   });
 
-  return response.data;
+  return response.status;
 };

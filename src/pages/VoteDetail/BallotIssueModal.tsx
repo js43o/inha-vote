@@ -85,12 +85,7 @@ export function BallotIssueModal({
               fullWidth
               icon={
                 loading ? (
-                  <Progress
-                    width={20}
-                    height={20}
-                    fill="white"
-                    className="animate-spin-fast"
-                  />
+                  <Progress className="animate-spin-fast w-5 h-5 fill-white" />
                 ) : undefined
               }
               disabled={loading}

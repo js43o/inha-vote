@@ -56,6 +56,7 @@ export function VoteDetailPage() {
         return navigate('/login');
       }
 
+      console.log('투표권 발급 여부 조회');
       const address = kernelClientAtom.account?.address;
       const issued = await checkBallotIssuedOnchain(address);
       setIssued(issued);
