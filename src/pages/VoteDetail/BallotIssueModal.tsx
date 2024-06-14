@@ -16,7 +16,7 @@ type BallotIssueModalProps = {
 };
 
 export function BallotIssueModal({
-  vote: { from },
+  // vote,
   visible,
   onClose,
 }: BallotIssueModalProps) {
