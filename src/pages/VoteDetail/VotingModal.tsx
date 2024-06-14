@@ -1,9 +1,7 @@
-import { useAtom } from 'jotai';
 import { ChangeEvent, DragEvent, useState } from 'react';
 import Upload from '~/assets/icons/upload.svg?react';
 import Progress from '~/assets/icons/progress.svg?react';
 import { Button, Modal, ToggleInput } from '~/components';
-import { kernelClientAtomKey } from '~/libs/atom';
 import { useVoting } from '~/libs/hooks/useVoting';
 import { Candidate, Vote, Ballot } from '~/libs/types';
 
@@ -25,7 +23,6 @@ export function BallotValidationModal({
   const [selectedCandidate, setSelectedCandidate] = useState<number | null>(
     null,
   );
-  const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
   const { validateBallot, finalVote } = useVoting();
 
   const uploadBallot = async (file?: File) => {
@@ -63,8 +60,8 @@ export function BallotValidationModal({
 
   const onFinalVote = async () => {
     setLoading(true);
-    if (kernelClientAtom && ballot && selectedCandidate !== null) {
-      await finalVote(kernelClientAtom, ballot, selectedCandidate);
+    if (ballot && selectedCandidate !== null) {
+      await finalVote(ballot, selectedCandidate);
     }
 
     setLoading(false);

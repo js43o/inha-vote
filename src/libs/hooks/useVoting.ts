@@ -4,12 +4,11 @@ import wc from '~/libs/circuit/witness_calculator.js';
 import {
   BN256ToBin,
   BN256ToHex,
-  getRandomFutureDate,
   reverseCoordinate,
   getFormattedDateString,
   BNToDecimal,
 } from '~/libs/utils';
-import { CONTRACT, ONE_DAY_MS, ONE_HOUR_MS } from '~/libs/constants';
+import { CONTRACT } from '~/libs/constants';
 import { Ballot } from '~/libs/types';
 import { encodeFunctionData, parseAbi } from 'viem';
 import { bundlerActions } from 'permissionless';
@@ -92,11 +91,7 @@ export function useVoting() {
     }
   };
 
-  const finalVote = async (
-    kernelClient: KernelAccountClient<ENTRYPOINT_ADDRESS_V07_TYPE>,
-    ballot: Ballot,
-    index: number,
-  ) => {
+  const finalVote = async (ballot: Ballot, index: number) => {
     try {
       const receipt = await getRecieptOnChain(ballot.txHash);
       if (!receipt) {
