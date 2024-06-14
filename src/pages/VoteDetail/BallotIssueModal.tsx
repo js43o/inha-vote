@@ -34,7 +34,7 @@ export function BallotIssueModal({
     }
 
     setLoading(true);
-    const response = await preVote(kernelClientAtom, from);
+    const response = await preVote(kernelClientAtom /*, from */);
     if (!response) return;
 
     const { votingAvailableDate, contents } = response;

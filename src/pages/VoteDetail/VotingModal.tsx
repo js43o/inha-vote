@@ -14,7 +14,6 @@ type BallotValidationModalProps = {
 };
 
 export function BallotValidationModal({
-  vote,
   candidates,
   visible,
   onClose,

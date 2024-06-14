@@ -23,7 +23,7 @@ const CRYPTO_SECRET = import.meta.env.VITE_CRYPTO_SECRET;
 export function useVoting() {
   const preVote = async (
     kernelClient: KernelAccountClient<ENTRYPOINT_ADDRESS_V07_TYPE>,
-    startDate: Date,
+    // startDate: Date,
   ) => {
     if (!kernelClient) {
       console.log('잘못된 커널 클라이언트');
