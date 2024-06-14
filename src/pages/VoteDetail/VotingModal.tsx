@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai';
 import { ChangeEvent, DragEvent, useState } from 'react';
 import Upload from '~/assets/icons/upload.svg?react';
+import Progress from '~/assets/icons/progress.svg?react';
 import { Button, Modal, ToggleInput } from '~/components';
 import { kernelClientAtomKey } from '~/libs/atom';
 import { useVoting } from '~/libs/hooks/useVoting';
@@ -18,8 +19,9 @@ export function BallotValidationModal({
   visible,
   onClose,
 }: BallotValidationModalProps) {
-  const [ballot, setBallot] = useState<Ballot | null>(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [ballot, setBallot] = useState<Ballot | null>(null);
   const [selectedCandidate, setSelectedCandidate] = useState<number | null>(
     null,
   );
@@ -38,7 +40,6 @@ export function BallotValidationModal({
     }
 
     console.log(ballot);
-
     setBallot(ballot);
   };
 
@@ -61,10 +62,12 @@ export function BallotValidationModal({
   };
 
   const onFinalVote = async () => {
+    setLoading(true);
     if (kernelClientAtom && ballot && selectedCandidate !== null) {
       await finalVote(kernelClientAtom, ballot, selectedCandidate);
     }
 
+    setLoading(false);
     onCloseModal();
   };
 
@@ -144,10 +147,20 @@ export function BallotValidationModal({
               fullWidth
             />
             <Button
-              text="결정"
+              text={loading ? '처리 중...' : '결정'}
               fullWidth
-              disabled={selectedCandidate === null}
               onClick={onFinalVote}
+              icon={
+                loading ? (
+                  <Progress
+                    width={20}
+                    height={20}
+                    fill="white"
+                    className="animate-spin-fast"
+                  />
+                ) : undefined
+              }
+              disabled={selectedCandidate === null || loading}
             />
           </div>
         </>

@@ -26,7 +26,6 @@ export function VoteDetailPage() {
   const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);
   const [showBallotValidationModal, setShowBallotValidationModal] =
     useState(false);
-  const [showVotingModal, setShowVotingModal] = useState(false);
   const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
 
   useEffect(() => {
@@ -50,6 +49,20 @@ export function VoteDetailPage() {
 
     fetchData();
   }, [kernelClientAtom, voteId, navigate]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!kernelClientAtom || !kernelClientAtom.account) {
+        return navigate('/login');
+      }
+
+      const address = kernelClientAtom.account?.address;
+      const issued = await checkBallotIssuedOnchain(address);
+      setIssued(issued);
+    };
+
+    fetchData();
+  }, [showBallotIssueModal, kernelClientAtom, navigate]);
 
   if (!voteId || !vote || !candidates) {
     return <div>Loading...</div>;
