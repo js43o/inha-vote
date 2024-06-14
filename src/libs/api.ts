@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Candidate, SimpleVoteStatistics, Vote, VoteStatistics } from './types';
+import { CONTRACT } from './constants';
 
 export const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -164,4 +165,40 @@ export const registerStudentNumberToOnChain = async (studentNumber: string) => {
   } catch (e) {
     console.log(e);
   }
+};
+
+export const getRecieptOnChain = async (txHash: string) => {
+  const response = await axios({
+    url: import.meta.env.VITE_RPC,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      jsonrpc: '2.0',
+      method: 'eth_getTransactionReceipt',
+      params: [txHash],
+      id: 1,
+    },
+  });
+
+  return response.data.result;
+};
+
+export const getTornado = async (
+  callInputs: (string[] | bigint[][])[],
+  tokenAddress: string,
+  candidateAddress: string,
+) => {
+  const response = await axios({
+    url: `${import.meta.env.VITE_CHAIN_API_URL}finalVote`,
+    method: 'POST',
+    data: {
+      callInputs,
+      tokenAddress,
+      candidateAddress,
+    },
+  });
+
+  return response.data;
 };

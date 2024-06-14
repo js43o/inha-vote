@@ -11,26 +11,43 @@ import { BallotIssueModal } from './BallotIssueModal';
 import { BallotValidationModal } from './VotingModal';
 import { RemainingTime } from './RemainingTime';
 import { StatisticsSection } from './StatisticsSection';
+import { checkBallotIssuedOnchain } from '~/libs/contract';
+import { useAtom } from 'jotai';
+import { kernelClientAtomKey } from '~/libs/atom';
 
 export function VoteDetailPage() {
   const navigate = useNavigate();
   const { id: voteId } = useParams();
   const [vote, setVote] = useState<Vote>();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
-
+  const participated = false; // 투표 여부 (알 수 없음)
   const [issued, setIssued] = useState(false); // 온체인 투표권 발급 여부
-  const [participated, setParticipated] = useState(false); // 온체인 투표 여부
 
   const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);
   const [showBallotValidationModal, setShowBallotValidationModal] =
     useState(false);
   const [showVotingModal, setShowVotingModal] = useState(false);
+  const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
 
   useEffect(() => {
-    if (!voteId) return;
-    getMockVote(Number(voteId)).then((vote) => setVote(vote));
-    getMockCandidateList().then((candidates) => setCandidates(candidates));
-  }, [voteId]);
+    const fetchData = async () => {
+      if (!voteId) return;
+      if (!kernelClientAtom || !kernelClientAtom.account) {
+        return navigate('/login');
+      }
+
+      const vote = await getMockVote(Number(voteId));
+      setVote(vote);
+      const candidates = await getMockCandidateList();
+      setCandidates(candidates);
+
+      const address = kernelClientAtom.account?.address;
+      const issued = await checkBallotIssuedOnchain(address);
+      setIssued(issued);
+    };
+
+    fetchData();
+  }, [kernelClientAtom, voteId]);
 
   if (!voteId || !vote || !candidates) {
     return <div>Loading...</div>;

@@ -1,4 +1,4 @@
-import { randomBytes, toBigInt } from 'ethers';
+import { randomBytes, toBigInt, Interface } from 'ethers';
 import CryptoJS from 'crypto-js';
 import wc from '~/libs/circuit/witness_calculator.js';
 import {
@@ -7,6 +7,7 @@ import {
   getRandomFutureDate,
   reverseCoordinate,
   getFormattedDateString,
+  BNToDecimal,
 } from '~/libs/utils';
 import { CONTRACT, ONE_DAY_MS, ONE_HOUR_MS } from '~/libs/constants';
 import { Ballot } from '~/libs/types';
@@ -14,6 +15,8 @@ import { encodeFunctionData, parseAbi } from 'viem';
 import { bundlerActions } from 'permissionless';
 import { KernelAccountClient } from '@zerodev/sdk';
 import { ENTRYPOINT_ADDRESS_V07_TYPE } from 'permissionless/types';
+import { getCandidateAddressOnchain } from '../contract';
+import { getRecieptOnChain, getTornado } from '../api';
 
 const CRYPTO_SECRET = import.meta.env.VITE_CRYPTO_SECRET;
 
@@ -63,17 +66,17 @@ export function useVoting() {
     });
 
     try {
-      const votingAvailableDate =
-        startDate < new Date()
+      const votingAvailableDate = new Date();
+      /* startDate < new Date()
           ? getRandomFutureDate(ONE_DAY_MS * 3, ONE_HOUR_MS)
-          : startDate;
+          : startDate; */
 
       const ballot: Ballot = {
         nullifierHash: nullifierHash.toString(),
         secret: secret.toString(),
         nullifier: nullifier.toString(),
         commitment: commitment.toString(),
-        txHash: '',
+        txHash: receipt.receipt.transactionHash,
         votingAvailableDate,
       };
 
@@ -89,8 +92,102 @@ export function useVoting() {
     }
   };
 
-  const finalVote = async (ballot: Ballot) => {
+  const finalVote = async (
+    kernelClient: KernelAccountClient<ENTRYPOINT_ADDRESS_V07_TYPE>,
+    ballot: Ballot,
+    index: number,
+  ) => {
     try {
+      const receipt = await getRecieptOnChain(ballot.txHash);
+      if (!receipt) {
+        throw 'empty-receipt';
+      }
+
+      console.log(receipt.logs);
+      const log = receipt.logs[5];
+
+      const tornadoABI = parseAbi([
+        `function withdraw(uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[2] memory input, address tokenAddress, address candidate) external`,
+        `function deposit(uint256 _commitment, address tokenAddress) external`,
+        `event Deposit(uint256 root, uint256[10] hashPairings, uint8[10] pairDirection)`,
+        `event Withdrawal(address to, uint256 nullifierHash)`,
+      ]);
+
+      // ABI 추출
+      // const tornadoABI = tornadoArtifact.abi;
+
+      // 인터페이스 생성
+      const tornadoInterface = new Interface(tornadoABI);
+      const decodedData = tornadoInterface.decodeEventLog(
+        'Deposit',
+        log.data,
+        log.topics,
+      );
+
+      const address = await getCandidateAddressOnchain(index);
+      const proofInput = {
+        root: BNToDecimal(decodedData.root),
+        nullifierHash: ballot.nullifierHash,
+        recipient: BNToDecimal(address),
+        secret: BN256ToBin(ballot.secret).split(''),
+        nullifier: BN256ToBin(ballot.nullifier).split(''),
+        hashPairings: decodedData.hashPairings.map(BNToDecimal),
+        hashDirections: decodedData.pairDirection,
+      };
+      console.log(proofInput);
+
+      const SnarkJS = window['snarkjs'];
+      const { proof, publicSignals } = await SnarkJS.groth16.fullProve(
+        proofInput,
+        '/withdraw.wasm',
+        '/setup_final.zkey',
+      );
+
+      const callInputs = [
+        proof.pi_a.slice(0, 2).map(BN256ToHex).map(BigInt),
+        proof.pi_b
+          .slice(0, 2)
+          .map((row) => reverseCoordinate(row.map(BN256ToHex))),
+        proof.pi_c.slice(0, 2).map(BN256ToHex),
+        publicSignals.slice(0, 2).map(BN256ToHex),
+      ];
+
+      // console.log(callInputs);
+      /* 
+      const tx = await getTornado(callInputs, CONTRACT.TOKEN.ADDRESS, address);
+      console.log(tx); */
+
+      const userOpHash = await kernelClient.sendUserOperation({
+        userOperation: {
+          callData: await kernelClient.account!.encodeCallData({
+            to: CONTRACT.TORNADO.ADDRESS as `0x${string}`,
+            value: BigInt(0),
+            data: encodeFunctionData({
+              abi: CONTRACT.TORNADO.ABI,
+              functionName: 'withdraw',
+              args: [
+                callInputs[0] as [bigint, bigint],
+                callInputs[1] as [[bigint, bigint], [bigint, bigint]],
+                callInputs[2] as [bigint, bigint],
+                callInputs[3] as [bigint, bigint],
+                CONTRACT.TOKEN.ADDRESS as `0x${string}`,
+                address,
+              ],
+            }),
+          }),
+        },
+      });
+      const bundlerClient = kernelClient.extend(
+        bundlerActions(kernelClient.account!.entryPoint),
+      );
+      const receipt2 = await bundlerClient.waitForUserOperationReceipt({
+        hash: userOpHash,
+      });
+      console.log(receipt2);
+
+      // const callData = tornadoInterface.encodeFunctionData('withdraw', [42]);
+
+      ///////////////////////////////////////////////////////////////
       /*
       receipt = await window.ethereum.request({
         method: 'eth_getTransactionReceipt',
@@ -106,10 +203,11 @@ export function useVoting() {
         log.data,
         log.topics,
       );
-      */
+      
 
       const SnarkJS = window['snarkjs'];
 
+      ethers.TransactionReceipt;
       const proofInput = {
         // root: BNToDecimal(decodedData.root),
         nullifierHash: ballot.nullifierHash,
@@ -137,7 +235,6 @@ export function useVoting() {
 
       console.log(callInputs);
 
-      /*
       const callData = tornadoInterface.encodeFunctionData(
         'withdraw',
         callInputs,

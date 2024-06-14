@@ -1,6 +1,8 @@
+import { useAtom } from 'jotai';
 import { ChangeEvent, DragEvent, useState } from 'react';
 import Upload from '~/assets/icons/upload.svg?react';
 import { Button, Modal, ToggleInput } from '~/components';
+import { kernelClientAtomKey } from '~/libs/atom';
 import { useVoting } from '~/libs/hooks/useVoting';
 import { Candidate, Vote, Ballot } from '~/libs/types';
 
@@ -22,6 +24,7 @@ export function BallotValidationModal({
   const [selectedCandidate, setSelectedCandidate] = useState<number | null>(
     null,
   );
+  const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
   const { validateBallot, finalVote } = useVoting();
 
   const uploadBallot = async (file?: File) => {
@@ -34,6 +37,8 @@ export function BallotValidationModal({
       setError(ballot);
       return;
     }
+
+    console.log(ballot);
 
     setBallot(ballot);
   };
@@ -56,9 +61,9 @@ export function BallotValidationModal({
     onClose();
   };
 
-  const onFinalVote = () => {
-    if (ballot) {
-      finalVote(ballot);
+  const onFinalVote = async () => {
+    if (kernelClientAtom && ballot && selectedCandidate !== null) {
+      await finalVote(kernelClientAtom, ballot, selectedCandidate);
     }
 
     onCloseModal();
@@ -104,7 +109,7 @@ export function BallotValidationModal({
         <>
           <div className="text-2xl font-bold">최종 후보 선택</div>
           <ul className="w-full flex flex-col gap-4">
-            {candidates.map((candidate) => (
+            {candidates.map((candidate, idx) => (
               <li key={candidate.id} className="flex items-center gap-4">
                 <img
                   src={candidate.imgSrc}
@@ -116,8 +121,8 @@ export function BallotValidationModal({
                 </div>
                 <ToggleInput
                   text="선택"
-                  checked={selectedCandidate === candidate.id}
-                  onToggle={() => onSelectCandidate(candidate.id)}
+                  checked={selectedCandidate === idx}
+                  onToggle={() => onSelectCandidate(idx)}
                 />
               </li>
             ))}
