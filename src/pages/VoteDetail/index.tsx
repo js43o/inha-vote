@@ -47,7 +47,7 @@ export function VoteDetailPage() {
     };
 
     fetchData();
-  }, [kernelClientAtom, voteId]);
+  }, [kernelClientAtom, voteId, navigate]);
 
   if (!voteId || !vote || !candidates) {
     return <div>Loading...</div>;
@@ -127,7 +127,7 @@ export function VoteDetailPage() {
           <StatisticsSection voteId={Number(voteId)} candidates={candidates} />
         ) : (
           <div className="flex flex-col items-center gap-2 mt-16 px-4 md:px-8">
-            {!participated && !issued ? (
+            {!issued ? (
               <>
                 <div>위 내용을 모두 확인하셨나요?</div>
                 <Button

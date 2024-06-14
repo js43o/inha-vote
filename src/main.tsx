@@ -9,7 +9,7 @@ import {
   VoteDetailPage,
   RegisterPage,
   LoginPage,
-  TestPage,
+  AuthCheck,
   NoPage,
 } from '~/pages';
 import { Layout } from './components/Layout';
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
   },
   { path: 'register', element: <RegisterPage /> },
   { path: 'login', element: <LoginPage /> },
-  { path: '/', element: <TestPage /> },
+  { path: '/', element: <AuthCheck /> },
   { path: '*', element: <NoPage /> },
 ]);
 
