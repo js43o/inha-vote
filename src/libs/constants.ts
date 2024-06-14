@@ -24,7 +24,7 @@ export const DAY_NAME_KOR = ['일', '월', '화', '수', '목', '금', '토'];
 
 export const CONTRACT = {
   VOTING_BOX: {
-    ADDRESS: '0x1f39991E1C674f9072E184F99faa8e0AF502E86F',
+    ADDRESS: '0x6a779Ee772D8244C34BdDd9d912cc7932D297620',
     ABI: parseAbi([
       'function studentSaltTable(uint) public view returns (uint)',
       'function candidateTable(uint) public view returns (address)',
@@ -32,16 +32,17 @@ export const CONTRACT = {
     ]),
   },
   TOKEN: {
-    ADDRESS: '0x2ead8675Ff1122dCc53B0Ce7C45bf956e289A13c',
-    ABI: parseAbi(['function check(address) public view returns(bool)']),
+    ADDRESS: '0x599Aac16ade739afbEE573DCf7349152632d6f8A',
+    // ABI: parseAbi([]),
   },
   TORNADO: {
-    ADDRESS: '0x7c0794FfAa1cF32bF09621FceC8314236b76C0A1',
+    ADDRESS: '0x0AD76d72c849991178B4A98449eECE90859542Db',
     ABI: parseAbi([
       'function deposit(uint256 _commitment, address tokenAddress) external',
       `function withdraw(uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[2] memory input, address tokenAddress, address candidate) external`,
       `event Deposit(uint256 root, uint256[10] hashPairings, uint8[10] pairDirection)`,
       `event Withdrawal(address to, uint256 nullifierHash)`,
+      'function check(address, address) public view returns(bool)',
     ]),
   },
 };

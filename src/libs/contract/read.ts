@@ -25,10 +25,10 @@ export async function getCandidateAddressOnchain(index: number) {
 
 export async function checkBallotIssuedOnchain(address: `0x${string}`) {
   const data = await getPublicClient().readContract({
-    address: CONTRACT.TOKEN.ADDRESS as `0x${string}`,
-    abi: CONTRACT.TOKEN.ABI,
+    address: CONTRACT.TORNADO.ADDRESS as `0x${string}`,
+    abi: CONTRACT.TORNADO.ABI,
     functionName: 'check',
-    args: [address],
+    args: [address, CONTRACT.TOKEN.ADDRESS as `0x${string}`],
   });
 
   return data;

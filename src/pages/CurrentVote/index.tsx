@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import Sort from '~/assets/icons/sort.svg?react';
 import { SortBy, Vote } from '~/libs/types';
-import { VoteItem, Menu, ToggleInput, SortType } from '~/components';
-import { useAtom } from 'jotai';
-import { kernelClientAtomKey } from '~/libs/atom';
+import { VoteItem, ToggleInput, SortType, NoContents } from '~/components';
 import { getVotes } from '~/libs/api';
 
 export function CurrentVotePage() {
@@ -11,7 +9,6 @@ export function CurrentVotePage() {
   const [showOnlyParticiable, setShowOnlyParticiable] = useState(false);
   const [votes, setVotes] = useState<Vote[]>([]);
   const [participatedVotes, setParticipatedVotes] = useState<number[]>([5]); // 온체인 투표 여부
-  const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
 
   const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
 
@@ -69,18 +66,22 @@ export function CurrentVotePage() {
         </div>
       </div>
       <ul className="flex flex-col gap-4">
-        {votes
-          .filter(
-            (vote) =>
-              !showOnlyParticiable || !participatedVotes.includes(vote.id),
-          )
-          .map((vote) => (
-            <VoteItem
-              key={vote.id}
-              vote={vote}
-              participated={participatedVotes.includes(vote.id)}
-            />
-          ))}
+        {votes.length > 0 ? (
+          votes
+            .filter(
+              (vote) =>
+                !showOnlyParticiable || !participatedVotes.includes(vote.id),
+            )
+            .map((vote) => (
+              <VoteItem
+                key={vote.id}
+                vote={vote}
+                participated={participatedVotes.includes(vote.id)}
+              />
+            ))
+        ) : (
+          <NoContents />
+        )}
       </ul>
     </main>
   );

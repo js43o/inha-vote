@@ -7,3 +7,4 @@ export * from './SortType';
 export * from './Input';
 export * from './Select';
 export * from './Divider';
+export * from './NoContents';
