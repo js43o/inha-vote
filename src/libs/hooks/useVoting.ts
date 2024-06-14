@@ -100,7 +100,7 @@ export function useVoting() {
     try {
       const receipt = await getRecieptOnChain(ballot.txHash);
       if (!receipt) {
-        throw 'empty-receipt';
+        throw new Error('empty-receipt');
       }
 
       console.log(receipt.logs);
@@ -113,10 +113,6 @@ export function useVoting() {
         `event Withdrawal(address to, uint256 nullifierHash)`,
       ]);
 
-      // ABI 추출
-      // const tornadoABI = tornadoArtifact.abi;
-
-      // 인터페이스 생성
       const tornadoInterface = new Interface(tornadoABI);
       const decodedData = tornadoInterface.decodeEventLog(
         'Deposit',
@@ -152,11 +148,6 @@ export function useVoting() {
         publicSignals.slice(0, 2).map(BN256ToHex),
       ];
 
-      // console.log(callInputs);
-      /* 
-      const tx = await getTornado(callInputs, CONTRACT.TOKEN.ADDRESS, address);
-      console.log(tx); */
-
       const userOpHash = await kernelClient.sendUserOperation({
         userOperation: {
           callData: await kernelClient.account!.encodeCallData({
@@ -184,86 +175,6 @@ export function useVoting() {
         hash: userOpHash,
       });
       console.log(receipt2);
-
-      // const callData = tornadoInterface.encodeFunctionData('withdraw', [42]);
-
-      ///////////////////////////////////////////////////////////////
-      /*
-      receipt = await window.ethereum.request({
-        method: 'eth_getTransactionReceipt',
-        params: [proofElements.txHash],
-      });
-      if (!receipt) {
-        throw 'empty-receipt';
-      }
-
-      const log = receipt.logs[0];
-      const decodedData = tornadoInterface.decodeEventLog(
-        'Deposit',
-        log.data,
-        log.topics,
-      );
-      
-
-      const SnarkJS = window['snarkjs'];
-
-      ethers.TransactionReceipt;
-      const proofInput = {
-        // root: BNToDecimal(decodedData.root),
-        nullifierHash: ballot.nullifierHash,
-        // recipient: BNToDecimal(account.address),
-        secret: BN256ToBin(ballot.secret).split(''),
-        nullifier: BN256ToBin(ballot.nullifier).split(''),
-        // hashPairings: decodedData.hashPairings.map((n) => BNToDecimal(n)),
-        // hashDirections: decodedData.pairDirection,
-      };
-
-      const { proof, publicSignals } = await SnarkJS.groth16.fullProve(
-        proofInput,
-        '/withdraw.wasm',
-        '/setup_final.zkey',
-      );
-
-      const callInputs = [
-        proof.pi_a.slice(0, 2).map(BN256ToHex),
-        proof.pi_b
-          .slice(0, 2)
-          .map((row) => reverseCoordinate(row.map(BN256ToHex))),
-        proof.pi_c.slice(0, 2).map(BN256ToHex),
-        publicSignals.slice(0, 2).map(BN256ToHex),
-      ];
-
-      console.log(callInputs);
-
-      const callData = tornadoInterface.encodeFunctionData(
-        'withdraw',
-        callInputs,
-      );
-      const tx = {
-        to: tornadoAddress,
-        from: account.address,
-        data: callData,
-      };
-      const txHash = await window.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [tx],
-      });
-
-      var receipt;
-      while (!receipt) {
-        receipt = await window.ethereum.request({
-          method: 'eth_getTransactionReceipt',
-          params: [txHash],
-        });
-        await new Promise((resolve, reject) => {
-          setTimeout(resolve, 1000);
-        });
-      }
-
-      if (!!receipt) {
-        updateWithdrawalSuccessful(true);
-      }
-    */
     } catch (e) {
       console.log(e);
     }
