@@ -1,4 +1,4 @@
-import { CONTRACT } from '../constants';
+import { CONTRACT } from '~/libs/constants';
 import { getPublicClient } from './client';
 
 export async function getSaltOnchain(studentNumber: string) {

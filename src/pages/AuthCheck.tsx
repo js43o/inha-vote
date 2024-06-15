@@ -1,10 +1,10 @@
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { kernelClientAtomKey } from '~/libs/atom';
 
 export function AuthCheck() {
-  const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
+  const kernelClientAtom = useAtomValue(kernelClientAtomKey);
   const navigate = useNavigate();
 
   useEffect(() => {

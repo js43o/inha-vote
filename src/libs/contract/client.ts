@@ -19,15 +19,6 @@ export function getPublicClient() {
   });
 }
 
-/*   const test = async () => {
-    const data = await getPublicClient().readContract({
-      address: VOTING_BOX_ADDRESS,
-      abi: VOTING_BOX_CONTRACT_ABI,
-      functionName: 'owner',
-    });
-    console.log('data:', data);
-  }; */
-
 export async function getKernelClient(
   passkeyValidator: KernelValidator<typeof entryPoint, string>,
 ) {

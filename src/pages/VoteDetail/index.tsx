@@ -11,7 +11,7 @@ import { BallotValidationModal } from './VotingModal';
 import { RemainingTime } from './RemainingTime';
 import { StatisticsSection } from './StatisticsSection';
 import { checkBallotIssuedOnchain } from '~/libs/contract';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { kernelClientAtomKey } from '~/libs/atom';
 import { getCandidates, getVoteRate, getVotes } from '~/libs/api';
 
@@ -27,7 +27,7 @@ export function VoteDetailPage() {
   const [showBallotIssueModal, setShowBallotIssueModal] = useState(false);
   const [showBallotValidationModal, setShowBallotValidationModal] =
     useState(false);
-  const [kernelClientAtom, setKernelClientAtom] = useAtom(kernelClientAtomKey);
+  const kernelClientAtom = useAtomValue(kernelClientAtomKey);
 
   useEffect(() => {
     const fetchData = async () => {

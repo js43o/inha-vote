@@ -14,8 +14,8 @@ import { encodeFunctionData, parseAbi } from 'viem';
 import { bundlerActions } from 'permissionless';
 import { KernelAccountClient } from '@zerodev/sdk';
 import { ENTRYPOINT_ADDRESS_V07_TYPE } from 'permissionless/types';
-import { getCandidateAddressOnchain } from '../contract';
-import { finalVoteOnChain, getRecieptOnChain } from '../api';
+import { getCandidateAddressOnchain } from '~/libs/contract';
+import { finalVoteOnChain, getRecieptOnChain } from '~/libs/api';
 
 const CRYPTO_SECRET = import.meta.env.VITE_CRYPTO_SECRET;
 
@@ -24,6 +24,7 @@ export function useVoting() {
     kernelClient: KernelAccountClient<ENTRYPOINT_ADDRESS_V07_TYPE>,
     // startDate: Date,
   ) => {
+    console.log('##### Pre-Vote #####');
     if (!kernelClient) {
       console.log('잘못된 커널 클라이언트');
       return;
@@ -33,17 +34,26 @@ export function useVoting() {
     const buffer = await res.arrayBuffer();
     const depositWC = await wc(buffer);
 
+    console.log('1. secret 및 nullifier 생성');
     const secret = toBigInt(randomBytes(32));
     const nullifier = toBigInt(randomBytes(32));
+    console.log(
+      `secret = ${secret.toString().slice(0, 8)}..., nullifier = ${nullifier.toString().slice(0, 8)}...`,
+    );
     const input = {
       secret: BN256ToBin(secret).split(''),
       nullifier: BN256ToBin(nullifier).split(''),
     };
+    console.log('2. commitment 및 nullifierHash 생성');
     const [_, commitment, nullifierHash] = await depositWC.calculateWitness(
       input,
       0,
     );
+    console.log(
+      `commitment = ${commitment.toString().slice(0, 8)}..., nullifierHash = ${nullifierHash.toString().slice(0, 8)}...`,
+    );
 
+    console.log('3. 트랜잭션 (자신의 토큰을 Mixer에 송금)');
     const userOpHash = await kernelClient.sendUserOperation({
       userOperation: {
         callData: await kernelClient.account!.encodeCallData({
@@ -63,6 +73,7 @@ export function useVoting() {
     const receipt = await bundlerClient.waitForUserOperationReceipt({
       hash: userOpHash,
     });
+    console.log('투표권 발급 성공!');
 
     try {
       const votingAvailableDate = new Date();
@@ -93,30 +104,26 @@ export function useVoting() {
 
   const finalVote = async (ballot: Ballot, index: number) => {
     try {
+      console.log('##### Final-Vote #####');
+      console.log('1. 투표권 유효성 확인');
       const receipt = await getRecieptOnChain(ballot.txHash);
       if (!receipt) {
+        console.log('유효하지 않은 투표권입니다.');
         throw new Error('empty-receipt');
       }
 
-      console.log(receipt.logs);
       const log = receipt.logs[5];
-
-      const tornadoABI = parseAbi([
-        `function withdraw(uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[2] memory input, address tokenAddress, address candidate) external`,
-        `function deposit(uint256 _commitment, address tokenAddress) external`,
-        `event Deposit(uint256 root, uint256[10] hashPairings, uint8[10] pairDirection)`,
-        `event Withdrawal(address to, uint256 nullifierHash)`,
-      ]);
-
-      const tornadoInterface = new Interface(tornadoABI);
+      const tornadoInterface = new Interface(CONTRACT.TORNADO.ABI);
       const decodedData = tornadoInterface.decodeEventLog(
         'Deposit',
         log.data,
         log.topics,
       );
 
+      console.log('2. 투표 대상 후보의 address 조회');
       const address = await getCandidateAddressOnchain(index);
-      console.log(address);
+      console.log(`address = ${address}`);
+
       const proofInput = {
         root: BNToDecimal(decodedData.root),
         nullifierHash: ballot.nullifierHash,
@@ -126,14 +133,15 @@ export function useVoting() {
         hashPairings: decodedData.hashPairings.map(BNToDecimal),
         hashDirections: decodedData.pairDirection,
       };
-      console.log(proofInput);
 
+      console.log('3. proof 객체 생성');
       const SnarkJS = window['snarkjs'];
       const { proof, publicSignals } = await SnarkJS.groth16.fullProve(
         proofInput,
         '/withdraw.wasm',
         '/setup_final.zkey',
       );
+      console.log(`proof = ${proofInput}`);
 
       const callInputs = [
         proof.pi_a.slice(0, 2).map(BN256ToHex),
@@ -145,40 +153,14 @@ export function useVoting() {
         publicSignals.slice(0, 2).map(BN256ToHex),
       ];
 
+      console.log('4. 트랜잭션 (Mixer에 송금했던 토큰을 후보자로 인출)');
       const response = await finalVoteOnChain(
         callInputs,
         CONTRACT.TOKEN.ADDRESS,
         address,
       );
       return response;
-
-      /* const userOpHash = await kernelClient.sendUserOperation({
-        userOperation: {
-          callData: await kernelClient.account!.encodeCallData({
-            to: CONTRACT.TORNADO.ADDRESS as `0x${string}`,
-            value: BigInt(0),
-            data: encodeFunctionData({
-              abi: CONTRACT.TORNADO.ABI,
-              functionName: 'withdraw',
-              args: [
-                callInputs[0] as [bigint, bigint],
-                callInputs[1] as [[bigint, bigint], [bigint, bigint]],
-                callInputs[2] as [bigint, bigint],
-                callInputs[3] as [bigint, bigint],
-                CONTRACT.TOKEN.ADDRESS as `0x${string}`,
-                address,
-              ],
-            }),
-          }),
-        },
-      });
-      const bundlerClient = kernelClient.extend(
-        bundlerActions(kernelClient.account!.entryPoint),
-      );
-      const receipt2 = await bundlerClient.waitForUserOperationReceipt({
-        hash: userOpHash,
-      });
-      console.log(receipt2); */
+      console.log('투표 성공!');
     } catch (e) {
       console.log(e);
     }

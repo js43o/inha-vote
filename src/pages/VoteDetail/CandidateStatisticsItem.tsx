@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Candidate, CandidateStatistics } from '~/libs/types';
 import { StatisticsChart } from './StatisticsChart';
 import { Divider } from '~/components';
-import { getNumberOfVoteOfCandidates } from '~/libs/api';
-import { getNumberOfVoteOnChain } from '~/libs/contract';
 
 type CandidateStatisticsItemProps = Pick<
   Candidate,
@@ -15,7 +13,7 @@ export function CandidateStatisticsItem({
   name,
   imgSrc,
   allTotalNumberOfVotes,
-  statistics: { totalNumberOfVotes, numberOfVotesBy },
+  statistics: { numberOfVotesBy },
 }: CandidateStatisticsItemProps) {
   const [showDetail, setShowDetail] = useState(false);
 
