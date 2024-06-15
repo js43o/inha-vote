@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Candidate, SimpleVoteStatistics, Vote } from './types';
+import { getNumberOfVoteOnChain } from './contract';
 
 export const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -202,4 +203,27 @@ export const finalVoteOnChain = async (
   });
 
   return response.status;
+};
+
+export const getNumberOfCandidates = async (voteId: number) => {
+  const candidates = await getCandidates(voteId);
+  if (!candidates) return;
+
+  const users = await Promise.all(
+    candidates.map((candidate) => getUser(candidate.id.toString())),
+  );
+  const numberOfVoteOfCandidates = await Promise.all(
+    users
+      .filter((user) => !!user)
+      .map((user) => getNumberOfVoteOnChain(user!.address as `0x${string}`)),
+  );
+
+  return numberOfVoteOfCandidates;
+};
+
+export const getVoteRate = async (voteId: number) => {
+  const numberOfVoteOfCandidates = await getNumberOfCandidates(voteId);
+  if (!numberOfVoteOfCandidates) return;
+
+  return numberOfVoteOfCandidates.reduce((acc, cur) => acc + cur, 0);
 };

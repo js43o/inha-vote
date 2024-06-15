@@ -8,11 +8,13 @@ import { getFormattedDateString } from '~/libs/utils';
 type VoteItemProps = {
   vote: Vote;
   participated?: boolean;
+  voteRate?: number;
 };
 
 export function VoteItem({
-  vote: { id, title, from, to, votingRate },
+  vote: { id, title, from, to },
   participated,
+  voteRate = 0,
 }: VoteItemProps) {
   const currentDate = new Date();
   const status =
@@ -40,7 +42,7 @@ export function VoteItem({
         </div>
         <div className="gap-0 flex flex-col sm:flex-row sm:gap-1 text-gray-500 text-sm sm:text-base">
           <p className="flex gap-2">
-            <span className="sm:hidden font-bold">투표 시작</span>
+            <span className="sm:hidden font-semibold">투표 시작</span>
             {getFormattedDateString(from, 'DATE_TIME_KOR')}
           </p>
           <p className="flex gap-2 sm:gap-1">
@@ -51,10 +53,9 @@ export function VoteItem({
         </div>
         {status !== 'planned' && (
           <div
-            className={`${status === 'closed' ? 'text-gray-500' : 'text-blue-500'} font-semibold text-sm sm:text-base`}
+            className={`${status === 'closed' ? 'text-gray-500' : 'text-blue-500'} font-bold text-sm sm:text-base`}
           >
-            {status === 'closed' ? '최종 투표율' : '실시간 투표율'} {votingRate}
-            %
+            {status === 'closed' ? '최종 투표율' : '실시간 투표율'} {voteRate}%
           </div>
         )}
       </div>

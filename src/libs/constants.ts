@@ -33,7 +33,9 @@ export const CONTRACT = {
   },
   TOKEN: {
     ADDRESS: '0x599Aac16ade739afbEE573DCf7349152632d6f8A',
-    // ABI: parseAbi([]),
+    ABI: parseAbi([
+      'function balanceOf(address account) external view returns (uint256)',
+    ]),
   },
   TORNADO: {
     ADDRESS: '0x0AD76d72c849991178B4A98449eECE90859542Db',

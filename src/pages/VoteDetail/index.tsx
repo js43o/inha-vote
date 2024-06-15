@@ -13,12 +13,13 @@ import { StatisticsSection } from './StatisticsSection';
 import { checkBallotIssuedOnchain } from '~/libs/contract';
 import { useAtom } from 'jotai';
 import { kernelClientAtomKey } from '~/libs/atom';
-import { getCandidates, getVotes } from '~/libs/api';
+import { getCandidates, getVoteRate, getVotes } from '~/libs/api';
 
 export function VoteDetailPage() {
   const navigate = useNavigate();
   const { id: voteId } = useParams();
   const [vote, setVote] = useState<Vote>();
+  const [voteRate, setVoteRate] = useState<number>();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const participated = false; // 투표 여부 (알 수 없음)
   const [issued, setIssued] = useState(false); // 온체인 투표권 발급 여부
@@ -45,6 +46,8 @@ export function VoteDetailPage() {
       const address = kernelClientAtom.account?.address;
       const issued = await checkBallotIssuedOnchain(address);
       setIssued(issued);
+      const rate = await getVoteRate(Number(voteId));
+      setVoteRate(rate);
     };
 
     fetchData();
@@ -56,7 +59,6 @@ export function VoteDetailPage() {
         return navigate('/login');
       }
 
-      console.log('투표권 발급 여부 조회');
       const address = kernelClientAtom.account?.address;
       const issued = await checkBallotIssuedOnchain(address);
       setIssued(issued);
@@ -111,7 +113,7 @@ export function VoteDetailPage() {
             {getVoteStatus(vote) !== 'planned' && (
               <div className="font-semibold">
                 {getVoteStatus(vote) === 'current' ? '실시간' : '최종'} 투표율{' '}
-                {vote.votingRate}%
+                {voteRate}%
               </div>
             )}
           </div>

@@ -2,27 +2,36 @@ import { useEffect, useState } from 'react';
 import Sort from '~/assets/icons/sort.svg?react';
 import { SortBy, Vote } from '~/libs/types';
 import { VoteItem, ToggleInput, SortType, NoContents } from '~/components';
-import { getVotes } from '~/libs/api';
+import { getVoteRate, getVotes } from '~/libs/api';
+import { getNumberOfVoteOnChain } from '~/libs/contract';
 
 export function CurrentVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');
   const [showOnlyParticiable, setShowOnlyParticiable] = useState(false);
   const [votes, setVotes] = useState<Vote[]>([]);
-  const [participatedVotes, setParticipatedVotes] = useState<number[]>([5]); // 온체인 투표 여부
-
+  const [voteRates, setVoteRates] = useState<number[]>([]);
   const onChangeSortBy = (newSortBy: SortBy) => setSortBy(newSortBy);
 
   const toggleShowOnlyParticiable = () =>
     setShowOnlyParticiable(!showOnlyParticiable);
 
   useEffect(() => {
-    getVotes().then((votes) =>
-      setVotes(
+    const fetchData = async () => {
+      const votes = await getVotes();
+      const currentVotes =
         votes?.filter(
           (vote) => vote.from < new Date() && vote.to > new Date(),
-        ) || [],
-      ),
-    );
+        ) || [];
+      setVotes(currentVotes);
+      const rates = await Promise.all(
+        currentVotes.map((vote) => getVoteRate(vote.id)),
+      );
+      setVoteRates(
+        rates.filter((rate) => (rate === undefined ? 0 : rate)) as number[],
+      );
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -67,18 +76,9 @@ export function CurrentVotePage() {
       </div>
       <ul className="flex flex-col gap-4">
         {votes.length > 0 ? (
-          votes
-            .filter(
-              (vote) =>
-                !showOnlyParticiable || !participatedVotes.includes(vote.id),
-            )
-            .map((vote) => (
-              <VoteItem
-                key={vote.id}
-                vote={vote}
-                participated={participatedVotes.includes(vote.id)}
-              />
-            ))
+          votes.map((vote, idx) => (
+            <VoteItem key={vote.id} vote={vote} voteRate={voteRates[idx]} />
+          ))
         ) : (
           <NoContents />
         )}

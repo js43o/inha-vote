@@ -33,3 +33,14 @@ export async function checkBallotIssuedOnchain(address: `0x${string}`) {
 
   return data;
 }
+
+export async function getNumberOfVoteOnChain(candidateAddress: `0x${string}`) {
+  const data = await getPublicClient().readContract({
+    address: CONTRACT.TOKEN.ADDRESS as `0x${string}`,
+    abi: CONTRACT.TOKEN.ABI,
+    functionName: 'balanceOf',
+    args: [candidateAddress],
+  });
+
+  return Number(data) / 10 ** 18;
+}
