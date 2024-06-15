@@ -205,7 +205,7 @@ export const finalVoteOnChain = async (
   return response.status;
 };
 
-export const getNumberOfCandidates = async (voteId: number) => {
+export const getNumberOfVoteOfCandidates = async (voteId: number) => {
   const candidates = await getCandidates(voteId);
   if (!candidates) return;
 
@@ -222,7 +222,7 @@ export const getNumberOfCandidates = async (voteId: number) => {
 };
 
 export const getVoteRate = async (voteId: number) => {
-  const numberOfVoteOfCandidates = await getNumberOfCandidates(voteId);
+  const numberOfVoteOfCandidates = await getNumberOfVoteOfCandidates(voteId);
   if (!numberOfVoteOfCandidates) return;
 
   return numberOfVoteOfCandidates.reduce((acc, cur) => acc + cur, 0);

@@ -3,7 +3,6 @@ import Sort from '~/assets/icons/sort.svg?react';
 import { SortBy, Vote } from '~/libs/types';
 import { VoteItem, ToggleInput, SortType, NoContents } from '~/components';
 import { getVoteRate, getVotes } from '~/libs/api';
-import { getNumberOfVoteOnChain } from '~/libs/contract';
 
 export function CurrentVotePage() {
   const [sortBy, setSortBy] = useState<SortBy>('title');

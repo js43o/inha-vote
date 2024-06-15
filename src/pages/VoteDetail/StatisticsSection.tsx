@@ -3,6 +3,7 @@ import { getMockVoteStatistics } from '~/libs/mockApi';
 import { Candidate, VoteStatistics } from '~/libs/types';
 import { CandidateStatisticsItem } from './CandidateStatisticsItem';
 import { StatisticsChart } from './StatisticsChart';
+import { getNumberOfVoteOfCandidates } from '~/libs/api';
 
 type StatisticsSectionProps = {
   voteId: number;
@@ -16,31 +17,43 @@ export function StatisticsSection({
   const [voteStatistics, setVoteStatistics] = useState<VoteStatistics | null>(
     null,
   );
-  const allTotalNumberOfVotes =
-    voteStatistics?.candidates.reduce(
-      (acc, cur) => acc + cur.totalNumberOfVotes,
-      0,
-    ) || 0;
+  const [numberOfVoteOfCandidates, setNumberOfVoteOfCandidates] = useState<
+    number[]
+  >([]);
+  const totalNumberOfVote = numberOfVoteOfCandidates.reduce(
+    (acc, cur) => acc + cur,
+    0,
+  );
 
   useEffect(() => {
-    if (voteId) {
-      getMockVoteStatistics().then(setVoteStatistics);
-    }
+    const fetchData = async () => {
+      const mockVoteStatistic = await getMockVoteStatistics();
+      setVoteStatistics(mockVoteStatistic);
+      const numberOfVote = await getNumberOfVoteOfCandidates(voteId);
+      setNumberOfVoteOfCandidates(numberOfVote || []);
+    };
+
+    fetchData();
   }, [voteId]);
 
   if (!voteStatistics) return <>통계 불러오는 중...</>;
 
   return (
     <section className="flex flex-col w-full gap-4 px-4 md:px-8">
-      <h2 className="flex justify-between">
-        <span className="text-2xl font-bold">투표 통계 (개발 예정)</span>
-        <span className="text-lg text-gray-500">
-          총 <span className="font-bold">{allTotalNumberOfVotes}표</span> 중
-        </span>
-      </h2>
+      <div className="flex flex-col gap-1">
+        <h2 className="flex justify-between">
+          <p className="text-2xl font-bold">투표 통계</p>
+          <span className="text-lg text-gray-500">
+            총 <span className="font-bold">{totalNumberOfVote}표</span> 중
+          </span>
+        </h2>
+        <p className="text-blue-600">
+          ※ 상세 투표 통계 기능은 개발 예정입니다.
+        </p>
+      </div>
       {voteStatistics ? (
         <StatisticsChart
-          totalNumberOfVotes={allTotalNumberOfVotes}
+          totalNumberOfVotes={totalNumberOfVote}
           data={{
             gender: {
               man: voteStatistics.candidates.reduce(
@@ -76,7 +89,7 @@ export function StatisticsSection({
       <div className="flex flex-col gap-2">
         <h3 className="font-semibold text-lg">후보자별 득표수</h3>
         <ul className="flex flex-col gap-3">
-          {voteStatistics.candidates.map((statistics) => {
+          {voteStatistics.candidates.map((statistics, idx) => {
             const candidate = candidates.find(
               (candidate) => candidate.id === statistics.id,
             );
@@ -86,7 +99,7 @@ export function StatisticsSection({
                 name={candidate.name}
                 affiliation={candidate.affiliation}
                 imgSrc={candidate.imgSrc}
-                allTotalNumberOfVotes={allTotalNumberOfVotes}
+                allTotalNumberOfVotes={numberOfVoteOfCandidates[idx]}
                 statistics={statistics}
               />
             ) : null;

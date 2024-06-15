@@ -12,7 +12,7 @@ export function StatisticsChart({
   slim = false,
 }: StatisticsChartProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 opacity-50">
       <div className="flex flex-col gap-1">
         <h3 className="text-lg font-semibold">성별별 투표수</h3>
         <ChartBar title="남성" value={gender.man} total={100} slim={slim} />
