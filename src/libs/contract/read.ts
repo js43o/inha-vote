@@ -41,6 +41,5 @@ export async function getNumberOfVoteOnChain(candidateAddress: `0x${string}`) {
     functionName: 'balanceOf',
     args: [candidateAddress],
   });
-
   return Number(data) / 10 ** 18;
 }

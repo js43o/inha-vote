@@ -10,10 +10,18 @@ import { BallotIssueModal } from './BallotIssueModal';
 import { BallotValidationModal } from './VotingModal';
 import { RemainingTime } from './RemainingTime';
 import { StatisticsSection } from './StatisticsSection';
-import { checkBallotIssuedOnchain } from '~/libs/contract';
+import {
+  checkBallotIssuedOnchain,
+  getCandidateAddressOnchain,
+} from '~/libs/contract';
 import { useAtomValue } from 'jotai';
 import { kernelClientAtomKey } from '~/libs/atom';
-import { getCandidates, getVoteRate, getVotes } from '~/libs/api';
+import {
+  getCandidates,
+  getNumberOfVoteOfCandidates,
+  getVoteRate,
+  getVotes,
+} from '~/libs/api';
 
 export function VoteDetailPage() {
   const navigate = useNavigate();
@@ -21,6 +29,9 @@ export function VoteDetailPage() {
   const [vote, setVote] = useState<Vote>();
   const [voteRate, setVoteRate] = useState<number>();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [numberOfVoteOfCandidates, setNumberOfVoteOfCandidates] = useState<
+    number[]
+  >([]);
   const participated = false; // 투표 여부 (알 수 없음)
   const [issued, setIssued] = useState(false); // 온체인 투표권 발급 여부
 
@@ -48,6 +59,8 @@ export function VoteDetailPage() {
       setIssued(issued);
       const rate = await getVoteRate(Number(voteId));
       setVoteRate(rate);
+      const numberOfVote = await getNumberOfVoteOfCandidates(Number(voteId));
+      setNumberOfVoteOfCandidates(numberOfVote || []);
     };
 
     fetchData();
@@ -137,8 +150,17 @@ export function VoteDetailPage() {
         </ul>
         <h2 className="text-2xl font-bold px-4 md:px-8">후보자 정보</h2>
         <ul className="grid grid-cols-1 md:gap-4 gap-16 md:grid-cols-2 px-4 md:px-8">
-          {candidates.map((candidate) => (
-            <CandidateItem key={candidate.id} candidate={candidate} />
+          {candidates.map((candidate, idx) => (
+            <CandidateItem
+              key={candidate.id}
+              candidate={candidate}
+              elected={
+                getVoteStatus(vote) === 'closed' &&
+                numberOfVoteOfCandidates[idx] ===
+                  Math.max(...numberOfVoteOfCandidates) &&
+                new Set(numberOfVoteOfCandidates).size !== 1
+              }
+            />
           ))}
         </ul>
         {getVoteStatus(vote) === 'closed' ? (

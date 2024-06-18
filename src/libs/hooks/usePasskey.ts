@@ -50,11 +50,15 @@ export function usePassKey() {
         kernelClient.account.address,
       );
       console.log(
-        res1 === 200 || res1 === 201 ? 'DB 등록 성공' : 'DB 등록 실패',
+        res1 === 200 || res1 === 201
+          ? 'DB 주소 등록 성공'
+          : 'DB 주소 등록 실패',
       );
       const res2 = await registerStudentNumberToOnChain(studentNumber);
       console.log(
-        res2 === 200 || res2 === 201 ? '온체인 등록 성공' : '온체인 등록 실패',
+        res2 === 200 || res2 === 201
+          ? '온체인 주소 등록 성공'
+          : '온체인 주소 등록 실패',
       );
 
       console.log('3. 사용자의 DB salt와 온체인 salt를 비교');

@@ -10,14 +10,25 @@ import {
 } from '~/libs/utils';
 import { CONTRACT } from '~/libs/constants';
 import { Ballot } from '~/libs/types';
-import { encodeFunctionData, parseAbi } from 'viem';
-import { bundlerActions } from 'permissionless';
-import { KernelAccountClient } from '@zerodev/sdk';
+import { encodeFunctionData, http } from 'viem';
+import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts';
+import { ENTRYPOINT_ADDRESS_V07, bundlerActions } from 'permissionless';
+import {
+  KernelAccountClient,
+  createKernelAccount,
+  createKernelAccountClient,
+  createZeroDevPaymasterClient,
+} from '@zerodev/sdk';
 import { ENTRYPOINT_ADDRESS_V07_TYPE } from 'permissionless/types';
-import { getCandidateAddressOnchain } from '~/libs/contract';
+import { signerToEcdsaValidator } from '@zerodev/ecdsa-validator';
+import { toECDSASigner } from '@zerodev/permissions/signers';
+import { getCandidateAddressOnchain, getPublicClient } from '~/libs/contract';
 import { finalVoteOnChain, getRecieptOnChain } from '~/libs/api';
+import { polygonAmoy } from 'viem/chains';
 
-const CRYPTO_SECRET = import.meta.env.VITE_CRYPTO_SECRET;
+const { VITE_CRYPTO_SECRET, VITE_PAYMASTER_URL, VITE_BUNDLER_URL } = import.meta
+  .env;
+const entryPoint = ENTRYPOINT_ADDRESS_V07;
 
 export function useVoting() {
   const preVote = async (
@@ -94,7 +105,7 @@ export function useVoting() {
         votingAvailableDate,
         contents: CryptoJS.AES.encrypt(
           JSON.stringify(ballot),
-          CRYPTO_SECRET,
+          VITE_CRYPTO_SECRET,
         ).toString(),
       };
     } catch (e) {
@@ -141,14 +152,17 @@ export function useVoting() {
         '/withdraw.wasm',
         '/setup_final.zkey',
       );
-      console.log(`proof = ${proofInput}`);
+      console.log(`proof = ${JSON.stringify(proof)}`);
 
       const callInputs = [
         proof.pi_a.slice(0, 2).map(BN256ToHex),
         proof.pi_b
           .slice(0, 2)
-          .map((row) => reverseCoordinate(row.map(BN256ToHex)))
-          .map((row) => row.toString()),
+          .map((row) =>
+            reverseCoordinate(row.map(BN256ToHex)).map((data) =>
+              data.toString(),
+            ),
+          ),
         proof.pi_c.slice(0, 2).map(BN256ToHex),
         publicSignals.slice(0, 2).map(BN256ToHex),
       ];
@@ -159,8 +173,73 @@ export function useVoting() {
         CONTRACT.TOKEN.ADDRESS,
         address,
       );
+
+      console.log('투표 결과 코드 = ', response);
       return response;
-      console.log('투표 성공!');
+      /*
+      const signer = privateKeyToAccount(generatePrivateKey());
+      const ecdsaValidator = await signerToEcdsaValidator(getPublicClient(), {
+        signer,
+        entryPoint,
+      });
+      const account = await createKernelAccount(getPublicClient(), {
+        plugins: { sudo: ecdsaValidator },
+        entryPoint,
+      });
+      console.log('My account:', account.address);
+
+      const relayerClient = createKernelAccountClient({
+        account,
+        entryPoint,
+        chain: polygonAmoy,
+        bundlerTransport: http(VITE_BUNDLER_URL),
+        middleware: {
+          sponsorUserOperation: async ({ userOperation }) => {
+            const zerodevPaymaster = createZeroDevPaymasterClient({
+              chain: polygonAmoy,
+              entryPoint,
+              // Get this RPC from ZeroDev dashboard
+              transport: http(VITE_PAYMASTER_URL),
+            });
+            return zerodevPaymaster.sponsorUserOperation({
+              userOperation,
+              entryPoint,
+            });
+          },
+        },
+      });
+
+      const userOpHash = await relayerClient.sendUserOperation({
+        userOperation: {
+          callData: await account.encodeCallData({
+            to: CONTRACT.TORNADO.ADDRESS as `0x${string}`,
+            value: BigInt(0),
+            data: encodeFunctionData({
+              abi: CONTRACT.TORNADO.ABI,
+              functionName: 'withdraw',
+              args: [
+                callInputs[0] as [bigint, bigint],
+                callInputs[1] as [[bigint, bigint], [bigint, bigint]],
+                callInputs[2] as [bigint, bigint],
+                callInputs[3] as [bigint, bigint],
+                CONTRACT.TOKEN.ADDRESS as `0x${string}`,
+                address,
+              ],
+            }),
+          }),
+        },
+      });
+
+      console.log('userOp hash:', userOpHash);
+      const bundlerClient = relayerClient.extend(
+        bundlerActions(ENTRYPOINT_ADDRESS_V07),
+      );
+      const _receipt = await bundlerClient.waitForUserOperationReceipt({
+        hash: userOpHash,
+      });
+
+      console.log('userOp completed');
+      */
     } catch (e) {
       console.log(e);
     }
@@ -169,7 +248,7 @@ export function useVoting() {
   const validateBallot = (proofString: string) => {
     try {
       const ballot: Ballot = JSON.parse(
-        CryptoJS.AES.decrypt(proofString, CRYPTO_SECRET).toString(
+        CryptoJS.AES.decrypt(proofString, VITE_CRYPTO_SECRET).toString(
           CryptoJS.enc.Utf8,
         ),
         (key, value) =>

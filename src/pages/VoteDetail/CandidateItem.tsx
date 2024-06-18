@@ -3,10 +3,12 @@ import Elected from '~/assets/icons/elected.svg?react';
 
 type CandidateItemProps = {
   candidate: Candidate;
+  elected?: boolean;
 };
 
 export function CandidateItem({
-  candidate: { name, affiliation, imgSrc, profiles, promises, word, elected },
+  candidate: { name, affiliation, imgSrc, profiles, promises, word },
+  elected = false,
 }: CandidateItemProps) {
   return (
     <li className="flex flex-col gap-4">
